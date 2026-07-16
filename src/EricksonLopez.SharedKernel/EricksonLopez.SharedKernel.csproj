@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>EricksonLopez.SharedKernel</AssemblyName>
+    <RootNamespace>EricksonLopez.SharedKernel</RootNamespace>
+
+    <!-- NuGet packaging -->
+    <IsPackable>true</IsPackable>
+    <PackageId>EricksonLopez.SharedKernel</PackageId>
+    <Description>A shared kernel for DDD-based .NET applications. Provides battle-tested abstractions: Entity, ValueObject, Result pattern, Domain Events, Specification pattern, and Pagination. Designed for use with Clean Architecture and CQRS.</Description>
+
+    <!-- Include README in NuGet package -->
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

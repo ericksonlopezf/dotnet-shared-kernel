@@ -1,0 +1,13 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build-and-test:
+    uses: ericksonlopezf/dotnet-shared-kernel/.github/workflows/dotnet-build-test.yml@main
+    with:
+      artifact-name: test-results
