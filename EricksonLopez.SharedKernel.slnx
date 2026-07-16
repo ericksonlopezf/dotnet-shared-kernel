@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/EricksonLopez.SharedKernel.Benchmarks/EricksonLopez.SharedKernel.Benchmarks.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/EricksonLopez.SharedKernel.Sample/EricksonLopez.SharedKernel.Sample.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/EricksonLopez.SharedKernel/EricksonLopez.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EricksonLopez.SharedKernel.Tests/EricksonLopez.SharedKernel.Tests.csproj" />
+  </Folder>
+</Solution>

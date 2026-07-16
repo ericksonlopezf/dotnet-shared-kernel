@@ -1,0 +1,47 @@
+# Ignore build output
+bin/
+obj/
+
+# NuGet packages directory (never commit restored packages)
+packages/
+*.nupkg
+*.snupkg
+
+# NuGet metadata
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.DotSettings.user
+
+# Visual Studio
+.vs/
+*.rsuser
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+TestResults/
+test-results/
+
+# BenchmarkDotNet
+BenchmarkDotNet.Artifacts/
