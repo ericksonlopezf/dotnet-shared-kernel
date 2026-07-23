@@ -76,4 +76,24 @@ public sealed class PagedListTests
         var parameters = PaginationParameters.Of(3, 10);
         parameters.Skip.Should().Be(20); // (3-1) * 10
     }
+
+    [Fact]
+    public void TotalPages_WhenPageSizeIsZero_ShouldBeZero()
+    {
+        var pagedList = Activator.CreateInstance(typeof(PagedList<int>), 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance, 
+            null, [new List<int>(), 10, 1, 0], null) as PagedList<int>;
+
+        pagedList!.TotalPages.Should().Be(0);
+    }
+
+    [Fact]
+    public void Create_NullArguments_ShouldThrow()
+    {
+        var act1 = () => PagedList<int>.Create(null!, 10, PaginationParameters.Default);
+        act1.Should().Throw<ArgumentNullException>().WithParameterName("items");
+
+        var act2 = () => PagedList<int>.Create([], 10, null!);
+        act2.Should().Throw<ArgumentNullException>().WithParameterName("parameters");
+    }
 }

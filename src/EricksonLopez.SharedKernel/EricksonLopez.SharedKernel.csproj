@@ -1,14 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <AssemblyName>EricksonLopez.SharedKernel</AssemblyName>
     <RootNamespace>EricksonLopez.SharedKernel</RootNamespace>
+
+    <!-- NativeAOT and trimming compatibility (only supported on modern .NET) -->
+    <IsTrimmable Condition="'$(TargetFramework)' == 'net10.0'">true</IsTrimmable>
+    <IsAotCompatible Condition="'$(TargetFramework)' == 'net10.0'">true</IsAotCompatible>
 
     <!-- NuGet packaging -->
     <IsPackable>true</IsPackable>
     <PackageId>EricksonLopez.SharedKernel</PackageId>
-    <Description>A shared kernel for DDD-based .NET applications. Provides battle-tested abstractions: Entity, ValueObject, Result pattern, Domain Events, Specification pattern, and Pagination. Designed for use with Clean Architecture and CQRS.</Description>
+    <Description>A shared kernel for DDD-based .NET applications. Provides battle-tested abstractions: Entity, ValueObject, Result pattern, Domain Events, Specification pattern, and Pagination. Designed for use with Clean Architecture and CQRS. NativeAOT and trimming compatible.</Description>
 
     <!-- Include README in NuGet package -->
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -16,6 +20,18 @@
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PolySharp" Version="1.14.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

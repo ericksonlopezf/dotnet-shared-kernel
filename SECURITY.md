@@ -25,4 +25,4 @@ Instead, email **[ericksonlopezf@gmail.com](mailto:ericksonlopezf@gmail.com)** w
 
 ## Scope
 
-This policy covers the `EricksonLopez.SharedKernel` NuGet package and its source code. This package has zero external dependencies.
+This policy covers the `EricksonLopez.SharedKernel` NuGet package and its source code. This package has zero external runtime dependencies on modern .NET (older frameworks utilize standard Microsoft BCL polyfills).

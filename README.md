@@ -3,21 +3,19 @@
 [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel?style=for-the-badge&logo=nuget&logoColor=white&color=512BD4)](https://www.nuget.org/packages/EricksonLopez.SharedKernel)
 [![CI](https://img.shields.io/github/actions/workflow/status/ericksonlopezf/dotnet-shared-kernel/ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/ericksonlopezf/dotnet-shared-kernel/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET_10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
+[![.NET](https://img.shields.io/badge/.NET_10_%7C_Standard_2.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
+[![NativeAOT](https://img.shields.io/badge/NativeAOT-Compatible-brightgreen?style=for-the-badge)](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot)
 
-A shared kernel for DDD-based .NET applications. Provides battle-tested abstractions for Clean Architecture projects: **Entity**, **ValueObject**, **Result pattern**, **Domain Events**, **Specification pattern**, and **Pagination**.
+A shared kernel for DDD-based .NET applications. Provides battle-tested abstractions for Clean Architecture projects: **Entity**, **AggregateRoot**, **ValueObject**, **Result pattern**, **Domain Events**, **Specification pattern**, and **Pagination**.
 
----
-
-## Why this exists
-
-Every enterprise .NET project I build needs the same foundational types. Instead of copying them across repositories, this package is the single source of truth.
-
-Design principles:
-- **Zero external dependencies** in the main library
-- **Immutable by default** — ValueObject, PagedList, Error are all sealed/records
-- **Composable** — Result supports Map/Bind; Specification supports And/Or/Not with `&`, `|`, `!` operators
-- **No magic** — every abstraction is readable and debuggable without a framework
+**Key Features:**
+- ⚡ **Zero external dependencies**
+- 🔒 **Immutable by default** — ValueObject, Error, PagedList are sealed/records
+- 🚀 **Zero-alloc happy path** — `Result.Success()` is cached
+- 🔗 **Fluent pipelines** — Result supports `Map`, `Bind`, `Match`, `Tap`, `Ensure`, `Recover`, `Try`, `Combine`
+- 🚀 **NativeAOT + Trimming compatible** — `IsAotCompatible` and `IsTrimmable` enabled
+- ⚙️ **Async-first** — Full `Task<Result<T>>` and `ValueTask<Result<T>>` extension methods
+- 🧩 **No magic** — every abstraction is readable and debuggable
 
 ---
 
@@ -27,6 +25,8 @@ Design principles:
 dotnet add package EricksonLopez.SharedKernel
 ```
 
+> Requires **.NET 10** or **.NET Standard 2.0** compatible frameworks (e.g., .NET Framework 4.6.1+, .NET Core 2.0+).
+
 ---
 
 ## Quick Start
@@ -34,7 +34,7 @@ dotnet add package EricksonLopez.SharedKernel
 ### Result Pattern
 
 ```csharp
-// Define errors in a static class per domain concept
+// Define errors as a static class per domain concept
 public static class UserErrors
 {
     public static Error NotFound(Guid id) =>
@@ -42,6 +42,9 @@ public static class UserErrors
 
     public static readonly Error NameEmpty =
         Error.Validation("User.NameEmpty", "Name cannot be empty.");
+
+    public static readonly Error Inactive =
+        Error.Forbidden("User.Inactive", "User is not active.");
 }
 
 // Return Result instead of throwing
@@ -50,16 +53,132 @@ public Result<User> GetUser(Guid id)
     var user = _repository.Find(id);
     return user is null ? UserErrors.NotFound(id) : user;
 }
+```
 
-// Caller handles explicitly
-var result = GetUser(id);
-if (result.IsFailure)
-    return result.Error; // propagate up
+**Fluent pipeline:**
 
-// Monadic chaining
+```csharp
 var result = GetUser(id)
+    .Ensure(u => u.IsActive, UserErrors.Inactive)
     .Map(u => new UserDto(u.Name, u.Email))
-    .Bind(dto => Validate(dto));
+    .Tap(dto => _cache.Set(id, dto))
+    .TapError(e => _logger.LogWarning("Failed: {Error}", e));
+```
+
+**Pattern matching with Match:**
+
+```csharp
+return result.Match(
+    user => Ok(user),
+    error => Problem(error.Description));
+```
+
+**Try-pattern (idiomatic .NET):**
+
+```csharp
+if (result.TryGetValue(out var user))
+    Console.WriteLine(user.Name);
+
+var name = GetUser(id)
+    .Map(u => u.Name)
+    .GetValueOrDefault("Unknown");
+```
+
+**Destructuring:**
+
+```csharp
+var (ok, user, error) = GetUser(id);
+if (ok) Console.WriteLine(user.Name);
+```
+
+**Exception bridge:**
+
+```csharp
+var result = Result.Try(
+    () => JsonSerializer.Deserialize<Config>(json),
+    ex => Error.Unexpected("Config.ParseFailed", ex.Message));
+```
+
+**Async pipelines (with ConfigureAwait(false)):**
+
+```csharp
+var result = await _repository.GetById(id)   // Task<Result<User>>
+    .Ensure(u => u.IsActive, UserErrors.Inactive)
+    .Map(u => u.ToDto())
+    .Tap(dto => _cache.SetAsync(id, dto))
+    .Recover(e => _fallbackRepo.GetById(id));
+```
+
+### Error Types
+
+```csharp
+Error.Failure(code, description)       // Generic domain error
+Error.Validation(code, description)    // Input validation
+Error.NotFound(code, description)      // Resource not found
+Error.Conflict(code, description)      // State conflict
+Error.Unauthorized(code, description)  // Authentication required
+Error.Forbidden(code, description)     // Insufficient permissions
+Error.Unavailable(code, description)   // Service unavailable
+Error.Unexpected(code, description)    // System error / exceptions
+```
+
+**Compound errors (e.g., multiple validation failures):**
+
+```csharp
+var error = Error.Validation("User.Invalid", "Validation failed",
+    Error.Validation("User.Name.Required", "Name is required"),
+    Error.Validation("User.Email.Invalid", "Invalid email format"));
+
+error.HasInnerErrors   // true
+error.InnerErrors      // [Name.Required, Email.Invalid]
+```
+
+**Combining multiple results:**
+
+```csharp
+var result = Result.Combine(
+    ValidateName(name),
+    ValidateEmail(email),
+    ValidateAge(age));
+// Returns success if all pass, or compound error with all failures
+
+// Typed combine into tuples:
+var (user, account) = Result.Combine(GetUser(id), GetAccount(id)).Value;
+```
+
+### AggregateRoot & Entity
+
+```csharp
+// AggregateRoot — the only entry point for Domain Events
+public sealed class Order : AggregateRoot<Guid>
+{
+    public string Description { get; private set; } = string.Empty;
+
+    public static Order Create(Guid id, string description)
+    {
+        var order = new Order { Id = id, Description = description };
+        order.RaiseDomainEvent(new OrderCreated(id));
+        return order;
+    }
+}
+
+// Entity — identity-only, no domain events
+public sealed class LineItem : Entity<Guid>
+{
+    public string ProductName { get; private set; } = string.Empty;
+}
+
+// Domain event
+public sealed record OrderCreated(Guid OrderId) : IDomainEvent;
+
+// In your Unit of Work — after SaveChanges:
+foreach (var aggregate in aggregates)
+{
+    var events = aggregate.DomainEvents.ToList();
+    aggregate.ClearDomainEvents();
+    foreach (var domainEvent in events)
+        await _publisher.Publish(domainEvent);
+}
 ```
 
 ### ValueObject
@@ -81,44 +200,12 @@ public sealed class Money : ValueObject
         yield return Amount;
         yield return Currency;
     }
-}
 
-var usd100 = new Money(100m, "USD");
-var usd100b = new Money(100m, "USD");
-Console.WriteLine(usd100 == usd100b); // true — structural equality
-```
-
-### Entity with Domain Events
-
-```csharp
-public sealed class Order : Entity<Guid>
-{
-    private Order() { }
-
-    public string Description { get; private set; } = string.Empty;
-
-    public static Order Create(string description)
-    {
-        var order = new Order
-        {
-            Id = Guid.NewGuid(),
-            Description = description
-        };
-        order.RaiseDomainEvent(new OrderCreatedEvent(order.Id));
-        return order;
-    }
-}
-
-// Domain event
-public sealed record OrderCreatedEvent(Guid OrderId) : IDomainEvent;
-
-// In your Unit of Work / repository — after SaveChanges:
-foreach (var entity in entities)
-{
-    var events = entity.DomainEvents.ToList();
-    entity.ClearDomainEvents();
-    foreach (var domainEvent in events)
-        await _publisher.Publish(domainEvent, cancellationToken);
+    // Optional: override for zero-boxing equality on hot paths
+    // public override bool Equals(ValueObject? other)
+    //     => other is Money m && Amount == m.Amount && Currency == m.Currency;
+    // public override int GetHashCode()
+    //     => HashCode.Combine(Amount, Currency);
 }
 ```
 
@@ -129,111 +216,153 @@ public sealed class ActiveUserSpec : Specification<User>
 {
     public override Expression<Func<User, bool>> ToExpression()
         => user => user.IsActive;
+
+    // Optional: NativeAOT-safe override
+    protected override bool Evaluate(User candidate)
+        => candidate.IsActive;
 }
 
-public sealed class PremiumUserSpec : Specification<User>
-{
-    public override Expression<Func<User, bool>> ToExpression()
-        => user => user.Tier == UserTier.Premium;
-}
-
-// Compose
+// Compose with operators
 var spec = new ActiveUserSpec() & new PremiumUserSpec();
 
 // In-memory evaluation
-var eligibleUsers = users.Where(spec.IsSatisfiedBy);
+var eligible = users.Where(spec.IsSatisfiedBy);
 
-// As LINQ expression (for Dapper/EF)
-var expression = spec.ToExpression(); // Expression<Func<User, bool>>
+// LINQ-to-SQL (EF Core / Dapper)
+var expression = spec.ToExpression();
 ```
 
 ### Pagination
 
 ```csharp
-// In your query handler
-public async Task<PagedList<ProductDto>> Handle(GetProductsQuery query)
-{
-    var parameters = PaginationParameters.Of(query.Page, query.PageSize);
+var parameters = PaginationParameters.Of(page: 2, pageSize: 10);
 
-    var items = await _connection.QueryAsync<ProductDto>(
-        "SELECT * FROM products LIMIT @limit OFFSET @offset",
-        new { limit = parameters.PageSize, offset = parameters.Skip });
+var items = await _connection.QueryAsync<ProductDto>(sql,
+    new { limit = parameters.PageSize, offset = parameters.Skip });
+var total = await _connection.ExecuteScalarAsync<int>(countSql);
 
-    var total = await _connection.ExecuteScalarAsync<int>(
-        "SELECT COUNT(*) FROM products");
+var page = PagedList<ProductDto>.Create(items, total, parameters);
 
-    return PagedList<ProductDto>.Create(items, total, parameters);
-}
-
-// PagedList<T> metadata
-page.TotalCount   // Total items across all pages
-page.TotalPages   // Ceiling(TotalCount / PageSize)
-page.HasNextPage  // true if not on last page
-page.Map(dto => new ProductResponse(dto.Id, dto.Name)) // project without losing metadata
+page.TotalCount    // Total items across all pages
+page.TotalPages    // Ceiling(TotalCount / PageSize)
+page.HasNextPage   // Navigation flag
+page.Map(dto => new ProductResponse(dto.Id, dto.Name))  // Project preserving metadata
 ```
 
 ---
 
 ## API Reference
 
-### `Entity<TId>`
+### Domain
 
-| Member | Description |
-|---|---|
-| `TId Id` | Entity identifier |
-| `IReadOnlyList<IDomainEvent> DomainEvents` | Pending events since last dispatch |
-| `RaiseDomainEvent(IDomainEvent)` | Queue a domain event |
-| `ClearDomainEvents()` | Clear after dispatch (call from infra layer) |
-
-### `ValueObject`
-
-| Member | Description |
-|---|---|
-| `GetEqualityComponents()` | Override to yield equality fields |
-| `==` / `!=` / `Equals` | Structural equality |
-
-### `Result` / `Result<T>`
-
-| Member | Description |
-|---|---|
-| `IsSuccess` / `IsFailure` | State inspection |
-| `Value` | The success value. Throws on failure. |
-| `Error` | The failure error. `Error.None` on success. |
-| `Map<TNext>(Func<T, TNext>)` | Transform value on success, propagate error |
-| `Bind<TNext>(Func<T, Result<TNext>>)` | Chain operations returning Result |
-
-### `Error`
-
-| Factory | ErrorType | HTTP equivalent |
+| Type | Members | Description |
 |---|---|---|
-| `Error.Failure(code, desc)` | `Failure` | 500 |
-| `Error.Validation(code, desc)` | `Validation` | 400 |
-| `Error.NotFound(code, desc)` | `NotFound` | 404 |
-| `Error.Conflict(code, desc)` | `Conflict` | 409 |
-| `Error.Unauthorized(code, desc)` | `Unauthorized` | 401 |
-| `Error.Forbidden(code, desc)` | `Forbidden` | 403 |
+| `Entity<TId>` | `Id`, `==`/`!=` | Identity-based equality |
+| `AggregateRoot<TId>` | `RaiseDomainEvent()`, `DomainEvents`, `ClearDomainEvents()` | Consistency boundary + event publishing |
+| `ValueObject` | `GetEqualityComponents()`, virtual `Equals` | Structural equality |
+| `IDomainEvent` | marker interface | Domain event contract |
 
-### `Specification<T>`
+### Result
+
+| Member | Result | Result\<T\> | Description |
+|---|---|---|---|
+| `IsSuccess` / `IsFailure` | ✅ | ✅ | State inspection |
+| `Error` | ✅ | ✅ | The failure error (`Error.None` on success) |
+| `Value` | — | ✅ | Success value (throws on failure) |
+| `Map<TNext>(Func)` | — | ✅ | Transform value |
+| `Bind<TNext>(Func)` | — | ✅ | Chain Result-returning operations |
+| `Match<TOut>(onSuccess, onFailure)` | ✅ | ✅ | Exhaustive handling |
+| `Tap(Action)` | ✅ | ✅ | Side effect on success |
+| `TapError(Action)` | ✅ | ✅ | Side effect on failure |
+| `Ensure(predicate, error)` | ✅ | ✅ | Post-condition validation |
+| `Recover(Func)` | — | ✅ | Fallback on failure |
+| `Finally(Action)` | ✅ | ✅ | Always execute |
+| `MapError(Func)` | ✅ | ✅ | Transform the error |
+| `TryGetValue(out T)` | — | ✅ | Try-pattern |
+| `TryGetError(out Error)` | ✅ | ✅ | Try-pattern |
+| `GetValueOrDefault(T)` | — | ✅ | Safe access |
+| `GetValueOrDefault(Func)` | — | ✅ | Safe access with fallback logic |
+| `ToResult()` | — | ✅ | Drop value (Result\<T\> → Result) |
+| `Deconstruct` | — | ✅ | `var (ok, value, error) = result;` |
+| `Try(Action, errorHandler)` | ✅ | ✅ | Exception → Error bridge |
+| `Combine(params Result[])` | ✅ | ✅ | Aggregate results |
+
+### Error
+
+| Factory | ErrorType | Semantic |
+|---|---|---|
+| `Error.Failure(code, desc)` | `Failure` | Generic domain error |
+| `Error.Validation(code, desc)` | `Validation` | Input validation |
+| `Error.NotFound(code, desc)` | `NotFound` | Resource not found |
+| `Error.Conflict(code, desc)` | `Conflict` | State conflict |
+| `Error.Unauthorized(code, desc)` | `Unauthorized` | Authentication required |
+| `Error.Forbidden(code, desc)` | `Forbidden` | Insufficient permissions |
+| `Error.Unavailable(code, desc)` | `Unavailable` | Service unavailable |
+| `Error.Unexpected(code, desc)` | `Unexpected` | System error |
+
+All factories have an overload with `params Error[] innerErrors` for compound errors.
+
+### Specification
 
 | Member | Description |
 |---|---|
 | `ToExpression()` | Expression tree for LINQ-to-SQL |
-| `IsSatisfiedBy(T)` | In-memory evaluation (cached compile) |
-| `And(spec)` / `&` | Logical AND composition |
-| `Or(spec)` / `\|` | Logical OR composition |
+| `IsSatisfiedBy(T)` | In-memory evaluation via `Evaluate()` |
+| `Evaluate(T)` | `protected virtual` — override for NativeAOT |
+| `And(spec)` / `&` | Logical AND |
+| `Or(spec)` / `\|` | Logical OR |
 | `Not()` / `!` | Logical NOT |
 
-### `PagedList<T>`
+### Pagination
 
 | Member | Description |
 |---|---|
-| `Items` | Items on the current page |
-| `TotalCount` | Total items in the data source |
-| `TotalPages` | Ceiling(TotalCount / PageSize) |
-| `HasPreviousPage` / `HasNextPage` | Navigation flags |
-| `Map<TResult>(Func<T, TResult>)` | Project items, preserve metadata |
 | `PagedList<T>.Create(items, total, params)` | Factory |
-| `PagedList<T>.Empty(params)` | Empty page factory |
+| `PagedList<T>.Empty(params)` | Empty page |
+| `Items`, `TotalCount`, `TotalPages` | Page data |
+| `HasPreviousPage` / `HasNextPage` | Navigation |
+| `Map<TResult>(Func)` | Project preserving metadata |
+
+---
+
+## NativeAOT Compatibility
+
+This library is fully NativeAOT and trimming compatible:
+
+```xml
+<IsTrimmable>true</IsTrimmable>
+<IsAotCompatible>true</IsAotCompatible>
+```
+
+**Specification in NativeAOT:** The default `Evaluate()` method uses `Expression.Compile()` (requires JIT). For NativeAOT, override `Evaluate()` in your leaf specifications:
+
+```csharp
+public sealed class ActiveSpec : Specification<Product>
+{
+    public override Expression<Func<Product, bool>> ToExpression()
+        => p => p.IsActive;
+
+    // NativeAOT-safe: no Expression.Compile()
+    protected override bool Evaluate(Product candidate)
+        => candidate.IsActive;
+}
+```
+
+Composite specifications (And, Or, Not) are **automatically NativeAOT-safe** — they delegate to children's `IsSatisfiedBy()` without compiling.
+
+---
+
+## Part of the EricksonLopez Ecosystem
+
+SharedKernel is the foundational layer of a modular .NET ecosystem:
+
+| Package | Description | Depends on SharedKernel |
+|---|---|---|
+| **SharedKernel** | DDD abstractions + Result pattern | — (this library) |
+| **DomainPrimitives** | Value Objects with Source Generators | ✅ |
+| **SqlBuilder** | SQL-first query builder for Dapper | ✅ |
+| **Outbox** | Transactional Messaging (Outbox + Inbox) | ✅ |
+| **Identity** | Enterprise Identity and Security | ✅ |
 
 ---
 
@@ -241,7 +370,9 @@ page.Map(dto => new ProductResponse(dto.Id, dto.Name)) // project without losing
 
 Design rationale is documented as ADRs in [`docs/decisions/`](docs/decisions/):
 
-- [ADR-001: Result Pattern — Explicit Failure over Exceptions](docs/decisions/ADR-001-result-pattern.md)
+- [0001: Value Object Boxing Acceptance](docs/decisions/0001-value-object-boxing.md)
+- [0002: Validation Error Design](docs/decisions/0002-validation-error-design.md)
+- [0003: Result Pattern Allocations Optimization](docs/decisions/0003-result-pattern-allocations.md)
 
 ---
 

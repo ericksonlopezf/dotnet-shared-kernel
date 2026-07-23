@@ -19,7 +19,7 @@ file sealed class Money(decimal amount, string currency) : ValueObject
 
 file sealed record OrderCreatedEvent(Guid OrderId) : IDomainEvent;
 
-file sealed class Order : Entity<Guid>
+file sealed class Order : AggregateRoot<Guid>
 {
     public string Description { get; private set; } = string.Empty;
 
@@ -29,6 +29,16 @@ file sealed class Order : Entity<Guid>
         order.RaiseDomainEvent(new OrderCreatedEvent(id));
         return order;
     }
+
+    public void RaiseNullEvent() => RaiseDomainEvent(null!);
+}
+
+file sealed class LineItem : Entity<Guid>
+{
+    public string ProductName { get; private set; } = string.Empty;
+
+    public static LineItem Create(Guid id, string productName)
+        => new() { Id = id, ProductName = productName };
 }
 
 // ─── ValueObject tests ────────────────────────────────────────────────────────
@@ -86,6 +96,25 @@ public sealed class ValueObjectTests
 
         money1.GetHashCode().Should().Be(money2.GetHashCode());
     }
+
+    [Fact]
+    public void ValueObject_EqualsDifferentType_ShouldBeFalse()
+    {
+        var money = new Money(100m, "USD");
+        money.Equals(new object()).Should().BeFalse();
+    }
+
+    [Fact]
+    public void ValueObject_EqualityOperator_Nulls_ShouldBeHandled()
+    {
+        Money? m1 = null;
+        Money? m2 = null;
+        var m3 = new Money(100m, "USD");
+
+        (m1 == m2).Should().BeTrue();
+        (m1 == m3).Should().BeFalse();
+        (m3 == m1).Should().BeFalse();
+    }
 }
 
 // ─── Entity tests ─────────────────────────────────────────────────────────────
@@ -96,24 +125,67 @@ public sealed class EntityTests
     public void TwoEntities_WithSameId_ShouldBeEqual()
     {
         var id = Guid.NewGuid();
-        var order1 = Order.Create(id, "Order A");
-        var order2 = Order.Create(id, "Order B");
+        var item1 = LineItem.Create(id, "Widget A");
+        var item2 = LineItem.Create(id, "Widget B");
 
-        order1.Should().Be(order2);
-        (order1 == order2).Should().BeTrue();
+        item1.Should().Be(item2);
+        (item1 == item2).Should().BeTrue();
     }
 
     [Fact]
     public void TwoEntities_WithDifferentIds_ShouldNotBeEqual()
     {
-        var order1 = Order.Create(Guid.NewGuid(), "Order A");
-        var order2 = Order.Create(Guid.NewGuid(), "Order A");
+        var item1 = LineItem.Create(Guid.NewGuid(), "Widget A");
+        var item2 = LineItem.Create(Guid.NewGuid(), "Widget A");
 
-        order1.Should().NotBe(order2);
+        item1.Should().NotBe(item2);
+        (item1 != item2).Should().BeTrue();
     }
 
     [Fact]
-    public void CreatingEntity_ShouldRaiseDomainEvent()
+    public void Entity_EqualsNull_ShouldBeFalse()
+    {
+        var item = LineItem.Create(Guid.NewGuid(), "Widget A");
+        item.Equals(null).Should().BeFalse();
+        (item == null).Should().BeFalse();
+        (null == item).Should().BeFalse();
+        (item != null).Should().BeTrue();
+        (null != item).Should().BeTrue();
+    }
+
+    [Fact]
+    public void Entity_EqualsDifferentType_ShouldBeFalse()
+    {
+        var item = LineItem.Create(Guid.NewGuid(), "Widget A");
+        item.Equals(new object()).Should().BeFalse();
+    }
+
+    [Fact]
+    public void Entity_SameReference_ShouldBeEqual()
+    {
+        var item = LineItem.Create(Guid.NewGuid(), "Widget A");
+        item.Equals(item).Should().BeTrue();
+#pragma warning disable CS1718 // Comparison made to same variable
+        (item == item).Should().BeTrue();
+#pragma warning restore CS1718 // Comparison made to same variable
+    }
+
+    [Fact]
+    public void Entity_GetHashCode_ShouldMatchIdHashCode()
+    {
+        var id = Guid.NewGuid();
+        var item = LineItem.Create(id, "Widget A");
+
+        item.GetHashCode().Should().Be(HashCode.Combine(item.GetType(), id));
+    }
+}
+
+// ─── AggregateRoot tests ──────────────────────────────────────────────────────
+
+public sealed class AggregateRootTests
+{
+    [Fact]
+    public void CreatingAggregate_ShouldRaiseDomainEvent()
     {
         var id = Guid.NewGuid();
         var order = Order.Create(id, "Order A");
@@ -131,4 +203,32 @@ public sealed class EntityTests
 
         order.DomainEvents.Should().BeEmpty();
     }
+
+    [Fact]
+    public void TwoAggregates_WithSameId_ShouldBeEqual()
+    {
+        var id = Guid.NewGuid();
+        var order1 = Order.Create(id, "Order A");
+        var order2 = Order.Create(id, "Order B");
+
+        order1.Should().Be(order2);
+        (order1 == order2).Should().BeTrue();
+    }
+
+    [Fact]
+    public void TwoAggregates_WithDifferentIds_ShouldNotBeEqual()
+    {
+        var order1 = Order.Create(Guid.NewGuid(), "Order A");
+        var order2 = Order.Create(Guid.NewGuid(), "Order A");
+
+        order1.Should().NotBe(order2);
+    }
+
+    [Fact]
+    public void AggregateRoot_RaiseNullDomainEvent_ShouldThrow()
+    {
+        var action = () => Order.Create(Guid.NewGuid(), "A").RaiseNullEvent();
+        action.Should().Throw<ArgumentNullException>();
+    }
 }
+

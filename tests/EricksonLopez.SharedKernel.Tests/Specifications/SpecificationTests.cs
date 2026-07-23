@@ -95,4 +95,42 @@ public sealed class SpecificationTests
 
         filtered.Should().HaveCount(2).And.NotContain(InactiveCheap);
     }
+
+    [Fact]
+    public void OperatorOr_ShouldWorkLikeOrMethod()
+    {
+        var spec = new ActiveProductSpec() | new AffordableProductSpec(100m);
+
+        spec.IsSatisfiedBy(ActiveCheap).Should().BeTrue();
+        spec.IsSatisfiedBy(ActiveExpensive).Should().BeTrue();
+        spec.IsSatisfiedBy(InactiveCheap).Should().BeTrue();
+    }
+
+    [Fact]
+    public void OperatorNot_ShouldWorkLikeNotMethod()
+    {
+        var spec = !new ActiveProductSpec();
+
+        spec.IsSatisfiedBy(ActiveCheap).Should().BeFalse();
+        spec.IsSatisfiedBy(InactiveCheap).Should().BeTrue();
+    }
+
+    [Fact]
+    public void CompositeSpec_ToExpression_ShouldCompileAndEvaluateCorrectly()
+    {
+        var andSpec = new ActiveProductSpec() & new AffordableProductSpec(100m);
+        var andFunc = andSpec.ToExpression().Compile();
+        andFunc(ActiveCheap).Should().BeTrue();
+        andFunc(ActiveExpensive).Should().BeFalse();
+
+        var orSpec = new ActiveProductSpec() | new AffordableProductSpec(100m);
+        var orFunc = orSpec.ToExpression().Compile();
+        orFunc(ActiveCheap).Should().BeTrue();
+        orFunc(InactiveCheap).Should().BeTrue();
+
+        var notSpec = !new ActiveProductSpec();
+        var notFunc = notSpec.ToExpression().Compile();
+        notFunc(ActiveCheap).Should().BeFalse();
+        notFunc(InactiveCheap).Should().BeTrue();
+    }
 }

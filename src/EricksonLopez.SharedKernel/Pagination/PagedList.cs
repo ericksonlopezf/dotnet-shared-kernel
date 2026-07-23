@@ -65,8 +65,8 @@ public sealed class PagedList<T>
         int totalCount,
         PaginationParameters parameters)
     {
-        ArgumentNullException.ThrowIfNull(items);
-        ArgumentNullException.ThrowIfNull(parameters);
+        if (items is null) throw new ArgumentNullException(nameof(items));
+        if (parameters is null) throw new ArgumentNullException(nameof(parameters));
 
         return new PagedList<T>(items, totalCount, parameters.Page, parameters.PageSize);
     }

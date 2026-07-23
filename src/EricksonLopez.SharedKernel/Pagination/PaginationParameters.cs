@@ -21,7 +21,7 @@ public sealed class PaginationParameters
     public int PageSize
     {
         get => _pageSize;
-        init => _pageSize = Math.Clamp(value, 1, MaxPageSize);
+        init => _pageSize = Math.Max(1, Math.Min(MaxPageSize, value));
     }
 
     /// <summary>
