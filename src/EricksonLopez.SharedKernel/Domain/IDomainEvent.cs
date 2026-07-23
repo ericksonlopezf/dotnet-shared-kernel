@@ -1,3 +1,4 @@
+using System;
 namespace EricksonLopez.SharedKernel.Domain;
 
 /// <summary>
@@ -24,3 +25,4 @@ namespace EricksonLopez.SharedKernel.Domain;
 /// </code>
 /// </example>
 public interface IDomainEvent;
+

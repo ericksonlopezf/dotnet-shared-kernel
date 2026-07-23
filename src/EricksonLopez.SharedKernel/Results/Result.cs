@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace EricksonLopez.SharedKernel.Results;
@@ -135,7 +136,7 @@ public class Result
             action();
             return Success();
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             return Failure(errorHandler(ex));
         }
@@ -157,7 +158,7 @@ public class Result
         {
             return Success(func());
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             return Failure<T>(errorHandler(ex));
         }
@@ -555,3 +556,4 @@ public sealed class Result<TValue> : Result
     public static implicit operator Result<TValue>(TValue value) => Success(value);
     public static implicit operator Result<TValue>(Error error) => Failure(error);
 }
+

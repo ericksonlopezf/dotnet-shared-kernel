@@ -1,3 +1,4 @@
+using System;
 namespace EricksonLopez.SharedKernel.Domain;
 
 /// <summary>
@@ -87,3 +88,4 @@ public abstract class ValueObject : IEquatable<ValueObject>
     public static bool operator !=(ValueObject? left, ValueObject? right)
         => !(left == right);
 }
+

@@ -1,0 +1,2793 @@
+{
+  "EricksonLopez.SharedKernel.dll": {
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Specifications\\Specification.cs": {
+      "EricksonLopez.SharedKernel.Specifications.Specification`1": {
+        "System.Boolean EricksonLopez.SharedKernel.Specifications.Specification`1::IsSatisfiedBy(T)": {
+          "Lines": {
+            "53": 43
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Specifications.Specification`1::Evaluate(T)": {
+          "Lines": {
+            "73": 28,
+            "77": 28,
+            "79": 28,
+            "80": 28
+          },
+          "Branches": [
+            {
+              "Line": 77,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 13
+            },
+            {
+              "Line": 77,
+              "Offset": 7,
+              "EndOffset": 26,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 15
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Specifications.Specification`1<T> EricksonLopez.SharedKernel.Specifications.Specification`1::And(EricksonLopez.SharedKernel.Specifications.Specification`1<T>)": {
+          "Lines": {
+            "88": 3
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Specifications.Specification`1<T> EricksonLopez.SharedKernel.Specifications.Specification`1::Or(EricksonLopez.SharedKernel.Specifications.Specification`1<T>)": {
+          "Lines": {
+            "94": 3
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Specifications.Specification`1<T> EricksonLopez.SharedKernel.Specifications.Specification`1::Not()": {
+          "Lines": {
+            "100": 3
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Specifications.Specification`1<T> EricksonLopez.SharedKernel.Specifications.Specification`1::op_BitwiseAnd(EricksonLopez.SharedKernel.Specifications.Specification`1<T>,EricksonLopez.SharedKernel.Specifications.Specification`1<T>)": {
+          "Lines": {
+            "105": 2
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Specifications.Specification`1<T> EricksonLopez.SharedKernel.Specifications.Specification`1::op_BitwiseOr(EricksonLopez.SharedKernel.Specifications.Specification`1<T>,EricksonLopez.SharedKernel.Specifications.Specification`1<T>)": {
+          "Lines": {
+            "108": 2
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Specifications.Specification`1<T> EricksonLopez.SharedKernel.Specifications.Specification`1::op_LogicalNot(EricksonLopez.SharedKernel.Specifications.Specification`1<T>)": {
+          "Lines": {
+            "111": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Specifications.AndSpecification`1": {
+        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>> EricksonLopez.SharedKernel.Specifications.AndSpecification`1::ToExpression()": {
+          "Lines": {
+            "124": 1,
+            "125": 1,
+            "126": 1,
+            "128": 1,
+            "130": 1,
+            "131": 1,
+            "133": 1,
+            "134": 1,
+            "136": 1,
+            "137": 1,
+            "138": 1
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Specifications.AndSpecification`1::Evaluate(T)": {
+          "Lines": {
+            "142": 5
+          },
+          "Branches": [
+            {
+              "Line": 142,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 142,
+              "Offset": 12,
+              "EndOffset": 28,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void EricksonLopez.SharedKernel.Specifications.AndSpecification`1::.ctor(EricksonLopez.SharedKernel.Specifications.Specification`1<T>,EricksonLopez.SharedKernel.Specifications.Specification`1<T>)": {
+          "Lines": {
+            "120": 3
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Specifications.OrSpecification`1": {
+        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>> EricksonLopez.SharedKernel.Specifications.OrSpecification`1::ToExpression()": {
+          "Lines": {
+            "150": 1,
+            "151": 1,
+            "152": 1,
+            "154": 1,
+            "156": 1,
+            "157": 1,
+            "159": 1,
+            "160": 1,
+            "162": 1,
+            "163": 1,
+            "164": 1
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Specifications.OrSpecification`1::Evaluate(T)": {
+          "Lines": {
+            "168": 6
+          },
+          "Branches": [
+            {
+              "Line": 168,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 168,
+              "Offset": 12,
+              "EndOffset": 28,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            }
+          ]
+        },
+        "System.Void EricksonLopez.SharedKernel.Specifications.OrSpecification`1::.ctor(EricksonLopez.SharedKernel.Specifications.Specification`1<T>,EricksonLopez.SharedKernel.Specifications.Specification`1<T>)": {
+          "Lines": {
+            "146": 3
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Specifications.NotSpecification`1": {
+        "System.Linq.Expressions.Expression`1<System.Func`2<T,System.Boolean>> EricksonLopez.SharedKernel.Specifications.NotSpecification`1::ToExpression()": {
+          "Lines": {
+            "175": 1,
+            "176": 1,
+            "177": 1,
+            "178": 1,
+            "179": 1
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Specifications.NotSpecification`1::Evaluate(T)": {
+          "Lines": {
+            "183": 4
+          },
+          "Branches": []
+        },
+        "System.Void EricksonLopez.SharedKernel.Specifications.NotSpecification`1::.ctor(EricksonLopez.SharedKernel.Specifications.Specification`1<T>)": {
+          "Lines": {
+            "172": 3
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Specifications.ReplaceExpressionVisitor": {
+        "System.Linq.Expressions.Expression EricksonLopez.SharedKernel.Specifications.ReplaceExpressionVisitor::Visit(System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "189": 14,
+            "190": 14,
+            "191": 4,
+            "193": 10,
+            "194": 14
+          },
+          "Branches": [
+            {
+              "Line": 190,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 190,
+              "Offset": 12,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 10
+            }
+          ]
+        },
+        "System.Void EricksonLopez.SharedKernel.Specifications.ReplaceExpressionVisitor::.ctor(System.Linq.Expressions.Expression,System.Linq.Expressions.Expression)": {
+          "Lines": {
+            "186": 4
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Results\\Error.cs": {
+      "EricksonLopez.SharedKernel.Results.Error": {
+        "System.String EricksonLopez.SharedKernel.Results.Error::get_Code()": {
+          "Lines": {
+            "46": 23
+          },
+          "Branches": []
+        },
+        "System.String EricksonLopez.SharedKernel.Results.Error::get_Description()": {
+          "Lines": {
+            "49": 8
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.ErrorType EricksonLopez.SharedKernel.Results.Error::get_Type()": {
+          "Lines": {
+            "52": 27
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IReadOnlyList`1<EricksonLopez.SharedKernel.Results.Error> EricksonLopez.SharedKernel.Results.Error::get_InnerErrors()": {
+          "Lines": {
+            "62": 18
+          },
+          "Branches": [
+            {
+              "Line": 62,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 62,
+              "Offset": 7,
+              "EndOffset": 15,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 16
+            }
+          ]
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Results.Error::get_HasInnerErrors()": {
+          "Lines": {
+            "67": 18
+          },
+          "Branches": [
+            {
+              "Line": 67,
+              "Offset": 8,
+              "EndOffset": 10,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 12
+            },
+            {
+              "Line": 67,
+              "Offset": 8,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Failure(System.String,System.String)": {
+          "Lines": {
+            "73": 23
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Failure(System.String,System.String,EricksonLopez.SharedKernel.Results.Error[])": {
+          "Lines": {
+            "77": 6
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Validation(System.String,System.String)": {
+          "Lines": {
+            "81": 56
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Validation(System.String,System.String,EricksonLopez.SharedKernel.Results.Error[])": {
+          "Lines": {
+            "85": 4
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::NotFound(System.String,System.String)": {
+          "Lines": {
+            "89": 18
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::NotFound(System.String,System.String,EricksonLopez.SharedKernel.Results.Error[])": {
+          "Lines": {
+            "93": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Conflict(System.String,System.String)": {
+          "Lines": {
+            "97": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Conflict(System.String,System.String,EricksonLopez.SharedKernel.Results.Error[])": {
+          "Lines": {
+            "101": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Unauthorized(System.String,System.String)": {
+          "Lines": {
+            "105": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Unauthorized(System.String,System.String,EricksonLopez.SharedKernel.Results.Error[])": {
+          "Lines": {
+            "109": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Forbidden(System.String,System.String)": {
+          "Lines": {
+            "113": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Forbidden(System.String,System.String,EricksonLopez.SharedKernel.Results.Error[])": {
+          "Lines": {
+            "117": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Unavailable(System.String,System.String)": {
+          "Lines": {
+            "121": 5
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Unavailable(System.String,System.String,EricksonLopez.SharedKernel.Results.Error[])": {
+          "Lines": {
+            "125": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Unexpected(System.String,System.String)": {
+          "Lines": {
+            "129": 6
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Error::Unexpected(System.String,System.String,EricksonLopez.SharedKernel.Results.Error[])": {
+          "Lines": {
+            "133": 1
+          },
+          "Branches": []
+        },
+        "System.String EricksonLopez.SharedKernel.Results.Error::ToString()": {
+          "Lines": {
+            "136": 4,
+            "137": 4,
+            "138": 4,
+            "139": 1,
+            "140": 4,
+            "141": 4
+          },
+          "Branches": [
+            {
+              "Line": 138,
+              "Offset": 107,
+              "EndOffset": 109,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 138,
+              "Offset": 107,
+              "EndOffset": 178,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void EricksonLopez.SharedKernel.Results.Error::.ctor(System.String,System.String,EricksonLopez.SharedKernel.Results.ErrorType,System.Collections.Generic.IReadOnlyList`1<EricksonLopez.SharedKernel.Results.Error>)": {
+          "Lines": {
+            "37": 128,
+            "38": 128,
+            "39": 128,
+            "40": 128,
+            "41": 128,
+            "42": 128,
+            "43": 128
+          },
+          "Branches": [
+            {
+              "Line": 42,
+              "Offset": 32,
+              "EndOffset": 34,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 16
+            },
+            {
+              "Line": 42,
+              "Offset": 32,
+              "EndOffset": 44,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 112
+            },
+            {
+              "Line": 42,
+              "Offset": 42,
+              "EndOffset": 44,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 42,
+              "Offset": 42,
+              "EndOffset": 47,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 15
+            }
+          ]
+        },
+        "System.Void EricksonLopez.SharedKernel.Results.Error::.cctor()": {
+          "Lines": {
+            "33": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Results\\Result.cs": {
+      "EricksonLopez.SharedKernel.Results.Result": {
+        "System.Boolean EricksonLopez.SharedKernel.Results.Result::get_IsSuccess()": {
+          "Lines": {
+            "44": 361
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Results.Result::get_IsFailure()": {
+          "Lines": {
+            "45": 153
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Error EricksonLopez.SharedKernel.Results.Result::get_Error()": {
+          "Lines": {
+            "46": 109
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::Success()": {
+          "Lines": {
+            "52": 25
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::Failure(EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "53": 26
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result::Success(TValue)": {
+          "Lines": {
+            "55": 86
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result::Failure(EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "56": 79
+          },
+          "Branches": []
+        },
+        "TOut EricksonLopez.SharedKernel.Results.Result::Match(System.Func`1<TOut>,System.Func`2<EricksonLopez.SharedKernel.Results.Error,TOut>)": {
+          "Lines": {
+            "71": 6
+          },
+          "Branches": [
+            {
+              "Line": 71,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 71,
+              "Offset": 6,
+              "EndOffset": 22,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::Tap(System.Action)": {
+          "Lines": {
+            "80": 6,
+            "81": 9,
+            "82": 6,
+            "83": 6
+          },
+          "Branches": [
+            {
+              "Line": 81,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 81,
+              "Offset": 9,
+              "EndOffset": 18,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::TapError(System.Action`1<EricksonLopez.SharedKernel.Results.Error>)": {
+          "Lines": {
+            "90": 6,
+            "91": 9,
+            "92": 6,
+            "93": 6
+          },
+          "Branches": [
+            {
+              "Line": 91,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 91,
+              "Offset": 9,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::Ensure(System.Func`1<System.Boolean>,EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "102": 9,
+            "103": 12,
+            "104": 6,
+            "105": 9
+          },
+          "Branches": [
+            {
+              "Line": 103,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 103,
+              "Offset": 9,
+              "EndOffset": 15,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            },
+            {
+              "Line": 104,
+              "Offset": 21,
+              "EndOffset": 23,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            },
+            {
+              "Line": 104,
+              "Offset": 21,
+              "EndOffset": 31,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::Finally(System.Action`1<EricksonLopez.SharedKernel.Results.Result>)": {
+          "Lines": {
+            "114": 6,
+            "115": 6,
+            "116": 6,
+            "117": 6
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::Try(System.Action,System.Func`2<System.Exception,EricksonLopez.SharedKernel.Results.Error>)": {
+          "Lines": {
+            "132": 2,
+            "134": 2,
+            "135": 2,
+            "136": 1,
+            "138": 1,
+            "139": 1,
+            "140": 1,
+            "142": 2
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<T> EricksonLopez.SharedKernel.Results.Result::Try(System.Func`1<T>,System.Func`2<System.Exception,EricksonLopez.SharedKernel.Results.Error>)": {
+          "Lines": {
+            "155": 2,
+            "157": 2,
+            "158": 2,
+            "160": 1,
+            "161": 1,
+            "162": 1,
+            "164": 2
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::Combine(EricksonLopez.SharedKernel.Results.Result[])": {
+          "Lines": {
+            "173": 4,
+            "174": 4,
+            "176": 30,
+            "177": 9,
+            "178": 9,
+            "179": 3,
+            "180": 3,
+            "181": 3,
+            "182": 3,
+            "183": 9,
+            "185": 4,
+            "186": 2,
+            "188": 2,
+            "189": 2,
+            "190": 2,
+            "191": 2,
+            "192": 2,
+            "193": 2,
+            "194": 4
+          },
+          "Branches": [
+            {
+              "Line": 176,
+              "Offset": 60,
+              "EndOffset": 10,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 9
+            },
+            {
+              "Line": 178,
+              "Offset": 25,
+              "EndOffset": 27,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 180,
+              "Offset": 29,
+              "EndOffset": 31,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 180,
+              "Offset": 29,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 178,
+              "Offset": 25,
+              "EndOffset": 51,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            },
+            {
+              "Line": 176,
+              "Offset": 60,
+              "EndOffset": 62,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 4
+            },
+            {
+              "Line": 185,
+              "Offset": 70,
+              "EndOffset": 72,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 185,
+              "Offset": 70,
+              "EndOffset": 81,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 2
+            },
+            {
+              "Line": 188,
+              "Offset": 88,
+              "EndOffset": 90,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 188,
+              "Offset": 88,
+              "EndOffset": 157,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 1
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<System.Collections.Generic.IReadOnlyList`1<T>> EricksonLopez.SharedKernel.Results.Result::Combine(EricksonLopez.SharedKernel.Results.Result`1<T>[])": {
+          "Lines": {
+            "201": 4,
+            "202": 4,
+            "203": 4,
+            "205": 30,
+            "206": 9,
+            "207": 9,
+            "208": 3,
+            "209": 3,
+            "210": 3,
+            "211": 3,
+            "213": 6,
+            "214": 6,
+            "215": 6,
+            "216": 9,
+            "218": 4,
+            "219": 2,
+            "221": 2,
+            "222": 2,
+            "223": 2,
+            "224": 2,
+            "225": 2,
+            "226": 2,
+            "227": 4
+          },
+          "Branches": [
+            {
+              "Line": 205,
+              "Offset": 90,
+              "EndOffset": 19,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 9
+            },
+            {
+              "Line": 207,
+              "Offset": 36,
+              "EndOffset": 38,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 209,
+              "Offset": 40,
+              "EndOffset": 42,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 209,
+              "Offset": 40,
+              "EndOffset": 48,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 207,
+              "Offset": 36,
+              "EndOffset": 65,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            },
+            {
+              "Line": 205,
+              "Offset": 90,
+              "EndOffset": 92,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 4
+            },
+            {
+              "Line": 218,
+              "Offset": 100,
+              "EndOffset": 102,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 218,
+              "Offset": 100,
+              "EndOffset": 117,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 2
+            },
+            {
+              "Line": 221,
+              "Offset": 124,
+              "EndOffset": 126,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 221,
+              "Offset": 124,
+              "EndOffset": 193,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 1
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<System.ValueTuple`2<T1,T2>> EricksonLopez.SharedKernel.Results.Result::Combine(EricksonLopez.SharedKernel.Results.Result`1<T1>,EricksonLopez.SharedKernel.Results.Result`1<T2>)": {
+          "Lines": {
+            "233": 5,
+            "234": 5,
+            "235": 1,
+            "237": 4,
+            "238": 6,
+            "239": 7,
+            "241": 4,
+            "242": 4,
+            "243": 4,
+            "244": 4,
+            "245": 4,
+            "246": 4,
+            "247": 5
+          },
+          "Branches": [
+            {
+              "Line": 234,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 234,
+              "Offset": 7,
+              "EndOffset": 17,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 234,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 234,
+              "Offset": 20,
+              "EndOffset": 50,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 4
+            },
+            {
+              "Line": 238,
+              "Offset": 64,
+              "EndOffset": 66,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 238,
+              "Offset": 64,
+              "EndOffset": 79,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 239,
+              "Offset": 89,
+              "EndOffset": 91,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 3
+            },
+            {
+              "Line": 239,
+              "Offset": 89,
+              "EndOffset": 104,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            },
+            {
+              "Line": 241,
+              "Offset": 111,
+              "EndOffset": 113,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 241,
+              "Offset": 111,
+              "EndOffset": 180,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 3
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<System.ValueTuple`3<T1,T2,T3>> EricksonLopez.SharedKernel.Results.Result::Combine(EricksonLopez.SharedKernel.Results.Result`1<T1>,EricksonLopez.SharedKernel.Results.Result`1<T2>,EricksonLopez.SharedKernel.Results.Result`1<T3>)": {
+          "Lines": {
+            "254": 5,
+            "255": 5,
+            "256": 1,
+            "258": 4,
+            "259": 6,
+            "260": 6,
+            "261": 6,
+            "263": 4,
+            "264": 4,
+            "265": 4,
+            "266": 4,
+            "267": 4,
+            "268": 4,
+            "269": 5
+          },
+          "Branches": [
+            {
+              "Line": 255,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 255,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 255,
+              "Offset": 7,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 255,
+              "Offset": 15,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            },
+            {
+              "Line": 255,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 255,
+              "Offset": 28,
+              "EndOffset": 64,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 4
+            },
+            {
+              "Line": 259,
+              "Offset": 78,
+              "EndOffset": 80,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 259,
+              "Offset": 78,
+              "EndOffset": 93,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 2
+            },
+            {
+              "Line": 260,
+              "Offset": 103,
+              "EndOffset": 105,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 2
+            },
+            {
+              "Line": 260,
+              "Offset": 103,
+              "EndOffset": 118,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 2
+            },
+            {
+              "Line": 261,
+              "Offset": 128,
+              "EndOffset": 130,
+              "Path": 0,
+              "Ordinal": 10,
+              "Hits": 2
+            },
+            {
+              "Line": 261,
+              "Offset": 128,
+              "EndOffset": 143,
+              "Path": 1,
+              "Ordinal": 11,
+              "Hits": 2
+            },
+            {
+              "Line": 263,
+              "Offset": 150,
+              "EndOffset": 152,
+              "Path": 0,
+              "Ordinal": 12,
+              "Hits": 1
+            },
+            {
+              "Line": 263,
+              "Offset": 150,
+              "EndOffset": 219,
+              "Path": 1,
+              "Ordinal": 13,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Results.Result::TryGetError(EricksonLopez.SharedKernel.Results.Error&)": {
+          "Lines": {
+            "283": 2,
+            "284": 2,
+            "285": 2,
+            "286": 2
+          },
+          "Branches": [
+            {
+              "Line": 284,
+              "Offset": 8,
+              "EndOffset": 10,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 284,
+              "Offset": 8,
+              "EndOffset": 13,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::MapError(System.Func`2<EricksonLopez.SharedKernel.Results.Error,EricksonLopez.SharedKernel.Results.Error>)": {
+          "Lines": {
+            "301": 6
+          },
+          "Branches": [
+            {
+              "Line": 301,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 301,
+              "Offset": 6,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result::op_Implicit(EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "305": 1
+          },
+          "Branches": []
+        },
+        "System.Void EricksonLopez.SharedKernel.Results.Result::.ctor(System.Boolean,EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "32": 196,
+            "33": 196,
+            "34": 196,
+            "35": 1,
+            "37": 195,
+            "38": 1,
+            "40": 194,
+            "41": 194,
+            "42": 194
+          },
+          "Branches": [
+            {
+              "Line": 34,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 89
+            },
+            {
+              "Line": 34,
+              "Offset": 9,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 107
+            },
+            {
+              "Line": 34,
+              "Offset": 27,
+              "EndOffset": 29,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 34,
+              "Offset": 27,
+              "EndOffset": 40,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 195
+            },
+            {
+              "Line": 37,
+              "Offset": 41,
+              "EndOffset": 43,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 107
+            },
+            {
+              "Line": 37,
+              "Offset": 41,
+              "EndOffset": 56,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 88
+            },
+            {
+              "Line": 37,
+              "Offset": 59,
+              "EndOffset": 61,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 37,
+              "Offset": 59,
+              "EndOffset": 72,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 194
+            }
+          ]
+        },
+        "System.Void EricksonLopez.SharedKernel.Results.Result::.cctor()": {
+          "Lines": {
+            "50": 1
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.Result`1": {
+        "TValue EricksonLopez.SharedKernel.Results.Result`1::get_Value()": {
+          "Lines": {
+            "343": 80,
+            "344": 80,
+            "345": 80,
+            "346": 80
+          },
+          "Branches": [
+            {
+              "Line": 343,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 343,
+              "Offset": 6,
+              "EndOffset": 58,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 79
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::Success(TValue)": {
+          "Lines": {
+            "350": 87
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::Failure(EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "351": 80
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TNext> EricksonLopez.SharedKernel.Results.Result`1::Map(System.Func`2<TValue,TNext>)": {
+          "Lines": {
+            "360": 10
+          },
+          "Branches": [
+            {
+              "Line": 360,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 5
+            },
+            {
+              "Line": 360,
+              "Offset": 6,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TNext> EricksonLopez.SharedKernel.Results.Result`1::Bind(System.Func`2<TValue,EricksonLopez.SharedKernel.Results.Result`1<TNext>>)": {
+          "Lines": {
+            "367": 6
+          },
+          "Branches": [
+            {
+              "Line": 367,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 367,
+              "Offset": 6,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            }
+          ]
+        },
+        "TOut EricksonLopez.SharedKernel.Results.Result`1::Match(System.Func`2<TValue,TOut>,System.Func`2<EricksonLopez.SharedKernel.Results.Error,TOut>)": {
+          "Lines": {
+            "382": 7
+          },
+          "Branches": [
+            {
+              "Line": 382,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 382,
+              "Offset": 6,
+              "EndOffset": 22,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::Tap(System.Action`1<TValue>)": {
+          "Lines": {
+            "391": 8,
+            "392": 13,
+            "393": 8,
+            "394": 8
+          },
+          "Branches": [
+            {
+              "Line": 392,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 5
+            },
+            {
+              "Line": 392,
+              "Offset": 9,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::TapError(System.Action`1<EricksonLopez.SharedKernel.Results.Error>)": {
+          "Lines": {
+            "401": 6,
+            "402": 10,
+            "403": 6,
+            "404": 6
+          },
+          "Branches": [
+            {
+              "Line": 402,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 402,
+              "Offset": 9,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::Ensure(System.Func`2<TValue,System.Boolean>,EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "419": 11,
+            "420": 12,
+            "421": 10,
+            "422": 11
+          },
+          "Branches": [
+            {
+              "Line": 420,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 420,
+              "Offset": 9,
+              "EndOffset": 15,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 10
+            },
+            {
+              "Line": 421,
+              "Offset": 27,
+              "EndOffset": 29,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 5
+            },
+            {
+              "Line": 421,
+              "Offset": 27,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 5
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::Recover(System.Func`2<EricksonLopez.SharedKernel.Results.Error,EricksonLopez.SharedKernel.Results.Result`1<TValue>>)": {
+          "Lines": {
+            "437": 8
+          },
+          "Branches": [
+            {
+              "Line": 437,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 437,
+              "Offset": 6,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::Finally(System.Action`1<EricksonLopez.SharedKernel.Results.Result`1<TValue>>)": {
+          "Lines": {
+            "446": 5,
+            "447": 5,
+            "448": 5,
+            "449": 5
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Results.Result`1::TryGetValue(TValue&)": {
+          "Lines": {
+            "463": 3,
+            "464": 3,
+            "465": 3,
+            "466": 3
+          },
+          "Branches": [
+            {
+              "Line": 464,
+              "Offset": 8,
+              "EndOffset": 10,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 464,
+              "Offset": 8,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Results.Result`1::TryGetError(EricksonLopez.SharedKernel.Results.Error&)": {
+          "Lines": {
+            "472": 2,
+            "473": 2,
+            "474": 2,
+            "475": 2
+          },
+          "Branches": [
+            {
+              "Line": 473,
+              "Offset": 8,
+              "EndOffset": 10,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 473,
+              "Offset": 8,
+              "EndOffset": 13,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "TValue EricksonLopez.SharedKernel.Results.Result`1::GetValueOrDefault(TValue)": {
+          "Lines": {
+            "490": 2
+          },
+          "Branches": [
+            {
+              "Line": 490,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 490,
+              "Offset": 6,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "TValue EricksonLopez.SharedKernel.Results.Result`1::GetValueOrDefault(System.Func`2<EricksonLopez.SharedKernel.Results.Error,TValue>)": {
+          "Lines": {
+            "502": 2
+          },
+          "Branches": [
+            {
+              "Line": 502,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 502,
+              "Offset": 6,
+              "EndOffset": 22,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::MapError(System.Func`2<EricksonLopez.SharedKernel.Results.Error,EricksonLopez.SharedKernel.Results.Error>)": {
+          "Lines": {
+            "517": 7
+          },
+          "Branches": [
+            {
+              "Line": 517,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 517,
+              "Offset": 6,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result EricksonLopez.SharedKernel.Results.Result`1::ToResult()": {
+          "Lines": {
+            "533": 2
+          },
+          "Branches": [
+            {
+              "Line": 533,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 533,
+              "Offset": 6,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void EricksonLopez.SharedKernel.Results.Result`1::Deconstruct(System.Boolean&,TValue&,EricksonLopez.SharedKernel.Results.Error&)": {
+          "Lines": {
+            "547": 3,
+            "548": 3,
+            "549": 3,
+            "550": 3,
+            "551": 3
+          },
+          "Branches": [
+            {
+              "Line": 549,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 549,
+              "Offset": 16,
+              "EndOffset": 29,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::op_Implicit(TValue)": {
+          "Lines": {
+            "555": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Results.Result`1<TValue> EricksonLopez.SharedKernel.Results.Result`1::op_Implicit(EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "556": 1
+          },
+          "Branches": []
+        },
+        "System.Void EricksonLopez.SharedKernel.Results.Result`1::.ctor(TValue)": {
+          "Lines": {
+            "333": 87,
+            "334": 87
+          },
+          "Branches": []
+        },
+        "System.Void EricksonLopez.SharedKernel.Results.Result`1::.ctor(EricksonLopez.SharedKernel.Results.Error)": {
+          "Lines": {
+            "336": 80,
+            "337": 80
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Results\\ResultExtensions.cs": {
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Bind>d__2`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Bind>d__2`2::MoveNext()": {
+          "Lines": {
+            "52": 1,
+            "53": 1,
+            "54": 1,
+            "55": 1
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Bind>d__22`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Bind>d__22`2::MoveNext()": {
+          "Lines": {
+            "244": 2,
+            "245": 2,
+            "246": 2,
+            "247": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Bind>d__23`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Bind>d__23`2::MoveNext()": {
+          "Lines": {
+            "252": 2,
+            "253": 2,
+            "254": 3,
+            "255": 1,
+            "256": 2
+          },
+          "Branches": [
+            {
+              "Line": 254,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 254,
+              "Offset": 171,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Bind>d__3`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Bind>d__3`2::MoveNext()": {
+          "Lines": {
+            "60": 3,
+            "61": 3,
+            "62": 4,
+            "63": 2,
+            "64": 3
+          },
+          "Branches": [
+            {
+              "Line": 62,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 62,
+              "Offset": 171,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__17": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__17::MoveNext()": {
+          "Lines": {
+            "198": 3,
+            "199": 3,
+            "200": 3,
+            "201": 3
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__28`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__28`1::MoveNext()": {
+          "Lines": {
+            "295": 3,
+            "296": 3,
+            "297": 3,
+            "298": 3
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__29`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__29`1::MoveNext()": {
+          "Lines": {
+            "303": 3,
+            "304": 3,
+            "305": 4,
+            "306": 2,
+            "307": 2,
+            "308": 2,
+            "309": 3
+          },
+          "Branches": [
+            {
+              "Line": 305,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 305,
+              "Offset": 171,
+              "EndOffset": 185,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 306,
+              "Offset": 326,
+              "EndOffset": 328,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 306,
+              "Offset": 326,
+              "EndOffset": 341,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__37": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__37::MoveNext()": {
+          "Lines": {
+            "376": 3,
+            "377": 3,
+            "378": 3,
+            "379": 3
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__8`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__8`1::MoveNext()": {
+          "Lines": {
+            "111": 4,
+            "112": 4,
+            "113": 4,
+            "114": 4
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__9`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Ensure>d__9`1::MoveNext()": {
+          "Lines": {
+            "119": 3,
+            "120": 3,
+            "121": 4,
+            "122": 2,
+            "123": 2,
+            "124": 2,
+            "125": 3
+          },
+          "Branches": [
+            {
+              "Line": 121,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 121,
+              "Offset": 171,
+              "EndOffset": 185,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 122,
+              "Offset": 322,
+              "EndOffset": 324,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 122,
+              "Offset": 322,
+              "EndOffset": 337,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Finally>d__13`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Finally>d__13`1::MoveNext()": {
+          "Lines": {
+            "161": 1,
+            "162": 1,
+            "163": 1,
+            "164": 1
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Finally>d__19": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Finally>d__19::MoveNext()": {
+          "Lines": {
+            "214": 2,
+            "215": 2,
+            "216": 2,
+            "217": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Finally>d__33`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Finally>d__33`1::MoveNext()": {
+          "Lines": {
+            "339": 2,
+            "340": 2,
+            "341": 2,
+            "342": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Finally>d__39": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Finally>d__39::MoveNext()": {
+          "Lines": {
+            "392": 2,
+            "393": 2,
+            "394": 2,
+            "395": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Map>d__0`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Map>d__0`2::MoveNext()": {
+          "Lines": {
+            "32": 4,
+            "33": 4,
+            "34": 4,
+            "35": 4
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Map>d__1`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Map>d__1`2::MoveNext()": {
+          "Lines": {
+            "40": 2,
+            "41": 2,
+            "42": 3,
+            "43": 1,
+            "44": 1,
+            "45": 2
+          },
+          "Branches": [
+            {
+              "Line": 42,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 42,
+              "Offset": 171,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Map>d__20`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Map>d__20`2::MoveNext()": {
+          "Lines": {
+            "226": 2,
+            "227": 2,
+            "228": 2,
+            "229": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Map>d__21`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Map>d__21`2::MoveNext()": {
+          "Lines": {
+            "234": 2,
+            "235": 2,
+            "236": 3,
+            "237": 1,
+            "238": 1,
+            "239": 2
+          },
+          "Branches": [
+            {
+              "Line": 236,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 236,
+              "Offset": 171,
+              "EndOffset": 195,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<MapError>d__12`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<MapError>d__12`1::MoveNext()": {
+          "Lines": {
+            "151": 3,
+            "152": 3,
+            "153": 3,
+            "154": 3
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<MapError>d__18": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<MapError>d__18::MoveNext()": {
+          "Lines": {
+            "206": 2,
+            "207": 2,
+            "208": 2,
+            "209": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<MapError>d__32`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<MapError>d__32`1::MoveNext()": {
+          "Lines": {
+            "331": 2,
+            "332": 2,
+            "333": 2,
+            "334": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<MapError>d__38": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<MapError>d__38::MoveNext()": {
+          "Lines": {
+            "384": 2,
+            "385": 2,
+            "386": 2,
+            "387": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Match>d__14`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Match>d__14`1::MoveNext()": {
+          "Lines": {
+            "174": 2,
+            "175": 2,
+            "176": 2,
+            "177": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Match>d__24`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Match>d__24`2::MoveNext()": {
+          "Lines": {
+            "262": 2,
+            "263": 2,
+            "264": 2,
+            "265": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Match>d__34`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Match>d__34`1::MoveNext()": {
+          "Lines": {
+            "352": 2,
+            "353": 2,
+            "354": 2,
+            "355": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Match>d__4`2": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Match>d__4`2::MoveNext()": {
+          "Lines": {
+            "72": 2,
+            "73": 2,
+            "74": 2,
+            "75": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Recover>d__10`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Recover>d__10`1::MoveNext()": {
+          "Lines": {
+            "132": 3,
+            "133": 3,
+            "134": 3,
+            "135": 3
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Recover>d__11`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Recover>d__11`1::MoveNext()": {
+          "Lines": {
+            "140": 2,
+            "141": 2,
+            "142": 3,
+            "143": 1,
+            "144": 2
+          },
+          "Branches": [
+            {
+              "Line": 142,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 142,
+              "Offset": 171,
+              "EndOffset": 185,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Recover>d__30`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Recover>d__30`1::MoveNext()": {
+          "Lines": {
+            "314": 2,
+            "315": 2,
+            "316": 2,
+            "317": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Recover>d__31`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Recover>d__31`1::MoveNext()": {
+          "Lines": {
+            "322": 3,
+            "323": 3,
+            "324": 5,
+            "325": 1,
+            "326": 3
+          },
+          "Branches": [
+            {
+              "Line": 324,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 324,
+              "Offset": 171,
+              "EndOffset": 185,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__15": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__15::MoveNext()": {
+          "Lines": {
+            "182": 2,
+            "183": 2,
+            "184": 2,
+            "185": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__25`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__25`1::MoveNext()": {
+          "Lines": {
+            "270": 2,
+            "271": 2,
+            "272": 2,
+            "273": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__26`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__26`1::MoveNext()": {
+          "Lines": {
+            "278": 2,
+            "279": 2,
+            "280": 3,
+            "281": 2,
+            "282": 2
+          },
+          "Branches": [
+            {
+              "Line": 280,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 280,
+              "Offset": 171,
+              "EndOffset": 300,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__35": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__35::MoveNext()": {
+          "Lines": {
+            "360": 2,
+            "361": 2,
+            "362": 2,
+            "363": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__5`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__5`1::MoveNext()": {
+          "Lines": {
+            "82": 2,
+            "83": 2,
+            "84": 2,
+            "85": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__6`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<Tap>d__6`1::MoveNext()": {
+          "Lines": {
+            "90": 1,
+            "91": 1,
+            "92": 2,
+            "93": 1,
+            "94": 1
+          },
+          "Branches": [
+            {
+              "Line": 92,
+              "Offset": 171,
+              "EndOffset": 173,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 92,
+              "Offset": 171,
+              "EndOffset": 296,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<TapError>d__16": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<TapError>d__16::MoveNext()": {
+          "Lines": {
+            "190": 2,
+            "191": 2,
+            "192": 2,
+            "193": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<TapError>d__27`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<TapError>d__27`1::MoveNext()": {
+          "Lines": {
+            "287": 2,
+            "288": 2,
+            "289": 2,
+            "290": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<TapError>d__36": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<TapError>d__36::MoveNext()": {
+          "Lines": {
+            "368": 2,
+            "369": 2,
+            "370": 2,
+            "371": 2
+          },
+          "Branches": []
+        }
+      },
+      "EricksonLopez.SharedKernel.Results.ResultExtensions/<TapError>d__7`1": {
+        "System.Void EricksonLopez.SharedKernel.Results.ResultExtensions/<TapError>d__7`1::MoveNext()": {
+          "Lines": {
+            "101": 1,
+            "102": 1,
+            "103": 1,
+            "104": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Pagination\\PagedList.cs": {
+      "EricksonLopez.SharedKernel.Pagination.PagedList`1": {
+        "System.Collections.Generic.IReadOnlyList`1<T> EricksonLopez.SharedKernel.Pagination.PagedList`1::get_Items()": {
+          "Lines": {
+            "33": 3
+          },
+          "Branches": []
+        },
+        "System.Int32 EricksonLopez.SharedKernel.Pagination.PagedList`1::get_TotalCount()": {
+          "Lines": {
+            "36": 10
+          },
+          "Branches": []
+        },
+        "System.Int32 EricksonLopez.SharedKernel.Pagination.PagedList`1::get_Page()": {
+          "Lines": {
+            "39": 11
+          },
+          "Branches": []
+        },
+        "System.Int32 EricksonLopez.SharedKernel.Pagination.PagedList`1::get_PageSize()": {
+          "Lines": {
+            "42": 16
+          },
+          "Branches": []
+        },
+        "System.Int32 EricksonLopez.SharedKernel.Pagination.PagedList`1::get_TotalPages()": {
+          "Lines": {
+            "45": 7,
+            "46": 7,
+            "47": 7
+          },
+          "Branches": [
+            {
+              "Line": 45,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 45,
+              "Offset": 7,
+              "EndOffset": 12,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            }
+          ]
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Pagination.PagedList`1::get_HasPreviousPage()": {
+          "Lines": {
+            "50": 4
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Pagination.PagedList`1::get_HasNextPage()": {
+          "Lines": {
+            "53": 4
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Pagination.PagedList`1<T> EricksonLopez.SharedKernel.Pagination.PagedList`1::Create(System.Collections.Generic.IEnumerable`1<T>,System.Int32,EricksonLopez.SharedKernel.Pagination.PaginationParameters)": {
+          "Lines": {
+            "67": 6,
+            "68": 7,
+            "69": 6,
+            "71": 4,
+            "72": 4
+          },
+          "Branches": [
+            {
+              "Line": 68,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 68,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            },
+            {
+              "Line": 69,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 69,
+              "Offset": 26,
+              "EndOffset": 39,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 4
+            }
+          ]
+        },
+        "EricksonLopez.SharedKernel.Pagination.PagedList`1<T> EricksonLopez.SharedKernel.Pagination.PagedList`1::Empty(EricksonLopez.SharedKernel.Pagination.PaginationParameters)": {
+          "Lines": {
+            "78": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Pagination.PagedList`1<TResult> EricksonLopez.SharedKernel.Pagination.PagedList`1::Map(System.Func`2<T,TResult>)": {
+          "Lines": {
+            "84": 1
+          },
+          "Branches": []
+        },
+        "System.Void EricksonLopez.SharedKernel.Pagination.PagedList`1::.ctor(System.Collections.Generic.IEnumerable`1<T>,System.Int32,System.Int32,System.Int32)": {
+          "Lines": {
+            "20": 7,
+            "21": 7,
+            "22": 7,
+            "23": 7,
+            "24": 7,
+            "25": 7,
+            "26": 7,
+            "27": 7,
+            "28": 7,
+            "29": 7,
+            "30": 7
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Pagination\\PaginationParameters.cs": {
+      "EricksonLopez.SharedKernel.Pagination.PaginationParameters": {
+        "System.Int32 EricksonLopez.SharedKernel.Pagination.PaginationParameters::get_Page()": {
+          "Lines": {
+            "19": 20
+          },
+          "Branches": []
+        },
+        "System.Int32 EricksonLopez.SharedKernel.Pagination.PaginationParameters::get_PageSize()": {
+          "Lines": {
+            "23": 7
+          },
+          "Branches": []
+        },
+        "System.Void modreq(System.Runtime.CompilerServices.IsExternalInit) EricksonLopez.SharedKernel.Pagination.PaginationParameters::set_PageSize(System.Int32)": {
+          "Lines": {
+            "24": 6
+          },
+          "Branches": []
+        },
+        "System.Int32 EricksonLopez.SharedKernel.Pagination.PaginationParameters::get_Skip()": {
+          "Lines": {
+            "30": 1
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Pagination.PaginationParameters EricksonLopez.SharedKernel.Pagination.PaginationParameters::get_Default()": {
+          "Lines": {
+            "35": 2
+          },
+          "Branches": []
+        },
+        "EricksonLopez.SharedKernel.Pagination.PaginationParameters EricksonLopez.SharedKernel.Pagination.PaginationParameters::Of(System.Int32,System.Int32)": {
+          "Lines": {
+            "40": 6,
+            "41": 6,
+            "42": 6,
+            "43": 6,
+            "44": 6
+          },
+          "Branches": []
+        },
+        "System.Void EricksonLopez.SharedKernel.Pagination.PaginationParameters::.ctor()": {
+          "Lines": {
+            "17": 8
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Domain\\AggregateRoot.cs": {
+      "EricksonLopez.SharedKernel.Domain.AggregateRoot`1": {
+        "System.Collections.Generic.IReadOnlyList`1<EricksonLopez.SharedKernel.Domain.IDomainEvent> EricksonLopez.SharedKernel.Domain.AggregateRoot`1::get_DomainEvents()": {
+          "Lines": {
+            "40": 3
+          },
+          "Branches": []
+        },
+        "System.Void EricksonLopez.SharedKernel.Domain.AggregateRoot`1::RaiseDomainEvent(EricksonLopez.SharedKernel.Domain.IDomainEvent)": {
+          "Lines": {
+            "49": 8,
+            "50": 9,
+            "51": 7,
+            "52": 7
+          },
+          "Branches": [
+            {
+              "Line": 50,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 50,
+              "Offset": 7,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 7
+            }
+          ]
+        },
+        "System.Void EricksonLopez.SharedKernel.Domain.AggregateRoot`1::ClearDomainEvents()": {
+          "Lines": {
+            "58": 1
+          },
+          "Branches": []
+        },
+        "System.Void EricksonLopez.SharedKernel.Domain.AggregateRoot`1::.ctor()": {
+          "Lines": {
+            "35": 7
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Domain\\Entity.cs": {
+      "EricksonLopez.SharedKernel.Domain.Entity`1": {
+        "TId EricksonLopez.SharedKernel.Domain.Entity`1::get_Id()": {
+          "Lines": {
+            "24": 45
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Domain.Entity`1::Equals(System.Object)": {
+          "Lines": {
+            "29": 13,
+            "30": 13,
+            "31": 4,
+            "33": 9,
+            "34": 2,
+            "36": 7,
+            "37": 7,
+            "38": 13
+          },
+          "Branches": [
+            {
+              "Line": 30,
+              "Offset": 2,
+              "EndOffset": 4,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 10
+            },
+            {
+              "Line": 30,
+              "Offset": 2,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 30,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 4
+            },
+            {
+              "Line": 30,
+              "Offset": 26,
+              "EndOffset": 32,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 9
+            },
+            {
+              "Line": 33,
+              "Offset": 38,
+              "EndOffset": 40,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 33,
+              "Offset": 38,
+              "EndOffset": 44,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 7
+            }
+          ]
+        },
+        "System.Int32 EricksonLopez.SharedKernel.Domain.Entity`1::GetHashCode()": {
+          "Lines": {
+            "40": 1
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Domain.Entity`1::op_Equality(EricksonLopez.SharedKernel.Domain.Entity`1<TId>,EricksonLopez.SharedKernel.Domain.Entity`1<TId>)": {
+          "Lines": {
+            "43": 8
+          },
+          "Branches": [
+            {
+              "Line": 43,
+              "Offset": 1,
+              "EndOffset": 3,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 43,
+              "Offset": 1,
+              "EndOffset": 9,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            }
+          ]
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Domain.Entity`1::op_Inequality(EricksonLopez.SharedKernel.Domain.Entity`1<TId>,EricksonLopez.SharedKernel.Domain.Entity`1<TId>)": {
+          "Lines": {
+            "46": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "D:\\DevData\\dotnet-shared-kernel\\src\\EricksonLopez.SharedKernel\\Domain\\ValueObject.cs": {
+      "EricksonLopez.SharedKernel.Domain.ValueObject": {
+        "System.Boolean EricksonLopez.SharedKernel.Domain.ValueObject::Equals(EricksonLopez.SharedKernel.Domain.ValueObject)": {
+          "Lines": {
+            "70": 8,
+            "71": 8,
+            "72": 2,
+            "74": 6,
+            "75": 8
+          },
+          "Branches": [
+            {
+              "Line": 71,
+              "Offset": 2,
+              "EndOffset": 4,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 6
+            },
+            {
+              "Line": 71,
+              "Offset": 2,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 71,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 71,
+              "Offset": 26,
+              "EndOffset": 32,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 6
+            }
+          ]
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Domain.ValueObject::Equals(System.Object)": {
+          "Lines": {
+            "78": 4
+          },
+          "Branches": [
+            {
+              "Line": 78,
+              "Offset": 8,
+              "EndOffset": 10,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 78,
+              "Offset": 8,
+              "EndOffset": 19,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Int32 EricksonLopez.SharedKernel.Domain.ValueObject::GetHashCode()": {
+          "Lines": {
+            "81": 2,
+            "82": 6
+          },
+          "Branches": []
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Domain.ValueObject::op_Equality(EricksonLopez.SharedKernel.Domain.ValueObject,EricksonLopez.SharedKernel.Domain.ValueObject)": {
+          "Lines": {
+            "85": 5
+          },
+          "Branches": [
+            {
+              "Line": 85,
+              "Offset": 1,
+              "EndOffset": 3,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 85,
+              "Offset": 1,
+              "EndOffset": 9,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Boolean EricksonLopez.SharedKernel.Domain.ValueObject::op_Inequality(EricksonLopez.SharedKernel.Domain.ValueObject,EricksonLopez.SharedKernel.Domain.ValueObject)": {
+          "Lines": {
+            "88": 1
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}

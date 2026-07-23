@@ -11,3 +11,6 @@ jobs:
     uses: ericksonlopezf/dotnet-shared-kernel/.github/workflows/dotnet-build-test.yml@main
     with:
       artifact-name: test-results
+    secrets:
+      SNK_KEY: ${{ secrets.SNK_KEY }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

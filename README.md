@@ -1,7 +1,9 @@
 # EricksonLopez.SharedKernel
 
 [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel?style=for-the-badge&logo=nuget&logoColor=white&color=512BD4)](https://www.nuget.org/packages/EricksonLopez.SharedKernel)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/EricksonLopez.SharedKernel?style=for-the-badge&logo=nuget&logoColor=white&color=004880)](https://www.nuget.org/packages/EricksonLopez.SharedKernel)
 [![CI](https://img.shields.io/github/actions/workflow/status/ericksonlopezf/dotnet-shared-kernel/ci.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/ericksonlopezf/dotnet-shared-kernel/actions)
+[![Coverage](https://codecov.io/gh/ericksonlopezf/dotnet-shared-kernel/graph/badge.svg)](https://codecov.io/gh/ericksonlopezf/dotnet-shared-kernel)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![.NET](https://img.shields.io/badge/.NET_10_%7C_Standard_2.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
 [![NativeAOT](https://img.shields.io/badge/NativeAOT-Compatible-brightgreen?style=for-the-badge)](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot)
@@ -16,6 +18,24 @@ A shared kernel for DDD-based .NET applications. Provides battle-tested abstract
 - 🚀 **NativeAOT + Trimming compatible** — `IsAotCompatible` and `IsTrimmable` enabled
 - ⚙️ **Async-first** — Full `Task<Result<T>>` and `ValueTask<Result<T>>` extension methods
 - 🧩 **No magic** — every abstraction is readable and debuggable
+
+---
+
+## Table of Contents
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+  - [Result Pattern](#result-pattern)
+  - [Error Types](#error-types)
+  - [AggregateRoot & Entity](#aggregateroot--entity)
+  - [ValueObject](#valueobject)
+  - [Specification Pattern](#specification-pattern)
+  - [Pagination](#pagination)
+- [API Reference](#api-reference)
+- [NativeAOT Compatibility](#nativeaot-compatibility)
+- [Part of the EricksonLopez Ecosystem](#part-of-the-ericksonlopez-ecosystem)
+- [Architecture Decisions & Guides](#architecture-decisions--guides)
+- [FAQ & Troubleshooting](#faq--troubleshooting)
+- [License](#license)
 
 ---
 
@@ -152,11 +172,17 @@ var (user, account) = Result.Combine(GetUser(id), GetAccount(id)).Value;
 // AggregateRoot — the only entry point for Domain Events
 public sealed class Order : AggregateRoot<Guid>
 {
-    public string Description { get; private set; } = string.Empty;
+    public string Description { get; private set; }
+
+    private Order(Guid id, string description)
+    {
+        Id = id;
+        Description = description;
+    }
 
     public static Order Create(Guid id, string description)
     {
-        var order = new Order { Id = id, Description = description };
+        var order = new Order(id, description);
         order.RaiseDomainEvent(new OrderCreated(id));
         return order;
     }
@@ -352,30 +378,74 @@ Composite specifications (And, Or, Not) are **automatically NativeAOT-safe** —
 
 ---
 
+## Performance Benchmarks
+
+The `SharedKernel` is strictly optimized for low latency and minimal allocations. We use `BenchmarkDotNet` to ensure the happy path is completely allocation-free (`0 bytes`).
+
+| Operation | Allocation | Note |
+|---|---|---|
+| `Result.Success()` | **0 B** | Cached static instance |
+| `Result.Failure()` | ~24 B | Exceptional path |
+| `ValueObject.Equals` (hot path) | **0 B** | When `Equals` is manually overridden (see ADR) |
+| `Specification.IsSatisfiedBy` | **0 B** | Cached compiled expression lock |
+
+For details, see [ADR-006: Performance Analysis](docs/decisions/ADR-006-performance-analysis.md).
+
+---
+
+## Samples
+
+Check the [samples/](samples) directory for working examples:
+
+- **EricksonLopez.SharedKernel.Sample**: Standard Web API project demonstrating the Result pattern and Specification pattern.
+- **EricksonLopez.SharedKernel.AotConsole**: A Native AOT console app demonstrating trimming and zero-reflection value objects.
+
+---
+
 ## Part of the EricksonLopez Ecosystem
 
 SharedKernel is the foundational layer of a modular .NET ecosystem:
 
-| Package | Description | Depends on SharedKernel |
-|---|---|---|
-| **SharedKernel** | DDD abstractions + Result pattern | — (this library) |
-| **DomainPrimitives** | Value Objects with Source Generators | ✅ |
-| **SqlBuilder** | SQL-first query builder for Dapper | ✅ |
-| **Outbox** | Transactional Messaging (Outbox + Inbox) | ✅ |
-| **Identity** | Enterprise Identity and Security | ✅ |
+| Package | Description | Depends on SharedKernel | Status |
+|---|---|---|---|
+| **SharedKernel** | DDD abstractions + Result pattern | — (this library) | ✅ Published |
+| **DomainPrimitives** | Value Objects with Source Generators | ✅ | 📋 Planned |
+| **SqlBuilder** | SQL-first query builder for Dapper | ✅ | 📋 Planned |
+| **Outbox** | Transactional Messaging (Outbox + Inbox) | ✅ | 📋 Planned |
 
 ---
 
-## Architecture Decisions
+## Architecture Decisions & Guides
 
-Design rationale is documented as ADRs in [`docs/decisions/`](docs/decisions/):
+Design rationale and guides are documented in the `docs` folder:
 
-- [0001: Value Object Boxing Acceptance](docs/decisions/0001-value-object-boxing.md)
-- [0002: Validation Error Design](docs/decisions/0002-validation-error-design.md)
-- [0003: Result Pattern Allocations Optimization](docs/decisions/0003-result-pattern-allocations.md)
+- 📖 **[Cookbook: Patterns and Examples](docs/Cookbook.md)**
+- 📖 **[Best Practices and Anti-Patterns](docs/BestPractices.md)**
+
+**Architectural Decision Records (ADRs):**
+- [ADR-001: Result Pattern](docs/decisions/ADR-001-result-pattern.md)
+- [ADR-002: Zero Functional Dependencies](docs/decisions/ADR-002-zero-functional-dependencies.md)
+- [ADR-003: Value Object Boxing Acceptance](docs/decisions/ADR-003-value-object-boxing.md)
+- [ADR-004: Validation Error Design](docs/decisions/ADR-004-validation-error-design.md)
+- [ADR-005: Result Pattern Allocations Optimization](docs/decisions/ADR-005-result-pattern-allocations.md)
+- [ADR-006: Performance Analysis](docs/decisions/ADR-006-performance-analysis.md)
+- [ADR-007: Native AOT Compatibility](docs/decisions/ADR-007-native-aot-compatibility.md)
 
 ---
 
 ## License
 
 MIT © [Erickson López](https://github.com/ericksonlopezf)
+
+---
+
+## FAQ & Troubleshooting
+
+**Q: Why is `Result` a class and not a `struct`?**
+A: `Result` is a class to provide inheritance (`Result<TValue> : Result`) and allow null-checks when used as a reference type. The allocations are minimal because `Result.Success()` uses a cached singleton and `Error` uses `IReadOnlyList<Error>?` which is null in the happy path.
+
+**Q: How do I handle multiple validation errors?**
+A: You can pass multiple inner errors to `Error.Validation` using the `params Error[] innerErrors` overload. See [Error Types](#error-types) for examples.
+
+**Q: I modified a `ToString()` method and my PR build failed with `VerifyException`. What should I do?**
+A: We use `Verify.Xunit` for snapshot testing. If you intentionally changed the output format, you must review the generated `.received.txt` file and rename it to `.verified.txt` to accept the new snapshot. See our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.

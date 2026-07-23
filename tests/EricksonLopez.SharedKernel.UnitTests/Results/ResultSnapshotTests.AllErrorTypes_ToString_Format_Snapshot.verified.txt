@@ -1,0 +1,8 @@
+﻿[Failure] Domain.Failure: Generic failure
+[Validation] Domain.Validation: Validation failed
+[NotFound] Domain.NotFound: Resource not found
+[Conflict] Domain.Conflict: State conflict
+[Unauthorized] Domain.Unauthorized: Auth required
+[Forbidden] Domain.Forbidden: Insufficient permissions
+[Unavailable] Domain.Unavailable: Service unavailable
+[Unexpected] Domain.Unexpected: Unexpected error

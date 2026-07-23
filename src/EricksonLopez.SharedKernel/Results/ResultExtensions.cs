@@ -1,3 +1,6 @@
+using System;
+using System.Threading.Tasks;
+
 namespace EricksonLopez.SharedKernel.Results;
 
 /// <summary>
@@ -103,6 +106,15 @@ public static class ResultExtensions
         return result.TapError(action);
     }
 
+    /// <summary>Executes an async side effect on failure.</summary>
+    public static async Task<Result<T>> TapError<T>(
+        this Task<Result<T>> resultTask, Func<Error, Task> action)
+    {
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailure) await action(result.Error).ConfigureAwait(false);
+        return result;
+    }
+
     // ── Ensure ────────────────────────────────────────────────────────────────
 
     /// <summary>Validates a condition on the success value.</summary>
@@ -190,6 +202,15 @@ public static class ResultExtensions
     {
         var result = await resultTask.ConfigureAwait(false);
         return result.TapError(onFailure);
+    }
+
+    /// <summary>Executes an async side effect on failure.</summary>
+    public static async Task<Result> TapError(
+        this Task<Result> resultTask, Func<Error, Task> onFailure)
+    {
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailure) await onFailure(result.Error).ConfigureAwait(false);
+        return result;
     }
 
     /// <summary>Validates a condition after success.</summary>
@@ -289,6 +310,15 @@ public static class ResultExtensions
         return result.TapError(action);
     }
 
+    /// <summary>Executes an async side effect on failure.</summary>
+    public static async ValueTask<Result<T>> TapError<T>(
+        this ValueTask<Result<T>> resultTask, Func<Error, ValueTask> action)
+    {
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailure) await action(result.Error).ConfigureAwait(false);
+        return result;
+    }
+
     /// <summary>Validates a condition on the success value.</summary>
     public static async ValueTask<Result<T>> Ensure<T>(
         this ValueTask<Result<T>> resultTask, Func<T, bool> predicate, Error error)
@@ -368,6 +398,15 @@ public static class ResultExtensions
     {
         var result = await resultTask.ConfigureAwait(false);
         return result.TapError(onFailure);
+    }
+
+    /// <summary>Executes an async side effect on failure.</summary>
+    public static async ValueTask<Result> TapError(
+        this ValueTask<Result> resultTask, Func<Error, ValueTask> onFailure)
+    {
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailure) await onFailure(result.Error).ConfigureAwait(false);
+        return result;
     }
 
     /// <summary>Validates a condition after success.</summary>

@@ -45,3 +45,11 @@ test-results/
 
 # BenchmarkDotNet
 BenchmarkDotNet.Artifacts/
+
+# Internal design & prompt documents (never publish to public repo)
+*.prompt.md
+1. - prompt Kernel.md
+
+# Strong Name keys — private key material, never commit to public repos
+# CI/CD uses the SNK_KEY GitHub Actions secret instead
+*.snk

@@ -1,3 +1,4 @@
+using System;
 using System.Linq.Expressions;
 
 namespace EricksonLopez.SharedKernel.Specifications;
@@ -20,3 +21,4 @@ public interface ISpecification<T>
     /// </summary>
     bool IsSatisfiedBy(T candidate);
 }
+

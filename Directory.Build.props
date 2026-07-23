@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Versioning — bump this single file for all packages -->
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.1.0</VersionPrefix>
     <VersionSuffix></VersionSuffix>
 
     <!-- NuGet package metadata -->
@@ -23,6 +23,12 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningLevel>5</WarningLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!-- Strong Naming -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)EricksonLopez.SharedKernel.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
 
     <!-- Deterministic builds (important for NuGet reproducibility) -->
     <Deterministic>true</Deterministic>

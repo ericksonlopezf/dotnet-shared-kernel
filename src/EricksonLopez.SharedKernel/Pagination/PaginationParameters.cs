@@ -1,3 +1,4 @@
+using System;
 namespace EricksonLopez.SharedKernel.Pagination;
 
 /// <summary>
@@ -16,7 +17,13 @@ public sealed class PaginationParameters
 
     private int _pageSize = DefaultPageSize;
 
-    public int Page { get; init; } = DefaultPage;
+    private int _page = DefaultPage;
+
+    public int Page
+    {
+        get => _page;
+        init => _page = Math.Max(1, value);
+    }
 
     public int PageSize
     {
@@ -32,14 +39,15 @@ public sealed class PaginationParameters
     /// <summary>
     /// Creates default pagination parameters (page 1, 10 items per page).
     /// </summary>
-    public static PaginationParameters Default => new();
+    public static readonly PaginationParameters Default = new();
 
     /// <summary>
     /// Creates pagination parameters with explicit values.
     /// </summary>
     public static PaginationParameters Of(int page, int pageSize) => new()
     {
-        Page = Math.Max(1, page),
+        Page = page,
         PageSize = pageSize
     };
 }
+

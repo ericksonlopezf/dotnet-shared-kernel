@@ -1,3 +1,4 @@
+using System;
 namespace EricksonLopez.SharedKernel.Domain;
 
 /// <summary>
@@ -36,8 +37,9 @@ public abstract class AggregateRoot<TId> : Entity<TId>
 
     /// <summary>
     /// Read-only view of domain events raised by this aggregate since the last dispatch.
+    /// Returns a thread-safe snapshot of the current events.
     /// </summary>
-    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.ToArray();
 
     /// <summary>
     /// Raises a domain event. The event will be dispatched by the infrastructure layer
@@ -48,6 +50,7 @@ public abstract class AggregateRoot<TId> : Entity<TId>
     protected void RaiseDomainEvent(IDomainEvent domainEvent)
     {
         if (domainEvent is null) throw new ArgumentNullException(nameof(domainEvent));
+        
         _domainEvents.Add(domainEvent);
     }
 
@@ -55,5 +58,9 @@ public abstract class AggregateRoot<TId> : Entity<TId>
     /// Clears all pending domain events. Should be called by the infrastructure layer
     /// after dispatching events.
     /// </summary>
-    public void ClearDomainEvents() => _domainEvents.Clear();
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
+    }
 }
+

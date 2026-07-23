@@ -1,3 +1,4 @@
+using System;
 namespace EricksonLopez.SharedKernel.Domain;
 
 /// <summary>
@@ -15,7 +16,7 @@ namespace EricksonLopez.SharedKernel.Domain;
 /// </para>
 /// </remarks>
 /// <typeparam name="TId">The type of the entity identifier.</typeparam>
-public abstract class Entity<TId>
+public abstract class Entity<TId> : IEquatable<Entity<TId>>
     where TId : notnull
 {
     /// <summary>
@@ -25,17 +26,19 @@ public abstract class Entity<TId>
 
     // ─── Equality ───────────────────────────────────────────────────────────────
 
-    public override bool Equals(object? obj)
+    public virtual bool Equals(Entity<TId>? other)
     {
-        if (obj is null || obj.GetType() != GetType())
+        if (other is null || other.GetType() != GetType())
             return false;
 
-        if (ReferenceEquals(this, obj))
+        if (ReferenceEquals(this, other))
             return true;
 
-        var other = (Entity<TId>)obj;
         return Id.Equals(other.Id);
     }
+
+    public override bool Equals(object? obj)
+        => obj is Entity<TId> other && Equals(other);
 
     public override int GetHashCode() => HashCode.Combine(GetType(), Id);
 
@@ -45,3 +48,4 @@ public abstract class Entity<TId>
     public static bool operator !=(Entity<TId>? left, Entity<TId>? right)
         => !(left == right);
 }
+

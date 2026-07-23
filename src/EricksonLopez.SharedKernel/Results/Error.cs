@@ -1,3 +1,4 @@
+using System;
 namespace EricksonLopez.SharedKernel.Results;
 
 /// <summary>
@@ -20,8 +21,8 @@ namespace EricksonLopez.SharedKernel.Results;
 /// <para>
 /// <b>Equality:</b> Two errors are equal if they share the same
 /// <see cref="Code"/>, <see cref="Description"/>, <see cref="Type"/>,
-/// and <see cref="InnerErrors"/>. This follows standard record semantics
-/// where all fields participate in equality.
+/// and all <see cref="InnerErrors"/> are also equal. This ensures structural
+/// equality even for compound errors.
 /// </para>
 /// </remarks>
 public sealed record Error
@@ -56,7 +57,8 @@ public sealed record Error
     /// Returns an empty list when there are no inner errors.
     /// </summary>
     /// <remarks>
-    /// This is a computed property and does NOT participate in record equality.
+    /// This is a computed property. The equality logic has been overridden
+    /// to ensure that compound errors with identical inner errors are considered equal.
     /// The backing field is null for simple errors (zero allocation).
     /// </remarks>
     public IReadOnlyList<Error> InnerErrors => _innerErrors ?? Array.Empty<Error>();
@@ -139,6 +141,34 @@ public sealed record Error
             result += $" ({InnerErrors.Count} inner errors)";
         return result;
     }
+
+    public bool Equals(Error? other)
+    {
+        if (other is null) return false;
+        if (ReferenceEquals(this, other)) return true;
+        if (Code != other.Code || Description != other.Description || Type != other.Type) return false;
+        
+        if (HasInnerErrors != other.HasInnerErrors) return false;
+        if (!HasInnerErrors) return true;
+        
+        return InnerErrors.SequenceEqual(other.InnerErrors);
+    }
+
+    public override int GetHashCode()
+    {
+        var hash = new HashCode();
+        hash.Add(Code);
+        hash.Add(Description);
+        hash.Add(Type);
+        if (HasInnerErrors)
+        {
+            foreach (var error in InnerErrors)
+            {
+                hash.Add(error);
+            }
+        }
+        return hash.ToHashCode();
+    }
 }
 
 /// <summary>
@@ -171,3 +201,4 @@ public enum ErrorType
     /// <summary>Unexpected system error (wrapped exceptions, invariant violations).</summary>
     Unexpected
 }
+

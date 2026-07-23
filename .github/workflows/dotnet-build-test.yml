@@ -28,6 +28,13 @@ on:
         required: false
         type: string
         default: "test-results"
+    secrets:
+      SNK_KEY:
+        description: "Base64-encoded Strong Name key (.snk) for assembly signing"
+        required: false
+      CODECOV_TOKEN:
+        description: "Codecov upload token for coverage reporting"
+        required: false
 
 env:
   DOTNET_NOLOGO: true
@@ -45,6 +52,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ inputs.dotnet-version }}
+
+      - name: Restore Strong Name key
+        env:
+          SNK_KEY: ${{ secrets.SNK_KEY }}
+        run: |
+          if [ -n "$SNK_KEY" ]; then
+            echo "$SNK_KEY" | base64 --decode > EricksonLopez.SharedKernel.snk
+          fi
 
       - name: Restore
         run: dotnet restore
@@ -70,9 +85,12 @@ jobs:
           name: ${{ inputs.artifact-name }}
           path: ./test-results/
 
-      - name: Upload coverage
+      - name: Upload coverage to Codecov
         if: always() && inputs.upload-coverage
-        uses: actions/upload-artifact@v4
+        uses: codecov/codecov-action@v4
         with:
-          name: ${{ inputs.artifact-name }}-coverage
-          path: "**/coverage.cobertura.xml"
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: "**/coverage.cobertura.xml"
+          fail_ci_if_error: false
+          flags: unittests
+          name: codecov-${{ inputs.artifact-name }}
