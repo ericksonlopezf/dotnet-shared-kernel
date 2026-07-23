@@ -16,6 +16,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      attestations: write
 
     steps:
       - name: Checkout
@@ -30,6 +31,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
+
+      - name: Restore Strong Name key
+        env:
+          SNK_KEY: ${{ secrets.SNK_KEY }}
+        run: |
+          if [ -n "$SNK_KEY" ]; then
+            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.SharedKernel.snk
+          fi
 
       - name: Restore
         run: dotnet restore
@@ -48,6 +57,11 @@ jobs:
           --output ./nupkgs
           -p:VersionPrefix=${{ steps.version.outputs.VERSION }}
 
+      - name: Generate Sigstore Provenance Attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: './nupkgs/*.nupkg'
+
       - name: NuGet login
         uses: NuGet/login@v1
         id: login
@@ -64,9 +78,23 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Release ${{ github.ref_name }}"
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          name: Release ${{ steps.version.outputs.VERSION }}
+          generate_release_notes: false
           body: |
-            See [CHANGELOG.md](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/CHANGELOG.md) for details.
+            ## Products in this release
+
+            - **EricksonLopez.SharedKernel** `${{ steps.version.outputs.VERSION }}` – [CHANGELOG](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/${{ github.ref_name }}/CHANGELOG.md)
+
+            ---
+
+            For detailed changes, see the linked changelog above.
+
+            ### Installation
+
+            ```bash
+            dotnet add package EricksonLopez.SharedKernel --version ${{ steps.version.outputs.VERSION }}
+            ```
           files: ./nupkgs/*.nupkg
           draft: false
           prerelease: ${{ contains(github.ref_name, '-') }}

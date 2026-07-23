@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
@@ -45,6 +46,7 @@ namespace EricksonLopez.SharedKernel.Specifications;
 public abstract class Specification<T> : ISpecification<T>
 {
     private Func<T, bool>? _compiledExpression;
+    private readonly object _compileLock = new();
 
     /// <inheritdoc/>
     public abstract Expression<Func<T, bool>> ToExpression();
@@ -73,9 +75,15 @@ public abstract class Specification<T> : ISpecification<T>
     {
         // Fallback: compiles the expression tree for in-memory evaluation.
         // For NativeAOT, override this method to avoid Expression.Compile().
+        if (_compiledExpression is null)
+        {
+            lock (_compileLock)
+            {
 #pragma warning disable IL3050 // RequiresDynamicCode — virtual method; consumers override for AOT
-        _compiledExpression ??= ToExpression().Compile();
+                _compiledExpression ??= ToExpression().Compile();
 #pragma warning restore IL3050
+            }
+        }
         return _compiledExpression(candidate);
     }
 
@@ -193,3 +201,4 @@ internal sealed class ReplaceExpressionVisitor(Expression oldValue, Expression n
         return base.Visit(node)!;
     }
 }
+

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Concurrent;
 namespace EricksonLopez.SharedKernel.Domain;
 
 /// <summary>
@@ -32,12 +34,13 @@ namespace EricksonLopez.SharedKernel.Domain;
 public abstract class AggregateRoot<TId> : Entity<TId>
     where TId : notnull
 {
-    private readonly List<IDomainEvent> _domainEvents = [];
+    private readonly ConcurrentQueue<IDomainEvent> _domainEvents = new();
 
     /// <summary>
     /// Read-only view of domain events raised by this aggregate since the last dispatch.
+    /// Returns a thread-safe snapshot of the current events.
     /// </summary>
-    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.ToArray();
 
     /// <summary>
     /// Raises a domain event. The event will be dispatched by the infrastructure layer
@@ -48,12 +51,21 @@ public abstract class AggregateRoot<TId> : Entity<TId>
     protected void RaiseDomainEvent(IDomainEvent domainEvent)
     {
         if (domainEvent is null) throw new ArgumentNullException(nameof(domainEvent));
-        _domainEvents.Add(domainEvent);
+        
+        _domainEvents.Enqueue(domainEvent);
     }
 
     /// <summary>
     /// Clears all pending domain events. Should be called by the infrastructure layer
     /// after dispatching events.
     /// </summary>
-    public void ClearDomainEvents() => _domainEvents.Clear();
+    public void ClearDomainEvents()
+    {
+#if NETSTANDARD2_0
+        while (_domainEvents.TryDequeue(out _)) { }
+#else
+        _domainEvents.Clear();
+#endif
+    }
 }
+

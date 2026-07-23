@@ -1,3 +1,4 @@
+using System;
 namespace EricksonLopez.SharedKernel.Pagination;
 
 /// <summary>
@@ -42,9 +43,7 @@ public sealed class PagedList<T>
     public int PageSize { get; }
 
     /// <summary>Total number of pages.</summary>
-    public int TotalPages => PageSize > 0
-        ? (int)Math.Ceiling(TotalCount / (double)PageSize)
-        : 0;
+    public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);
 
     /// <summary>Whether there is a page before the current one.</summary>
     public bool HasPreviousPage => Page > 1;
@@ -75,7 +74,10 @@ public sealed class PagedList<T>
     /// Creates a <see cref="PagedList{T}"/> with no items.
     /// </summary>
     public static PagedList<T> Empty(PaginationParameters parameters)
-        => new([], 0, parameters.Page, parameters.PageSize);
+    {
+        if (parameters is null) throw new ArgumentNullException(nameof(parameters));
+        return new([], 0, parameters.Page, parameters.PageSize);
+    }
 
     /// <summary>
     /// Projects each item to a new type, preserving pagination metadata.
@@ -83,3 +85,4 @@ public sealed class PagedList<T>
     public PagedList<TResult> Map<TResult>(Func<T, TResult> selector)
         => new(Items.Select(selector), TotalCount, Page, PageSize);
 }
+

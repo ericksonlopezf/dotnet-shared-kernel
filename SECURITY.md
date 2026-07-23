@@ -4,13 +4,16 @@
 
 | Version | Supported |
 |---|---|
+| 1.1.x | ✅ |
 | 1.0.x | ✅ |
 
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability, **please do not open a public issue.**
 
-Instead, email **[ericksonlopezf@gmail.com](mailto:ericksonlopezf@gmail.com)** with:
+Instead, we encourage you to use [GitHub Private Vulnerability Reporting](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability) directly in this repository.
+
+Alternatively, you can email **[ericksonlopezf@gmail.com](mailto:ericksonlopezf@gmail.com)** with:
 
 1. **Description** of the vulnerability
 2. **Steps to reproduce** (or a proof-of-concept)
@@ -19,9 +22,10 @@ Instead, email **[ericksonlopezf@gmail.com](mailto:ericksonlopezf@gmail.com)** w
 
 ### What to expect
 
-- **Acknowledgement** within 48 hours
-- **Resolution target** within 14 days for critical issues
-- Credit in the release notes (unless you prefer to remain anonymous)
+- **Acknowledgement** within 48 hours.
+- **Resolution target** within 14 days for critical issues, 30 days for others.
+- **Coordinated Vulnerability Disclosure (CVD):** We ask for a reasonable embargo period before public disclosure to allow consumers to update.
+- Credit in the release notes (unless you prefer to remain anonymous).
 
 ## Scope
 
