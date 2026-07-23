@@ -137,7 +137,7 @@ public sealed class ResultAssertionsTests
         var act = () => result.ShouldHaveErrorCode(TestValues.Strings.ErrorCode, TestValues.Strings.BecauseMustFail);
         
         // Assert
-        act.Should().Throw<Exception>().WithMessage("*Expected*result.Error.Code*");
+        act.Should().Throw<Exception>().WithMessage($"*{TestValues.Strings.BecauseMustFail}*");
     }
 
     // ─── Generic Result<T> ────────────────────────────────────────────────────
@@ -275,7 +275,7 @@ public sealed class ResultAssertionsTests
         var act = () => result.ShouldHaveErrorCode(TestValues.Strings.ErrorCode, TestValues.Strings.BecauseMustFail);
         
         // Assert
-        act.Should().Throw<Exception>().WithMessage("*Expected*result.Error.Code*");
+        act.Should().Throw<Exception>().WithMessage($"*{TestValues.Strings.BecauseMustFail}*");
     }
 
     // ─── ShouldHaveInnerErrors ────────────────────────────────────────────────

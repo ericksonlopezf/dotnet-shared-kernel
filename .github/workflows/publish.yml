@@ -35,7 +35,10 @@ jobs:
       - name: Restore Strong Name key
         env:
           SNK_KEY: ${{ secrets.SNK_KEY }}
-        run: echo "$SNK_KEY" | base64 --decode > EricksonLopez.SharedKernel.snk
+        run: |
+          if [ -n "$SNK_KEY" ]; then
+            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.SharedKernel.snk
+          fi
 
       - name: Restore
         run: dotnet restore

@@ -58,7 +58,7 @@ jobs:
           SNK_KEY: ${{ secrets.SNK_KEY }}
         run: |
           if [ -n "$SNK_KEY" ]; then
-            echo "$SNK_KEY" | base64 --decode > EricksonLopez.SharedKernel.snk
+            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.SharedKernel.snk
           fi
 
       - name: Restore

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 namespace EricksonLopez.SharedKernel.Domain;
 
 /// <summary>
@@ -33,7 +34,7 @@ namespace EricksonLopez.SharedKernel.Domain;
 public abstract class AggregateRoot<TId> : Entity<TId>
     where TId : notnull
 {
-    private readonly List<IDomainEvent> _domainEvents = [];
+    private readonly ConcurrentQueue<IDomainEvent> _domainEvents = new();
 
     /// <summary>
     /// Read-only view of domain events raised by this aggregate since the last dispatch.
@@ -51,7 +52,7 @@ public abstract class AggregateRoot<TId> : Entity<TId>
     {
         if (domainEvent is null) throw new ArgumentNullException(nameof(domainEvent));
         
-        _domainEvents.Add(domainEvent);
+        _domainEvents.Enqueue(domainEvent);
     }
 
     /// <summary>
@@ -60,7 +61,11 @@ public abstract class AggregateRoot<TId> : Entity<TId>
     /// </summary>
     public void ClearDomainEvents()
     {
+#if NETSTANDARD2_0
+        while (_domainEvents.TryDequeue(out _)) { }
+#else
         _domainEvents.Clear();
+#endif
     }
 }
 
