@@ -58,7 +58,7 @@ jobs:
           -p:VersionPrefix=${{ steps.version.outputs.VERSION }}
 
       - name: Generate Sigstore Provenance Attestation
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v4
         with:
           subject-path: './nupkgs/*.nupkg'
 
