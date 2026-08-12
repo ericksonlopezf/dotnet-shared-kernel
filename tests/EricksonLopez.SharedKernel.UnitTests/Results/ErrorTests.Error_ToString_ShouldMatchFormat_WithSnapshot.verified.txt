@@ -1,5 +1,0 @@
-﻿Simple:
-[Failure] Simple.Error: A simple failure
-
-Complex:
-[Validation] Complex.Error: A complex error (2 inner errors)

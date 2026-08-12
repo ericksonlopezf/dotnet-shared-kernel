@@ -1,9 +1,30 @@
 name: Publish NuGet
 
+# ─── Triggers ─────────────────────────────────────────────────────────────────
+# 1. Automatic: Triggered by Release Please when a release PR is merged.
+#    The workflow_dispatch input 'version' will be set to the new SemVer.
+# 2. Manual: Also triggered by pushing a 'v*.*.*' tag manually (legacy support).
+# 3. Manual dispatch: Via GitHub UI for debugging.
+#
+# Automatic versioning flow:
+#   Commit with Conventional prefix (e.g. 'feat:') →
+#   release-please.yml creates/updates Release PR →
+#   Maintainer merges Release PR →
+#   release-please creates GitHub Release + tag vX.Y.Z →
+#   release-please triggers this workflow via workflow_dispatch →
+#   Pack → Sign → Attest → Publish to NuGet.org
+# ─────────────────────────────────────────────────────────────────────────────────
+
 on:
   push:
     tags:
-      - "v*.*.*"         # Triggers on: v1.0.0, v1.2.3, v2.0.0-preview.1
+      - "v*.*.*"           # Legacy: manual tag push still works
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g. 1.2.3 — without 'v' prefix)"
+        required: false
+        type: string
 
 env:
   DOTNET_NOLOGO: true
@@ -14,56 +35,101 @@ jobs:
     name: Pack & Publish
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: write
-      attestations: write
+      id-token: write        # Required for Sigstore OIDC attestation
+      contents: write        # Required for GitHub Release creation
+      attestations: write    # Required for actions/attest-build-provenance
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
 
-      - name: Extract version from tag
+      # ─── Resolve version ──────────────────────────────────────────────────────
+      # Priority: workflow_dispatch input → git tag → fallback to Directory.Build.props
+      - name: Resolve version
         id: version
-        # Strip the 'v' prefix: v1.2.3 → 1.2.3
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          if [ -n "$INPUT_VERSION" ]; then
+            echo "VERSION=$INPUT_VERSION" >> $GITHUB_OUTPUT
+            echo "Resolved version from workflow_dispatch input: $INPUT_VERSION"
+          elif [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+            echo "Resolved version from git tag: $VERSION"
+          else
+            VERSION=$(grep -oP '(?<=<VersionPrefix>)[^<]+' Directory.Build.props)
+            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+            echo "Resolved version from Directory.Build.props: $VERSION"
+          fi
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
           dotnet-version: "10.0.x"
 
+      # ─── Strong Name key ──────────────────────────────────────────────────────
+      # The private .snk is stored as a base64-encoded GitHub Secret (SNK_KEY).
+      # The public key is committed as public.snk. If SNK_KEY is not set (e.g.,
+      # in a fork), the build succeeds without signing (conditional in Directory.Build.props).
       - name: Restore Strong Name key
         env:
           SNK_KEY: ${{ secrets.SNK_KEY }}
         run: |
           if [ -n "$SNK_KEY" ]; then
-            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.SharedKernel.snk
+            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.snk
           fi
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore EricksonLopez.SharedKernel.slnx
 
       - name: Build (Release)
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build EricksonLopez.SharedKernel.slnx --no-restore --configuration Release
 
+      # ─── Full test suite before publish ──────────────────────────────────────
+      # Never publish without a passing test suite.
       - name: Run tests before publish
-        run: dotnet test --no-build --configuration Release
+        run: |
+          dotnet test EricksonLopez.SharedKernel.slnx \
+            --no-build \
+            --configuration Release \
+            --logger "trx" \
+            --results-directory ./test-results \
+            --collect:"XPlat Code Coverage" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
-      - name: Pack
-        run: >
-          dotnet pack src/EricksonLopez.SharedKernel/EricksonLopez.SharedKernel.csproj
-          --no-build
-          --configuration Release
-          --output ./nupkgs
-          -p:VersionPrefix=${{ steps.version.outputs.VERSION }}
+      # ─── Pack all packages ────────────────────────────────────────────────────
+      - name: Pack Packages
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          PACK_ARGS="--no-build --configuration Release --output ./nupkgs -p:VersionPrefix=$VERSION"
+          dotnet pack src/EricksonLopez.SharedKernel/EricksonLopez.SharedKernel.csproj $PACK_ARGS
+          echo "Packed packages:"
+          ls -la ./nupkgs/
 
+      # ─── Sigstore Provenance Attestation ─────────────────────────────────────
+      # Generates a cryptographically signed provenance attestation for every .nupkg
+      # using Sigstore's keyless signing via GitHub's OIDC token. The attestation
+      # proves that the packages were built from THIS repository's workflow and not
+      # tampered with after the build. Consumers can verify via:
+      #   gh attestation verify <package.nupkg> --repo ericksonlopezf/dotnet-shared-kernel
+      #
+      # Why v2: attest-build-provenance@v2 uses the SLSA v1.0 predicate format
+      # (vs v0.2 in v1), which is the current standard for SLSA Build L2/L3
+      # provenance and is supported by NuGet.org's new provenance verification.
       - name: Generate Sigstore Provenance Attestation
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45 # v2
         with:
           subject-path: './nupkgs/*.nupkg'
 
-      - name: NuGet login
-        uses: NuGet/login@v1
+      # ─── NuGet.org publish via OIDC ──────────────────────────────────────────
+      # Uses NuGet Trusted Publishing (OIDC) — no long-lived API keys stored.
+      # The NuGet/login action exchanges GitHub's OIDC token for a short-lived
+      # NuGet API token scoped to this specific repository and workflow.
+      - name: NuGet login (OIDC)
+        uses: NuGet/login@ebc737b6fc418a6ca0073cf116ec8dc156d8b81e # v1
         id: login
         with:
           user: ericksonlopezf
@@ -75,8 +141,13 @@ jobs:
           --source https://api.nuget.org/v3/index.json
           --skip-duplicate
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      # ─── GitHub Release ───────────────────────────────────────────────────────
+      # When triggered by a tag push, create the GitHub Release with assets.
+      # When triggered by Release Please workflow_dispatch, the release is already
+      # created by release-please-action — this step is skipped.
+      - name: Create GitHub Release (tag-triggered only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
           tag_name: v${{ steps.version.outputs.VERSION }}
           name: Release ${{ steps.version.outputs.VERSION }}
@@ -89,12 +160,6 @@ jobs:
             ---
 
             For detailed changes, see the linked changelog above.
-
-            ### Installation
-
-            ```bash
-            dotnet add package EricksonLopez.SharedKernel --version ${{ steps.version.outputs.VERSION }}
-            ```
           files: ./nupkgs/*.nupkg
           draft: false
-          prerelease: ${{ contains(github.ref_name, '-') }}
+          prerelease: ${{ contains(steps.version.outputs.VERSION, '-') }}

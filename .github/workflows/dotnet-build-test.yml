@@ -35,6 +35,9 @@ on:
       CODECOV_TOKEN:
         description: "Codecov upload token for coverage reporting"
         required: false
+      SONAR_TOKEN:
+        description: "SonarCloud token for analysis"
+        required: false
 
 env:
   DOTNET_NOLOGO: true
@@ -46,10 +49,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
           dotnet-version: ${{ inputs.dotnet-version }}
 
@@ -58,11 +61,28 @@ jobs:
           SNK_KEY: ${{ secrets.SNK_KEY }}
         run: |
           if [ -n "$SNK_KEY" ]; then
-            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.SharedKernel.snk
+            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.snk
           fi
 
       - name: Restore
         run: dotnet restore
+
+      - name: Setup Java (for SonarScanner)
+        uses: actions/setup-java@e9fbacdec3bb3b6036605a3e6f7995d66773a8c6 # v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Install SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Begin Sonar Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: env.SONAR_TOKEN != ''
+        run: |
+          dotnet sonarscanner begin /k:"EricksonLopez_${{ github.event.repository.name }}" /o:"ericksonlopez" /d:sonar.login="$SONAR_TOKEN" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 
       - name: Build (Release)
         run: dotnet build --no-restore --configuration Release
@@ -78,16 +98,29 @@ jobs:
           --results-directory ./test-results
           --collect:"XPlat Code Coverage"
 
+      - name: Install Stryker
+        run: dotnet tool install -g dotnet-stryker
+
+      - name: Run Stryker Mutation Testing
+        run: dotnet stryker
+
+      - name: End Sonar Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: always() && env.SONAR_TOKEN != ''
+        run: dotnet sonarscanner end /d:sonar.login="$SONAR_TOKEN"
+
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: ${{ inputs.artifact-name }}
           path: ./test-results/
 
       - name: Upload coverage to Codecov
         if: always() && inputs.upload-coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: "**/coverage.cobertura.xml"

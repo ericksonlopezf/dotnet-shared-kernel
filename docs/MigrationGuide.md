@@ -1,117 +1,187 @@
-# Migration Guide
+# Migration Guide — EricksonLopez.SharedKernel
 
-This guide will help you migrate your existing code to `EricksonLopez.SharedKernel`, focusing particularly on adopting the `Result` pattern and Domain-Driven Design (DDD) primitives.
+Migration guide for adopting or upgrading `EricksonLopez.SharedKernel` in your project.
 
-## 1. Moving Away from Exceptions for Control Flow
+> [!IMPORTANT]
+> This guide covers the v2.0 API which contains: `Entity<TId>`, `AggregateRoot<TId>`, `IDomainEvent`.
+> The types `Result<T>`, `ValueObject`, `Error`, `Specification<T>`, and `PaginationParameters` were removed from this library in v2.0.
+> If you are using them, refer to separate dedicated libraries.
 
-If your application previously threw exceptions for expected domain violations (like "User not found" or "Invalid email"), you should migrate these to the `Result` pattern.
+---
 
-### Before (Exceptions)
+## Migrating from v1.0.0 to v2.0
+
+### Breaking Changes
+
+The following types were **removed** from `EricksonLopez.SharedKernel` in v2.0:
+
+| Removed Type | Reason | Alternative |
+|---|---|---|
+| `Result<T>` / `Result` | Separated to its own library | A dedicated Result library |
+| `Error` / `ErrorType` | Separated to its own library | A dedicated Result library |
+| `ValueObject` | Separated to its own library | `EricksonLopez.DomainPrimitives` |
+| `Specification<T>` | Separated (ADR-008) | Custom implementation or `Ardalis.Specification` |
+| `PaginationParameters` | Removed | Custom implementation |
+| `PagedList<T>` | Removed | Custom implementation |
+
+### Using directive migration
+
+If your project has:
 ```csharp
-public User GetUser(Guid id)
+using EricksonLopez.SharedKernel.Results;      // ← remove
+using EricksonLopez.SharedKernel.Domain;       // ← remove
+using EricksonLopez.SharedKernel.Specifications; // ← remove
+```
+
+Replace with:
+```csharp
+using EricksonLopez.SharedKernel;              // ← only valid namespace
+```
+
+---
+
+## Migrating from a manual Entity implementation
+
+If you have your own `Entity` class:
+
+### Before (manual implementation)
+
+```csharp
+public abstract class Entity
 {
-    var user = _repository.Find(id);
-    if (user == null)
-        throw new NotFoundException($"User {id} not found.");
-    
-    if (!user.IsActive)
-        throw new BusinessRuleException("User is not active.");
-        
-    return user;
+    public Guid Id { get; set; }  // mutable — incorrect for DDD
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is not Entity other) return false;
+        return Id == other.Id;
+    }
+
+    public override int GetHashCode() => Id.GetHashCode();
 }
 ```
 
-### After (Result Pattern)
+**Problems:** Mutable Id, does not consider the concrete type, does not handle transient entities.
+
+### After (using the library)
+
 ```csharp
-public Result<User> GetUser(Guid id)
-{
-    var user = _repository.Find(id);
-    if (user == null)
-        return Error.NotFound("User.NotFound", $"User {id} not found.");
-    
-    if (!user.IsActive)
-        return Error.Conflict("User.Inactive", "User is not active.");
-        
-    return user; // Implicitly converts to Result<User>.Success(user)
-}
-```
+using EricksonLopez.SharedKernel;
 
-## 2. Migrating from FluentResults / CSharpFunctionalExtensions
-
-If you are coming from other popular Result pattern libraries, the concepts are very similar but the API might differ slightly.
-
-### Key Differences
-- **Immutability:** Our `Result` and `Error` types are strictly immutable.
-- **Errors:** We don't have multiple error types (no `IError` interfaces). Everything is a unified `sealed record Error` with an `ErrorType` enum (e.g., `Validation`, `NotFound`, `Conflict`).
-- **Success without Value:** We use `Result` (non-generic) instead of `Result.Ok()`.
-- **Match instead of Switch/If:** We strongly encourage the use of the `.Match()` fluent extension to handle both success and failure branches exhaustively.
-
-### Example Translation
-
-**From CSharpFunctionalExtensions:**
-```csharp
-Result<User> result = Result.Failure<User>("User not found");
-```
-
-**To EricksonLopez.SharedKernel:**
-```csharp
-Result<User> result = Error.NotFound("User.NotFound", "User not found");
-```
-
-## 3. Adopting Entity and AggregateRoot
-
-When migrating your domain entities, inherit from `Entity<TId>` or `AggregateRoot<TId>`.
-
-### Before
-```csharp
-public class Order
-{
-    public Guid Id { get; set; }
-    // ...
-}
-```
-
-### After
-```csharp
 public sealed class Order : AggregateRoot<Guid>
 {
-    // Id is protected set in the base class, initialize it via constructor or factory
-    private Order(Guid id) 
-    {
-        Id = id;
-    }
-    
+    // Id is protected init — immutable by design
+    // Equals and GetHashCode are correctly implemented
+    // == and != operators also available
+
     public static Order Create(Guid id)
     {
-        var order = new Order(id);
-        order.RaiseDomainEvent(new OrderCreated(id)); // Domain events now belong to AggregateRoot
+        return new Order { Id = id };
+    }
+}
+```
+
+**Benefits:** Immutable Id, equality by type + Id, correct handling of transient entities, overloaded operators.
+
+---
+
+## Migrating from a manual AggregateRoot implementation
+
+### Before (manual implementation with event List)
+
+```csharp
+public abstract class AggregateRoot : Entity
+{
+    private readonly List<IDomainEvent> _events = new();
+    public IReadOnlyList<IDomainEvent> Events => _events.AsReadOnly();
+
+    protected void AddEvent(IDomainEvent ev) => _events.Add(ev);
+    public void ClearEvents() => _events.Clear();
+}
+```
+
+**Problem:** `List<T>` is always allocated, even if no events are raised (not lazy).
+
+### After (using the library)
+
+```csharp
+using EricksonLopez.SharedKernel;
+
+// AggregateRoot<TId> already includes:
+// - DomainEvents (lazy — zero alloc if no events)
+// - RaiseDomainEvent(IDomainEvent) — protected
+// - ClearDomainEvents() — public
+
+public sealed class Order : AggregateRoot<Guid>
+{
+    // Only business logic here
+}
+```
+
+**Benefits:** Lazy allocation (zero alloc for read-only aggregates), null guard in `RaiseDomainEvent`.
+
+---
+
+## Migrating from Ardalis.SharedKernel
+
+```csharp
+// Ardalis.SharedKernel
+using Ardalis.SharedKernel;
+
+public class Order : EntityBase, IAggregateRoot
+{
+    public void PlaceOrder()
+    {
+        RegisterDomainEvent(new OrderPlacedEvent());
+    }
+}
+```
+
+```csharp
+// EricksonLopez.SharedKernel
+using EricksonLopez.SharedKernel;
+
+public sealed class Order : AggregateRoot<int>  // generic TId
+{
+    public static Order Place(int id)
+    {
+        var order = new Order { Id = id };
+        order.RaiseDomainEvent(new OrderPlacedEvent(id));
         return order;
     }
 }
 ```
 
-**Note:** Entities no longer have the `RaiseDomainEvent` method. That responsibility has been moved exclusively to `AggregateRoot<TId>` to enforce consistency boundaries.
+**Key differences:**
+- `EntityBase` → `Entity<TId>` (generic: choose your Id type)
+- `IAggregateRoot` marker → `AggregateRoot<TId>` base class (includes the logic)
+- `RegisterDomainEvent` → `RaiseDomainEvent` (same concept, different name)
 
-## 4. Value Objects
+---
 
-If you used custom structural equality in your types, migrate to `ValueObject` by overriding `GetEqualityComponents()`.
+## Adopting Strongly Typed Ids (recommended upgrade)
+
+### Before — Naked Guid Id
 
 ```csharp
-public class Address : ValueObject
+public sealed class Order : AggregateRoot<Guid>
 {
-    public string Street { get; }
-    public string City { get; }
-
-    public Address(string street, string city)
-    {
-        Street = street;
-        City = city;
-    }
-
-    protected override IEnumerable<object?> GetEqualityComponents()
-    {
-        yield return Street;
-        yield return City;
-    }
+    public Guid CustomerId { get; private set; }
+    // Is this an OrderId? A CustomerId? The compiler doesn't know.
 }
 ```
+
+### After — Strongly Typed Ids
+
+```csharp
+public readonly record struct OrderId(Guid Value);
+public readonly record struct CustomerId(Guid Value);
+
+public sealed class Order : AggregateRoot<OrderId>
+{
+    public CustomerId CustomerId { get; private set; }
+    // The compiler validates that you don't mix OrderId with CustomerId
+}
+```
+
+**Incremental migration:** You can migrate one type at a time. `AggregateRoot<Guid>` and `AggregateRoot<OrderId>` are independent — there is no dependency between them.

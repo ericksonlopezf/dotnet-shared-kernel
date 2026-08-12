@@ -7,34 +7,30 @@
     <IsPackable>false</IsPackable>
     <!-- Coverlet code coverage exclusions -->
     <Exclude>[*Tests]*,[*UnitTests]*</Exclude>
+    <NoWarn>$(NoWarn);CA1707;CA1852;CS1718;CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AwesomeAssertions" Version="9.5.0" />
-    <PackageReference Include="coverlet.collector" Version="6.0.4" />
-    <PackageReference Include="coverlet.msbuild" Version="10.0.1">
+    <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="coverlet.msbuild">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
-    <PackageReference Include="Verify.Xunit" Version="28.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Verify.Xunit" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
     <Using Include="AwesomeAssertions" />
-    <Using Include="EricksonLopez.SharedKernel.Attributes" />
-    <Using Include="EricksonLopez.SharedKernel.Domain" />
-    <Using Include="EricksonLopez.SharedKernel.Results" />
-    <Using Include="EricksonLopez.SharedKernel.Testing" />
     <Using Include="EricksonLopez.SharedKernel.UnitTests.Common" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
-    <ProjectReference Include="..\EricksonLopez.SharedKernel.Testing\EricksonLopez.SharedKernel.Testing.csproj" />
   </ItemGroup>
 
 </Project>
