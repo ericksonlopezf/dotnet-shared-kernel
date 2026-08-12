@@ -1,16 +1,11 @@
 <Solution>
-  <Folder Name="/benchmarks/">
-    <Project Path="benchmarks/EricksonLopez.SharedKernel.Benchmarks/EricksonLopez.SharedKernel.Benchmarks.csproj" />
-  </Folder>
-  <Folder Name="/samples/">
-    <Project Path="samples/EricksonLopez.SharedKernel.AotConsole/EricksonLopez.SharedKernel.AotConsole.csproj" />
-    <Project Path="samples/EricksonLopez.SharedKernel.Sample/EricksonLopez.SharedKernel.Sample.csproj" />
-  </Folder>
+
   <Folder Name="/src/">
     <Project Path="src/EricksonLopez.SharedKernel/EricksonLopez.SharedKernel.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/EricksonLopez.SharedKernel.Testing/EricksonLopez.SharedKernel.Testing.csproj" />
+    <Project Path="tests/EricksonLopez.SharedKernel.ArchitectureTests/EricksonLopez.SharedKernel.ArchitectureTests.csproj" />
+    <Project Path="benchmarks/EricksonLopez.SharedKernel.Benchmarks/EricksonLopez.SharedKernel.Benchmarks.csproj" />
     <Project Path="tests/EricksonLopez.SharedKernel.UnitTests/EricksonLopez.SharedKernel.UnitTests.csproj" />
   </Folder>
 </Solution>

@@ -1,0 +1,20 @@
+{
+  "stryker-config": {
+
+    "project": "EricksonLopez.SharedKernel.csproj",
+    "test-projects": [
+      "EricksonLopez.SharedKernel.UnitTests.csproj"
+    ],
+    "thresholds": {
+      "high": 100,
+      "low": 98,
+      "break": 95
+    },
+    "reporters": [
+      "html",
+      "json",
+      "cleartext",
+      "progress"
+    ]
+  }
+}

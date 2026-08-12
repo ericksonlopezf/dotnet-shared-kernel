@@ -7,39 +7,72 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.1.0] - 2026-07-23
+## [2.0.0] — Unreleased
 
-### Added
-- Multi-targeting support for `netstandard2.0` and `net10.0`, allowing backward compatibility with legacy .NET while preserving modern C# 13 features via PolySharp.
-- CI workflow (GitHub Actions) — build, test, and code coverage on PR/push.
-- Publish workflow (GitHub Actions) — NuGet publish triggered by version tags.
-- Additional Architectural Decision Records (ADRs) under `docs/decisions/`.
+> [!IMPORTANT]
+> This is a **breaking release**. All types added in v1.0.0 that were not domain primitives
+> (`Result<T>`, `Error`, `ValueObject`, `Specification<T>`, `PaginationParameters`, `PagedList<T>`)
+> have been permanently removed. Only `Entity<TId>`, `AggregateRoot<TId>`, and `IDomainEvent` remain.
 
-### Changed
-- **Testing Architecture**: Renamed `EricksonLopez.SharedKernel.Tests` to `EricksonLopez.SharedKernel.UnitTests` to strictly enforce separation of test types. Included `Verify.Xunit` to enable snapshot testing and configured `coverlet` to cleanly exclude test assemblies from coverage reports (maintaining a pristine 100% metric for production code).
-- `Specification<T>`: Replaced `Expression.Invoke()` with a custom `ExpressionVisitor` (`ParameterRebinder`) for composite specifications (And/Or). This fixes compatibility with modern ORMs like Entity Framework Core while keeping the NativeAOT support intact.
-- `Result.Success()`: Optimized non-generic success factory to return a cached static instance, making the happy path completely zero-alloc.
-- Adapted `Math.Clamp` and `ArgumentNullException.ThrowIfNull` fallbacks for `netstandard2.0` environments.
-
-## [1.0.1] - 2026-07-21
+### Removed
+- `EricksonLopez.SharedKernel.Testing` project — fluent assertion helpers eliminated entirely.
+- `Result<T>` / `Result` — Result pattern removed from this library (see ADR-014). Consumers requiring a Result type should adopt a dedicated library.
+- Implicit dependency on any Result-related package — the library now has **zero** external runtime dependencies on all supported TFMs.
 
 ### Changed
-- Bumped `AwesomeAssertions` from 9.4.0 to 9.5.0 (Merge PR #9).
-
-## [1.0.0] - 2026-07-16
+- `AggregateRoot<TId>.DomainEvents` now returns the underlying `ReadOnlyCollection` directly via `AsReadOnly()` instead of copying to an `Array.Empty` wrapper, eliminating unnecessary indirection.
+- `PackageTags` cleaned up — removed `result-pattern` tag that no longer applies (ADR-014 follow-up).
 
 ### Added
-- Initial project release with core DDD abstractions.
-- `Entity<TId>` — Generic base entity with identity-based equality and domain events lifecycle.
-- `AggregateRoot<TId>` — Consistency boundary with `RaiseDomainEvent` support.
-- `IDomainEvent` — Marker interface for domain events.
-- `ValueObject` — Structural equality via `GetEqualityComponents()`.
-- `Error` — Structured error record with code, description, and `ErrorType`.
-- `Result` and `Result<T>` — Discriminated union result type with `Map`, `Bind`, and fluent extensions.
-- `ISpecification<T>` and `Specification<T>` — Specification pattern with And/Or/Not composition.
-- `PaginationParameters` and `PagedList<T>` — Paginated result structures.
+- 15 Architecture Decision Records (ADRs) under `docs/decisions/` documenting all key design decisions.
+- `docs/Architecture.md` — full architecture guide with Mermaid diagrams.
+- `docs/API_REFERENCE.md` — complete public API reference.
+- `docs/PERFORMANCE_GUIDE.md` — lazy allocation analysis, NativeAOT startup benefits, and benchmark guide.
+- `docs/MigrationGuide.md` — migration guide from v1.0.0, manual implementations, and `Ardalis.SharedKernel`.
+- `docs/BestPractices.md`, `docs/AntiPatterns.md`, `docs/Cookbook.md`, `docs/FAQ.md`, `docs/GETTING_STARTED.md`, `docs/QUICK_START.md`, `docs/TROUBLESHOOTING.md`.
+- `EricksonLopez.SharedKernel.ArchitectureTests` — architecture enforcement tests using `NetArchTest.Rules`.
+- `EricksonLopez.SharedKernel.Benchmarks` — BenchmarkDotNet benchmarks for equality, hashing, and zero-alloc domain event access.
+- `samples/EricksonLopez.SharedKernel.Sample/` — runnable reference sample project.
+- `samples/EricksonLopez.SharedKernel.AotConsole/` — NativeAOT compatibility verification sample used as the AOT gate in CI.
+- SonarCloud integration to CI (`dotnet-build-test.yml`).
+- Stryker mutation testing JSON reporter.
+- `stryker-config.json` with thresholds: break=95, low=98, high=100.
+
+### Fixed
+- Architectural audit corrections applied across 11 identified findings (commit `13a4854`).
+
+---
+
+## [1.1.0] — 2026-07-23
+
+### Added
+- `AggregateRoot<TId>` domain primitive — transactional consistency boundary with lazy-allocated domain event collection.
+
+### Fixed
+- CI: Base64 decoding of the Strong Name key (SNK_KEY secret) made robust against newlines and empty secrets.
+
+---
+
+## [1.0.1] — 2026-07-21
+
+### Changed
+- Bumped `AwesomeAssertions` from `9.4.0` to `9.5.0` (Dependabot PR #9).
+
+---
+
+## [1.0.0] — 2026-07-16
+
+### Added
+- Initial project release.
+- `Entity<TId>` — generic abstract base entity with identity-based equality, `IsTransient()`, `GetHashCode()`, and `==`/`!=` operator overloads.
+- `IDomainEvent` — marker interface for domain events.
+- CI/CD workflows — GitHub Actions for build, test, coverage, and NuGet publishing triggered by version tags.
+
+---
 
 [Unreleased]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.1.0...HEAD
+[2.0.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.1.0...HEAD
 [1.1.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/releases/tag/v1.0.0
+

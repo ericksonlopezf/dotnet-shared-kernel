@@ -1,23 +1,37 @@
-# ADR-003: Value Object Boxing Acceptance
+# ADR-003: Value Object Boxing Acceptance and Base Class Rejection
 
 ## Status
 Accepted
 
 ## Context
-In the `ValueObject` base class, structural equality is determined by overriding `GetEqualityComponents()`, which yields an `IEnumerable<object?>`. This design causes value types (e.g., `int`, `decimal`, `Guid`) to be boxed when yielded, creating memory allocations on the heap.
+Traditionally, DDD frameworks (like those popularized by Jimmy Bogard or Vladimir Khorikov) include a `ValueObject` base class that uses reflection or an abstract method to provide structural equality:
 
-We debated whether to solve this using a Source Generator (to generate zero-boxing `Equals` methods automatically) or by changing the abstraction.
+```csharp
+protected abstract IEnumerable<object> GetEqualityComponents();
+```
+
+While convenient, this approach introduces a severe performance penalty on the hot path. If a Value Object contains value types (`int`, `decimal`, `DateTime`, `Guid`, etc.), yielding them as `object` forces the .NET runtime to perform **Boxing** (allocating a wrapper object on the heap). 
+
+Consequently, every equality check (`==`, `Equals`, or dictionary lookups) generates memory garbage. In high-throughput or low-latency systems, this unnecessary heap allocation triggers frequent Garbage Collection (GC) cycles, degrading overall application performance.
 
 ## Decision
-We will **accept** the boxing trade-off for the default implementation and officially document the *escape hatch* pattern for performance-critical scenarios (hot paths).
+We **strictly reject** providing a `ValueObject` base class in the `SharedKernel`.
 
-The official guidance is:
-1. Use the default `GetEqualityComponents()` for 95% of Value Objects (simple, easy to write, clean).
-2. For Value Objects heavily used in tight loops (hot paths), override `Equals(ValueObject?)` and `GetHashCode()` manually to prevent boxing.
+Instead, developers **must** leverage modern C# language features (C# 9+) to model Value Objects:
 
-We will not introduce a Source Generator into the `SharedKernel` library because it breaks the "Zero dependencies" rule and adds unnecessary complexity for a problem that rarely impacts typical LOB (Line of Business) applications.
+1. **`readonly record struct`**: Should be the default choice for most Value Objects. They provide true zero-allocation on the heap, immutability, and compiler-generated structural equality out of the box.
+   ```csharp
+   public readonly record struct Money(decimal Amount, string Currency);
+   ```
+2. **`record`**: For larger Value Objects where passing by reference is more efficient than passing by value (copying the struct).
+   ```csharp
+   public record Address(string Street, string City, string Country, string ZipCode);
+   ```
+
+By using native `record` types, the Roslyn compiler automatically synthesizes the highly optimized `IEquatable<T>` implementation for structural equality without any reflection or boxing.
 
 ## Consequences
-- **Positive:** Keeps the SharedKernel extremely simple and dependency-free.
-- **Positive:** Developer experience (DX) is excellent for the common case.
-- **Negative:** Minor heap allocations occur when comparing Value Objects with value-type properties using the default method.
+- **Positive:** Guarantees **Zero-Allocation** and zero reflection for Value Object equality operations.
+- **Positive:** Full alignment with **Native AOT** compilation principles.
+- **Positive:** Keeps the SharedKernel exceptionally lightweight and native to modern .NET paradigms.
+- **Negative:** Developers migrating from legacy DDD codebases will need to adapt their models from `class : ValueObject` to `record` or `readonly record struct`.

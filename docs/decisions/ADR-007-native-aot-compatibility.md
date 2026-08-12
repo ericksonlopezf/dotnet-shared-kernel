@@ -10,20 +10,21 @@ The primary challenge in DDD Shared Kernels regarding AOT is usually the use of 
 
 ## Decision and Implementation
 The kernel was architected to be AOT-friendly from the ground up:
-- **`ValueObject`**: Avoids reflection by enforcing manual component yielding via `GetEqualityComponents()`.
+- **`ValueObject`**: We explicitly rejected a reflection-based `ValueObject` class (see ADR-003).
 - **`Result` and `Error`**: Avoid reflection-heavy serialization/deserialization by being explicit types with no dynamic dictionaries.
-- **`Specification<T>`**: `Expression.Compile()` throws `IL3050` under AOT since it requires emitting IL at runtime. We mitigate this by explicitly marking the `Compile` call with `#pragma warning disable IL3050` inside `Evaluate`, while documenting the escape hatch: **Consumers targeting AOT MUST override the `Evaluate(T)` method** in their specific implementations to perform in-memory evaluations manually (e.g., `return entity.IsActive;`) rather than relying on expression tree compilation. 
+- **`Specification<T>`**: We explicitly rejected the `Specification` pattern for this library (see ADR-008) because `Expression.Compile()` throws `IL3050` under AOT. 
 
 ## Verification Results
-We compiled the `EricksonLopez.SharedKernel.AotConsole` sample project targeting `net10.0` with `win-x64` using `PublishAot=true`. 
+We compile the `EricksonLopez.SharedKernel.AotConsole` sample project targeting `net10.0` with `win-x64` using `PublishAot=true` in our CI pipeline. 
 
 ```bash
 dotnet publish samples\EricksonLopez.SharedKernel.AotConsole\EricksonLopez.SharedKernel.AotConsole.csproj -c Release -r win-x64
 ```
 
-**Result:** The build completed successfully and generated native code without any trimming or dynamic code warnings, verifying that the kernel itself is fully Native AOT compatible.
+**Result:** The build completes successfully and generates native code without any trimming or dynamic code warnings, verifying that the kernel itself is fully Native AOT compatible on .NET 10.
+
+*Note on Multi-Targeting:* As decided in ADR-009, this library also targets `.net8.0` and `.net9.0`. However, the `<IsAotCompatible>` and `<IsTrimmable>` properties are only conditionally applied to the `net10.0` target because the AOT tooling and BCL annotations are most mature there. Native AOT for .NET 8 and 9 is provided as best-effort.
 
 ## Consequences
 - **Positive:** Projects using this SharedKernel can be published as ultra-lightweight Native AOT executables or microservices.
 - **Positive:** Zero reflection translates to better runtime performance and lower memory usage.
-- **Negative:** Developers using the `Specification` pattern in AOT scenarios have slightly more boilerplate, as they must provide a manual `Evaluate(T)` override to bypass runtime expression compilation.

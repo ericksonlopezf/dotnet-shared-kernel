@@ -9,14 +9,14 @@ Thank you for your interest in contributing! This document provides guidelines f
 3. Create a **branch** (see Branching Strategy): `git checkout -b feature/your-feature develop`
 4. Make your changes
 5. **Run tests** to ensure nothing is broken
-6. **Commit** with a clear message
+6. **Commit** with a conventional commit message
 7. **Push** to your fork and create a **Pull Request** against `develop`
 
 ## Prerequisites
 
 Before contributing, ensure you have the following installed:
-- **[.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)**
-- An IDE such as Visual Studio, JetBrains Rider, or VS Code with the C# Dev Kit.
+- **[.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)** — version `10.0.302` or compatible (see `global.json`)
+- An IDE such as Visual Studio, JetBrains Rider, or VS Code with the C# Dev Kit
 
 ## Development Setup
 
@@ -25,13 +25,21 @@ Before contributing, ensure you have the following installed:
 git clone https://github.com/<your-username>/dotnet-shared-kernel.git
 cd dotnet-shared-kernel
 
-# Run the unified build script (restores, builds, formats, and tests)
-# On Windows:
-.\build.ps1
+# Restore dependencies
+dotnet restore
 
-# On Linux/macOS:
-./build.sh
+# Build (Release configuration)
+dotnet build --configuration Release
+
+# Run all tests
+dotnet test --configuration Release
+
+# Run with code coverage
+dotnet test --configuration Release --collect:"XPlat Code Coverage"
 ```
+
+> [!NOTE]
+> There are no `build.ps1` or `build.sh` scripts. Use the `dotnet` CLI commands above.
 
 ## Code Standards
 
@@ -45,11 +53,13 @@ This project enforces strict code quality. Your PR must pass all of these:
 
 ### Branching Strategy
 
-We use the following prefixes for branches:
+CI runs on `main` and `develop` branches. Use the following prefixes:
 - `feature/*` — For new abstractions or features.
 - `fix/*` — For bug fixes.
 - `docs/*` — For documentation updates.
 - `chore/*` — For tooling, CI/CD, or dependency updates.
+
+Pull Requests should target the `develop` branch.
 
 ### Commit Conventions
 
@@ -58,22 +68,64 @@ We strictly follow [Conventional Commits](https://www.conventionalcommits.org/).
 ```
 <type>[optional scope]: <description>
 ```
+
 **Allowed types:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`.
 
 ### Snapshot Testing (Verify.Xunit)
 
-We use `Verify.Xunit` to ensure that our output formats (like `ToString()` on errors) do not change unexpectedly. If you modify a format, a snapshot test will fail and a `.received.txt` file will be generated.
+We use `Verify.Xunit` to ensure output formats do not change unexpectedly. If you modify a format, a snapshot test will fail and a `.received.txt` file will be generated.
+
 To accept the new snapshot:
-1. Review the `.received.txt` file to ensure the new format is correct.
+1. Review the `.received.txt` file to confirm the new format is correct.
 2. Rename the `.received.txt` file to `.verified.txt` (overwriting the old one).
 3. Commit the updated `.verified.txt` file.
 
 ## Test Structure
 
-This repository separates testing concerns into three projects:
-1. **`EricksonLopez.SharedKernel.UnitTests`** — Standard unit tests for all domain and Result primitives.
-2. **`EricksonLopez.SharedKernel.Benchmarks`** — Performance benchmarks using `BenchmarkDotNet` to prove zero-allocation claims. Run these in `Release` mode before submitting performance-related PRs.
-3. **`EricksonLopez.SharedKernel.Testing`** — A specialized library containing fluent assertions (e.g. `ShouldBeSuccess`) intended to be distributed as a NuGet package for consumers.
+This repository separates testing concerns into distinct projects:
+
+1. **`EricksonLopez.SharedKernel.UnitTests`** — Standard unit tests for all domain primitives.
+2. **`EricksonLopez.SharedKernel.ArchitectureTests`** — Architecture enforcement tests using `NetArchTest.Rules` to verify type constraints (e.g., entities must not have public setters on `Id`).
+3. **`EricksonLopez.SharedKernel.Benchmarks`** — Performance benchmarks using `BenchmarkDotNet` to prove zero-allocation claims. Run in `Release` mode before submitting performance-related PRs.
+
+```bash
+# Run unit tests only
+dotnet test tests/EricksonLopez.SharedKernel.UnitTests/EricksonLopez.SharedKernel.UnitTests.csproj --configuration Release
+
+# Run architecture tests only
+dotnet test tests/EricksonLopez.SharedKernel.ArchitectureTests/EricksonLopez.SharedKernel.ArchitectureTests.csproj --configuration Release
+
+# Run benchmarks
+dotnet run --project benchmarks/EricksonLopez.SharedKernel.Benchmarks/EricksonLopez.SharedKernel.Benchmarks.csproj --configuration Release
+```
+
+## Mutation Testing (Stryker)
+
+The CI pipeline runs Stryker mutation testing with the following thresholds:
+
+| Threshold | Value |
+|---|---|
+| Break (CI failure) | 95% |
+| Low (warning) | 98% |
+| High (target) | 100% |
+
+To run Stryker locally:
+
+```bash
+dotnet tool install -g dotnet-stryker
+dotnet stryker
+```
+
+## NativeAOT Verification
+
+Before merging any PR that touches the `src/` directory, CI verifies that the library compiles without AOT warnings:
+
+```bash
+dotnet publish samples/EricksonLopez.SharedKernel.AotConsole/EricksonLopez.SharedKernel.AotConsole.csproj \
+  -c Release -r linux-x64 -p:PublishAot=true
+```
+
+Any `IL3050` or `IL2026` warnings will fail the build. Ensure your changes do not introduce reflection or dynamic code.
 
 ## Pull Request Guidelines
 
@@ -92,10 +144,12 @@ This repository separates testing concerns into three projects:
 
 ## What NOT to Contribute
 
-- ❌ External dependencies — this package has zero external dependencies by design
+- ❌ External runtime dependencies — this package has zero external dependencies by design
 - ❌ Breaking API changes without prior discussion
 - ❌ Generated files or build artifacts
+- ❌ Reflection-based code that breaks NativeAOT/Trimming compatibility
 
 ## License
 
 By contributing, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+
