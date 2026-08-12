@@ -1,8 +1,13 @@
 # ADR-001: Result Pattern — Explicit Failure over Exceptions
 
-**Status:** Accepted  
-**Date:** 2026-07-15  
+**Status:** Superseded by [ADR-014](ADR-014-remove-result-pattern.md)
+**Date:** 2026-07-15
 **Author:** Erickson López
+
+> [!NOTE]
+> The Result pattern described in this ADR was removed from this library in v2.0. See ADR-014 for the decision rationale. This ADR is preserved for historical reference.
+
+
 
 ## Context
 

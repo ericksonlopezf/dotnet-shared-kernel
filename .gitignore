@@ -1,55 +1,51 @@
-# Ignore build output
+# .NET Core
 bin/
 obj/
 
-# NuGet packages directory (never commit restored packages)
-packages/
-*.nupkg
-*.snupkg
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
 
-# NuGet metadata
-*.nuget.props
-*.nuget.targets
-project.lock.json
-project.fragment.lock.json
-artifacts/
-
-# User-specific files
+# Visual Studio
+.vs/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
-# Rider / JetBrains
-.idea/
+# ReSharper / JetBrains
+_ReSharper*/
+*.[Rr]e[Ss]harper
 *.DotSettings.user
+.idea/
 
-# Visual Studio
-.vs/
-*.rsuser
-
-# VS Code
-.vscode/
-!.vscode/extensions.json
-
-# OS
-.DS_Store
+# Windows
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Coverage reports
-coverage/
+# Mac
+.DS_Store
+
+# Test results
+TestResults/
 *.coverage
 *.coveragexml
-TestResults/
-test-results/
+StrykerOutput/
 
-# BenchmarkDotNet
+# Secrets
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+#BenchmarkDotNet
 BenchmarkDotNet.Artifacts/
-
-# Internal design & prompt documents (never publish to public repo)
-*.prompt.md
-1. - prompt Kernel.md
-
-# Strong Name keys — private key material, never commit to public repos
-# CI/CD uses the SNK_KEY GitHub Actions secret instead
-*.snk

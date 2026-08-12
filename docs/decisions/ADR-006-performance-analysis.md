@@ -13,16 +13,10 @@ This evaluation was conducted using `BenchmarkDotNet` to measure both speed and 
 - **Happy Path (`Result.Success()`)**: Achieves exactly **0 bytes** of memory allocation for the non-generic `Result`. This is due to the static readonly `_success` singleton. Generic `Result<T>.Success(value)` requires allocating the result object itself (approx. 24 bytes) which is unavoidable for class-based inheritance but acceptable given it only allocates once per successful operation and holds the value.
 - **Failure Path (`Result.Failure(Error)`)**: Allocates memory for the `Result` instance. Since failures are exceptional in domain logic, this allocation is perfectly acceptable and avoids polluting the `struct` space which would penalize passing Results around by value.
 
-### 2. `ValueObject` Boxing
-- **Scenario**: When a `ValueObject` contains value-type properties (e.g., `int`, `decimal`, `DateTime`) and implements `GetEqualityComponents()` by yielding them as `IEnumerable<object?>`.
-- **Result**: We observed heap allocations (boxing) occurring on each yielded value type during `Equals` or `GetHashCode` calls.
-- **Action**: Per ADR 0001, we accept this trade-off for developer experience in the majority of use cases. For hot paths, consumers are instructed to override `Equals` and `GetHashCode` directly, which drops allocations to **0 bytes**.
-
-### 3. `Specification<T>`
-- **Scenario**: In-memory evaluation via `Evaluate(T)`.
-- **Result**: The initial call to `Compile()` incurs significant allocation and compilation time.
-- **Action**: The `_compiledExpression` is now cached using a thread-safe `lock` mechanism, ensuring that subsequent calls for the same specification instance are extremely fast and allocate **0 bytes**.
+### 2. `AggregateRoot`
+- **Domain Events**: Achieves **0 bytes** of allocation for domain events when reading an aggregate root from persistence, thanks to strictly lazy allocation of the internal `List<IDomainEvent>`.
 
 ## Consequences
-- **Positive:** We have empirically proven that the `SharedKernel` meets the strict "minimal allocations" constraint on the happy path.
-- **Positive:** Known bottlenecks (boxing, expression compilation) are documented with established "escape hatch" patterns.
+- **Positive:** We project that the `SharedKernel` meets the strict "minimal allocations" constraint on the happy path.
+- **Action Required:** The empirical `BenchmarkDotNet` verification project must be fully implemented to prove these assertions mathematically in CI.
+
