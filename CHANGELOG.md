@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0](https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.1.0...v2.0.0) (2026-08-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* redesign core architecture and remove obsolete classes
+
+### ✨ Features
+
+* add AggregateRoot domain primitive, expand test coverage, and document allocation analysis ([9ca7053](https://github.com/ericksonlopezf/dotnet-shared-kernel/commit/9ca7053a9c7195db4ae6446943634e5bd16d16cf))
+* redesign core architecture and remove obsolete classes ([958a385](https://github.com/ericksonlopezf/dotnet-shared-kernel/commit/958a3851e5f713492e152d38cd793592d0a676eb))
+
+
+### 📖 Documentation
+
+* match codecov badge style with others ([9ca7053](https://github.com/ericksonlopezf/dotnet-shared-kernel/commit/9ca7053a9c7195db4ae6446943634e5bd16d16cf))
+* match codecov badge style with others ([0f20d17](https://github.com/ericksonlopezf/dotnet-shared-kernel/commit/0f20d17e3b4c73d2d14663cc5a5bc2b937705b0f))
+
 ## [Unreleased]
 
 ## [2.0.0] — Unreleased
@@ -75,4 +93,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.1.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/releases/tag/v1.0.0
-
