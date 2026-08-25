@@ -1,14 +1,35 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.Dapper\EricksonLopez.SharedKernel.Dapper.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.EntityFrameworkCore\EricksonLopez.SharedKernel.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.Json\EricksonLopez.SharedKernel.Json.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.OpenTelemetry\EricksonLopez.SharedKernel.OpenTelemetry.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.Testing\EricksonLopez.SharedKernel.Testing.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.SourceGenerators\EricksonLopez.SharedKernel.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" UndefineProperties="PublishAot" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="OpenTelemetry.Exporter.InMemory" />
   </ItemGroup>
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
     <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <NoWarn>$(NoWarn);CA1859;CS8602;CA1852;CS1591;CA1510;IL2026;IL3050;IL2104;IL3053;IL2091</NoWarn>
   </PropertyGroup>
 
 </Project>

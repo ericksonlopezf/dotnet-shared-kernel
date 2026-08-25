@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <!--
+      CA1707: Identifiers should not contain underscores (Method_Scenario_Result naming convention in ADR-030).
+      CA1852: Seal internal types (test helper types do not require explicit sealing).
+      CS1718: Comparison made to same variable (testing reflexivity in equality operator overloads).
+      CS1591: Missing XML comment for publicly visible type or member (tests are not public library APIs).
+      CA1859: Use concrete types when possible for performance (tests intentionally verify interface abstractions).
+      IL2026/IL3050: Trim/AOT warnings in test harness EF Core in-memory provider.
+      CS8618: Uninitialized non-nullable properties in EF entity fakes.
+      xUnit1051: Unused xUnit parameters.
+      CA1034/CA1816/CA2012: Test helper conventions.
+    -->
+    <NoWarn>$(NoWarn);CA1707;CA1852;CS1718;CS1591;CA1859;IL2026;IL3050;CS8618;xUnit1051;CA1034;CA1816;CA2012</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.EntityFrameworkCore\EricksonLopez.SharedKernel.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\EricksonLopez.SharedKernel.TestingUtilities\EricksonLopez.SharedKernel.TestingUtilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="coverlet.msbuild">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="FsCheck" />
+    <PackageReference Include="FsCheck.Xunit" />
+  </ItemGroup>
+</Project>

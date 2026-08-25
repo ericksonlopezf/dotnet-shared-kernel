@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <Exclude>[*Tests]*,[*UnitTests]*</Exclude>
+    <!--
+      CA1707: Identifiers should not contain underscores (Method_Scenario_Result naming convention in ADR-030).
+      CA1852: Seal internal types (test helper types do not require explicit sealing).
+      CS1718: Comparison made to same variable (testing reflexivity in equality operator overloads).
+      CS1591: Missing XML comment for publicly visible type or member (tests are not public library APIs).
+      CA1859: Use concrete types when possible for performance (tests intentionally verify interface abstractions).
+    -->
+    <NoWarn>$(NoWarn);CA1707;CA1852;CS1718;CS1591;CA1859</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="coverlet.msbuild">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="FsCheck" />
+    <PackageReference Include="FsCheck.Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.Dapper\EricksonLopez.SharedKernel.Dapper.csproj" />
+    <ProjectReference Include="..\EricksonLopez.SharedKernel.TestingUtilities\EricksonLopez.SharedKernel.TestingUtilities.csproj" />
+  </ItemGroup>
+
+</Project>

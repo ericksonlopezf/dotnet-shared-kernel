@@ -1,3 +1,4 @@
+# Copyright © Erickson Lopez. MIT License.
 name: Reusable — .NET Build & Test
 
 on:
@@ -28,6 +29,16 @@ on:
         required: false
         type: string
         default: "test-results"
+    secrets:
+      SNK_KEY:
+        description: "Base64-encoded Strong Name key (.snk) for assembly signing"
+        required: false
+      CODECOV_TOKEN:
+        description: "Codecov upload token for coverage reporting"
+        required: false
+      SONAR_TOKEN:
+        description: "SonarCloud token for analysis"
+        required: false
 
 env:
   DOTNET_NOLOGO: true
@@ -46,15 +57,45 @@ jobs:
         with:
           dotnet-version: ${{ inputs.dotnet-version }}
 
-      - name: Restore
-        run: dotnet restore
+      - name: Restore Strong Name key
+        env:
+          SNK_KEY: ${{ secrets.SNK_KEY }}
+        run: |
+          if [ -n "$SNK_KEY" ]; then
+            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.snk
+          fi
+
+      - name: Setup Java (for SonarScanner)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Install SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Begin Sonar Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: env.SONAR_TOKEN != ''
+        run: |
+          dotnet sonarscanner begin /k:"ericksonlopezf_${{ github.event.repository.name }}" \
+            /o:"ericksonlopezf" \
+            /d:sonar.token="$SONAR_TOKEN" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
+            /d:sonar.exclusions="samples/**,benchmarks/**,scripts/**,**/bin/**,**/obj/**,**/*.js" \
+            /d:sonar.coverage.exclusions="tests/**,samples/**,benchmarks/**,**/*Tests.cs,**/*Test*.cs,**/tests/**,**/benchmarks/**,**/samples/**,**/bin/**,**/obj/**,**/*Generator*.cs,**/*Analyzer*.cs,**/EquatableArray.cs,**/GeneratorHelpers.cs,**/Shared/**,**/*.g.cs,**/Generated/**" \
+            /d:sonar.cpd.exclusions="tests/**,**/tests/**,**/*Tests.cs,**/*Test*.cs,**/samples/**,**/benchmarks/**,**/bin/**,**/obj/**,**/*Generator*.cs,**/*Analyzer*.cs,**/EquatableArray.cs,**/GeneratorHelpers.cs,**/Shared/**,**/Models/**,**/SourceBuilder.cs,**/DiagnosticDescriptors.cs,**/*Template*.cs,**/*Converter*.cs,**/*Handler*.cs,**/*Provider*.cs,**/*.g.cs,**/Generated/**,src/EricksonLopez.SharedKernel.SourceGenerators/**"
 
       - name: Build (Release)
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build EricksonLopez.SharedKernel.slnx --configuration Release
 
       - name: Run tests
         run: >
           dotnet test
+          EricksonLopez.SharedKernel.slnx
           ${{ inputs.test-project }}
           --no-build
           --configuration Release
@@ -62,6 +103,15 @@ jobs:
           --logger "trx;LogFileName=test-results.trx"
           --results-directory ./test-results
           --collect:"XPlat Code Coverage"
+          --
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura
+
+      - name: End Sonar Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: always() && env.SONAR_TOKEN != ''
+        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
 
       - name: Upload test results
         if: always()
@@ -70,9 +120,12 @@ jobs:
           name: ${{ inputs.artifact-name }}
           path: ./test-results/
 
-      - name: Upload coverage
+      - name: Upload coverage to Codecov
         if: always() && inputs.upload-coverage
-        uses: actions/upload-artifact@v4
+        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
         with:
-          name: ${{ inputs.artifact-name }}-coverage
-          path: "**/coverage.cobertura.xml"
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: "./test-results/**/coverage.cobertura.xml"
+          fail_ci_if_error: false
+          flags: unittests
+          name: codecov-${{ inputs.artifact-name }}

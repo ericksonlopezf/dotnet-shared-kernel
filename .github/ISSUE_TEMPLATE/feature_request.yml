@@ -1,0 +1,29 @@
+name: 💡 Feature Request
+description: Propose a new feature, API addition, or enhancement for EricksonLopez.SharedKernel
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please outline the motivation, API design, and performance impact for your proposal.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement / Motivation
+      description: Is your feature request related to a problem or architectural bottleneck?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed API & Design
+      description: Provide signature sketches or usage examples.
+      render: csharp
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other approaches did you consider and why were they discarded?

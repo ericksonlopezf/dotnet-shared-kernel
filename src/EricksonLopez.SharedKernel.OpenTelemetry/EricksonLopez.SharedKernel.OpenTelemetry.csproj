@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <AssemblyName>EricksonLopez.SharedKernel.OpenTelemetry</AssemblyName>
+    <RootNamespace>EricksonLopez.SharedKernel.OpenTelemetry</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsTrimmable>true</IsTrimmable>
+    <IsAotCompatible>true</IsAotCompatible>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <EnableAotAnalyzer>true</EnableAotAnalyzer>
+    <EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <IsPackable>true</IsPackable>
+    <PackageId>EricksonLopez.SharedKernel.OpenTelemetry</PackageId>
+    <Description>OpenTelemetry tracing and metrics instrumentation for EricksonLopez.SharedKernel domain events. NativeAOT and Trimming compatible.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>$(CommonPackageTags);opentelemetry;observability;tracing;metrics;telemetry;domain-events</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="OpenTelemetry.Api" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="EricksonLopez.SharedKernel.OpenTelemetry.Tests" />
+  </ItemGroup>
+</Project>
