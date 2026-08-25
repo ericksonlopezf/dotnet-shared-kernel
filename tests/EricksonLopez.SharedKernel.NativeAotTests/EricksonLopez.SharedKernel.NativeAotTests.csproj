@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <IsPackable>false</IsPackable>
+    <!--
+      Architectural Role:
+      Standalone Native AOT binary assertion harness.
+      Directly compiled via ILC (Intermediate Language Compiler) to validate that all SharedKernel
+      primitives execute in a native, zero-reflection, zero-JIT trimmed environment.
+    -->
+    <NoWarn>$(NoWarn);CA1859;CS8602;CA1852;CS1591;CA1510</NoWarn>
+  </PropertyGroup>
+
+</Project>

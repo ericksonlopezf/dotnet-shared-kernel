@@ -1,0 +1,5 @@
+[*.cs]
+# Disables IDE1006 (Naming Rule Violation) specifically for test projects
+# to permit the tripartite Method_Scenario_Result (Osherove) pattern,
+# enabling tests to act as human-readable living specifications in CI/CD.
+dotnet_diagnostic.IDE1006.severity = none

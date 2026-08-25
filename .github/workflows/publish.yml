@@ -1,9 +1,23 @@
+# Copyright © Erickson Lopez. MIT License.
 name: Publish NuGet
+
+# ─── Triggers ─────────────────────────────────────────────────────────────────
+# 1. Automatic: Triggered by Release Please when a release PR is merged.
+#    The workflow_dispatch input 'version' will be set to the new SemVer.
+# 2. Manual: Also triggered by pushing a 'v*.*.*' tag manually (legacy support).
+# 3. Manual dispatch: Via GitHub UI for debugging.
+# ─────────────────────────────────────────────────────────────────────────────────
 
 on:
   push:
     tags:
-      - "v*.*.*"         # Triggers on: v1.0.0, v1.2.3, v2.0.0-preview.1
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g. 1.2.3 — without 'v' prefix)"
+        required: false
+        type: string
 
 env:
   DOTNET_NOLOGO: true
@@ -14,42 +28,113 @@ jobs:
     name: Pack & Publish
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: write
+      id-token: write        # Required for Sigstore OIDC attestation
+      contents: write        # Required for GitHub Release creation
+      attestations: write    # Required for actions/attest-build-provenance
+      statuses: read         # Required to query commit statuses for Stryker quality gate
+      actions: read          # Required to query workflow runs for Stryker quality gate
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Extract version from tag
+      # ─── Resolve version ──────────────────────────────────────────────────────
+      - name: Resolve version
         id: version
-        # Strip the 'v' prefix: v1.2.3 → 1.2.3
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          if [ -n "$INPUT_VERSION" ]; then
+            echo "VERSION=$INPUT_VERSION" >> $GITHUB_OUTPUT
+            echo "Resolved version from workflow_dispatch input: $INPUT_VERSION"
+          elif [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+            echo "Resolved version from git tag: $VERSION"
+          else
+            VERSION=$(grep -oP '(?<=<VersionPrefix>)[^<]+' Directory.Build.props || echo "1.0.0")
+            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+            echo "Resolved version from Directory.Build.props: $VERSION"
+          fi
+
+      # ─── Validate Stryker Mutation Testing Quality Gate ───────────────────────
+      - name: Validate Stryker Mutation Quality Gate
+        id: mutation-gate
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const verifyMutationGate = require('./scripts/verify-mutation-gate.js');
+            await verifyMutationGate({ github, context, core });
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
 
+      # ─── Strong Name key ──────────────────────────────────────────────────────
+      - name: Restore Strong Name key
+        env:
+          SNK_KEY: ${{ secrets.SNK_KEY }}
+        run: |
+          if [ -n "$SNK_KEY" ]; then
+            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.snk
+            echo "Strong Name key restored from secret."
+          else
+            echo "SNK_KEY secret not set — building without strong name signing."
+          fi
+
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore EricksonLopez.SharedKernel.slnx
 
       - name: Build (Release)
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build EricksonLopez.SharedKernel.slnx --no-restore --configuration Release
 
+      # ─── Full test suite before publish ──────────────────────────────────────
       - name: Run tests before publish
-        run: dotnet test --no-build --configuration Release
+        run: |
+          dotnet test EricksonLopez.SharedKernel.slnx \
+            --no-build \
+            --configuration Release \
+            --logger "trx;LogFileName=test-results.trx" \
+            --results-directory ./test-results \
+            --collect:"XPlat Code Coverage" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
-      - name: Pack
-        run: >
-          dotnet pack src/EricksonLopez.SharedKernel/EricksonLopez.SharedKernel.csproj
-          --no-build
-          --configuration Release
-          --output ./nupkgs
-          -p:VersionPrefix=${{ steps.version.outputs.VERSION }}
+      - name: Upload coverage to Codecov (publish gate)
+        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: "**/coverage.opencover.xml"
+          fail_ci_if_error: false
+          flags: publish-gate
+          name: codecov-publish
 
-      - name: NuGet login
-        uses: NuGet/login@v1
+      # ─── Pack all packages ────────────────────────────────────────────────────
+      - name: Pack All Packages
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          PACK_ARGS="--no-build --configuration Release --output ./nupkgs -p:VersionPrefix=$VERSION -p:TreatWarningsAsErrors=true"
+          dotnet pack src/EricksonLopez.SharedKernel/EricksonLopez.SharedKernel.csproj $PACK_ARGS
+          dotnet pack src/EricksonLopez.SharedKernel.EntityFrameworkCore/EricksonLopez.SharedKernel.EntityFrameworkCore.csproj $PACK_ARGS
+          dotnet pack src/EricksonLopez.SharedKernel.Dapper/EricksonLopez.SharedKernel.Dapper.csproj $PACK_ARGS
+          dotnet pack src/EricksonLopez.SharedKernel.Json/EricksonLopez.SharedKernel.Json.csproj $PACK_ARGS
+          dotnet pack src/EricksonLopez.SharedKernel.SourceGenerators/EricksonLopez.SharedKernel.SourceGenerators.csproj $PACK_ARGS
+          dotnet pack src/EricksonLopez.SharedKernel.OpenTelemetry/EricksonLopez.SharedKernel.OpenTelemetry.csproj $PACK_ARGS
+          dotnet pack src/EricksonLopez.SharedKernel.Testing/EricksonLopez.SharedKernel.Testing.csproj $PACK_ARGS
+          echo "Packed packages:"
+          ls -la ./nupkgs/
+
+      # ─── Sigstore Provenance Attestation ─────────────────────────────────────
+      - name: Generate Sigstore Provenance Attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: './nupkgs/*.nupkg'
+
+      # ─── NuGet.org publish via OIDC ──────────────────────────────────────────
+      - name: NuGet login (OIDC)
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
         id: login
         with:
           user: ericksonlopezf
@@ -61,12 +146,21 @@ jobs:
           --source https://api.nuget.org/v3/index.json
           --skip-duplicate
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      # ─── GitHub Release ───────────────────────────────────────────────────────
+      - name: Create GitHub Release (tag-triggered only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
-          name: "Release ${{ github.ref_name }}"
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          name: Release ${{ steps.version.outputs.VERSION }}
+          generate_release_notes: false
           body: |
-            See [CHANGELOG.md](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/CHANGELOG.md) for details.
+            ## Ecosystem Packages in this release
+            - `EricksonLopez.SharedKernel`
+            - `EricksonLopez.SharedKernel.EntityFrameworkCore`
+            - `EricksonLopez.SharedKernel.Dapper`
+            - `EricksonLopez.SharedKernel.Json`
+            - `EricksonLopez.SharedKernel.SourceGenerators`
+            - `EricksonLopez.SharedKernel.OpenTelemetry`
+            - `EricksonLopez.SharedKernel.Testing`
           files: ./nupkgs/*.nupkg
-          draft: false
-          prerelease: ${{ contains(github.ref_name, '-') }}

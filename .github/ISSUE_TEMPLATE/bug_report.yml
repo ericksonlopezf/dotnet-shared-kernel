@@ -1,0 +1,40 @@
+name: 🐛 Bug Report
+description: Report a reproducible bug or defect in EricksonLopez.SharedKernel
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug report! Please provide detailed reproduction steps.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal Reproduction Code
+      description: Provide a minimal C# code snippet or test demonstrating the issue.
+      render: csharp
+    validations:
+      required: true
+  - type: dropdown
+    id: tfm
+    attributes:
+      label: Target Framework
+      options:
+        - .NET 10.0
+        - .NET 9.0
+        - .NET 8.0
+    validations:
+      required: true
+  - type: checkboxes
+    id: aot
+    attributes:
+      label: Native AOT
+      options:
+        - label: This issue occurs when running under NativeAOT (`PublishAot=true`).

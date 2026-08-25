@@ -1,23 +1,24 @@
-## Description
+## 📋 Description
+<!-- Describe your changes in detail -->
 
-Brief description of the changes in this PR.
+## 🔗 Related Issues
+<!-- Reference any related issue(s): Fixes #123 -->
 
-## Type of Change
-
-- [ ] 🐛 Bug fix (non-breaking change that fixes an issue)
-- [ ] ✨ New feature (non-breaking change that adds functionality)
-- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
+## 🎯 Type of Change
+- [ ] 🐛 Bug fix (non-breaking change fixing an issue)
+- [ ] ✨ New feature (non-breaking change adding functionality)
+- [ ] 💥 Breaking change (fix or feature causing existing functionality to change)
+- [ ] ⚡ Performance improvement
 - [ ] 📖 Documentation update
-- [ ] ♻️ Refactoring (no functional changes)
+- [ ] 🧪 Tests enhancement
+- [ ] 🔧 Maintenance / CI/CD
 
-## Checklist
-
-- [ ] My code follows the project's code standards
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] All new and existing tests pass
-- [ ] I have updated the CHANGELOG.md under `[Unreleased]`
-- [ ] I have updated documentation as needed
-
-## Related Issues
-
-Closes #<!-- issue number -->
+## 🛡️ Architectural & Quality Checklist
+- [ ] Code strictly follows Clean Architecture, DDD, and Repository Invariants
+- [ ] Code is 100% NativeAOT & Trimming compliant (`EnableTrimAnalyzer=true`)
+- [ ] Zero unnecessary heap allocations on hot execution paths
+- [ ] All public APIs have XML documentation comments (CS1591 enforced)
+- [ ] Unit tests added/updated and passing locally (`dotnet test -c Release`)
+- [ ] Stryker mutation score verified ($\ge 95\%$ break threshold)
+- [ ] Adheres to Conventional Commits format (`feat:`, `fix:`, `docs:`, `perf:`, etc.)
+- [ ] 100% of code, comments, and documentation are in English

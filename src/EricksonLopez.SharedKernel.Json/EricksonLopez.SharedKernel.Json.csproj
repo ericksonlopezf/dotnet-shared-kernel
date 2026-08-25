@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <AssemblyName>EricksonLopez.SharedKernel.Json</AssemblyName>
+    <RootNamespace>EricksonLopez.SharedKernel.Json</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsTrimmable>true</IsTrimmable>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <EnableAotAnalyzer>true</EnableAotAnalyzer>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    
+    <!-- NuGet Package Metadata -->
+    <IsPackable>true</IsPackable>
+    <PackageId>EricksonLopez.SharedKernel.Json</PackageId>
+    <Description>System.Text.Json dynamic converter factory and serialization adapters for EricksonLopez.SharedKernel strong identifiers.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>$(CommonPackageTags);json;system-text-json;serialization;json-converter;strongly-typed-id</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/ericksonlopezf/dotnet-shared-kernel/discussions
+    about: Ask questions, discuss architectures, and share feedback.
+  - name: 🔒 Security Advisory
+    url: https://github.com/ericksonlopezf/dotnet-shared-kernel/security/advisories/new
+    about: Privately report a security vulnerability.

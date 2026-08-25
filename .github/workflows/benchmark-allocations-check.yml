@@ -1,0 +1,110 @@
+name: Benchmark Allocations Check
+
+# ─── Purpose ─────────────────────────────────────────────────────────────────
+# Runs on Pull Requests targeting main. Executes BenchmarkDotNet benchmarks
+# and actively asserts that the `Allocated Bytes` metric is 0 for critical 
+# zero-allocation primitives. Fails the PR if a regression introduces allocations.
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+jobs:
+  benchmark-allocations:
+    name: Assert Zero-Allocation Benchmarks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Restore Strong Name key
+        env:
+          SNK_KEY: ${{ secrets.SNK_KEY }}
+        run: |
+          if [ -n "$SNK_KEY" ]; then
+            echo "$SNK_KEY" | tr -d '\n\r ' | base64 --decode > EricksonLopez.snk
+          fi
+
+      - name: Restore dependencies
+        run: dotnet restore EricksonLopez.SharedKernel.slnx
+
+      - name: Build (Release)
+        run: dotnet build EricksonLopez.SharedKernel.slnx --no-restore --configuration Release
+
+      - name: Run benchmarks & Export JSON
+        run: >
+          dotnet run
+          --project benchmarks/EricksonLopez.SharedKernel.Benchmarks/EricksonLopez.SharedKernel.Benchmarks.csproj
+          --configuration Release
+          --framework net10.0
+          --
+          --filter "*"
+          --job short
+          --exporters json
+          --memory
+          --artifacts ./benchmarks/results
+
+      - name: Assert Zero Allocations
+        shell: pwsh
+        run: |
+          $jsonFiles = Get-ChildItem -Path "./benchmarks/results" -Filter "*-report.json" -Recurse
+          if ($jsonFiles.Count -eq 0) {
+              Write-Error "No BenchmarkDotNet JSON reports found."
+              exit 1
+          }
+          
+          $failed = $false
+          foreach ($file in $jsonFiles) {
+              Write-Host "Analyzing $($file.Name)..."
+              $report = Get-Content $file.FullName | ConvertFrom-Json
+              
+              foreach ($benchmark in $report.Benchmarks) {
+                  $methodName = $benchmark.MethodTitle
+                  
+                  # Optionally filter which benchmarks strictly require 0 allocations.
+                  # By default, we expect EricksonLopez primitives to be 0 allocation.
+                  if ($methodName -match "EricksonLopez" -and $benchmark.Memory) {
+                      $allocatedBytes = $benchmark.Memory.BytesAllocatedPerOperation
+                      
+                      if ($allocatedBytes -gt 0) {
+                          Write-Error "❌ Regression detected: $methodName allocated $allocatedBytes bytes."
+                          $failed = $true
+                      } else {
+                          Write-Host "✅ $methodName : 0 bytes allocated."
+                      }
+                  }
+              }
+          }
+          
+          if ($failed) {
+              Write-Error "One or more benchmarks violated the zero-allocation invariant."
+              exit 1
+          } else {
+              Write-Host "All verified benchmarks passed the zero-allocation check."
+          }
+
+      - name: Upload benchmark JSON results as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-benchmark-results-${{ github.run_id }}
+          path: benchmarks/results/
+          retention-days: 7

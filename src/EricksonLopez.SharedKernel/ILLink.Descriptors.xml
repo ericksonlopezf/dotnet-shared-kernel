@@ -1,0 +1,12 @@
+<linker>
+  <assembly fullname="EricksonLopez.SharedKernel">
+    <type fullname="EricksonLopez.SharedKernel.IEntity" preserve="all" />
+    <type fullname="EricksonLopez.SharedKernel.IEntity`1" preserve="all" />
+    <type fullname="EricksonLopez.SharedKernel.Entity`1" preserve="all" />
+    <type fullname="EricksonLopez.SharedKernel.IHasDomainEvents" preserve="all" />
+    <type fullname="EricksonLopez.SharedKernel.IAggregateRoot" preserve="all" />
+    <type fullname="EricksonLopez.SharedKernel.AggregateRoot`1" preserve="all" />
+    <type fullname="EricksonLopez.SharedKernel.DomainEvent" preserve="all" />
+    <type fullname="EricksonLopez.SharedKernel.IDomainEventDispatcher" preserve="all" />
+  </assembly>
+</linker>

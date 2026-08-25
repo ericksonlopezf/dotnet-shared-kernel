@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <Description>Testing SDK for EricksonLopez.SharedKernel. Provides domain event collectors, assertions, and test helpers for aggregate roots.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>$(CommonPackageTags);testing;unit-testing;test-doubles;assertions;domain-events;aggregate-root</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+  </ItemGroup>
+</Project>
