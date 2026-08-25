@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 
 namespace EricksonLopez.SharedKernel.EntityFrameworkCore.Tests.Extensions;
@@ -48,7 +48,7 @@ public class SharedKernelModelConfigurationExtensionsTests
             .Options;
 
         using var context = new TestStrongIdDbContext(options);
-        
+
         var entityType = context.Model.FindEntityType(typeof(TestStrongIdEntity))!;
         var property = entityType.FindProperty(nameof(TestStrongIdEntity.Id))!;
 
@@ -89,7 +89,9 @@ public class SharedKernelModelConfigurationExtensionsTests
         var customerEntity = modelBuilder.Model.FindEntityType(typeof(CustomerAggregate))!;
         var plainEntity = modelBuilder.Model.FindEntityType(typeof(PlainEntity))!;
 
+        customerEntity.IsIgnored(nameof(IHasDomainEvents.DomainEvents)).Should().BeTrue();
         customerEntity.IsIgnored(nameof(IHasDomainEvents.DrainDomainEvents)).Should().BeTrue();
+        plainEntity.IsIgnored(nameof(IHasDomainEvents.DomainEvents)).Should().BeFalse();
         plainEntity.IsIgnored(nameof(IHasDomainEvents.DrainDomainEvents)).Should().BeFalse();
     }
 

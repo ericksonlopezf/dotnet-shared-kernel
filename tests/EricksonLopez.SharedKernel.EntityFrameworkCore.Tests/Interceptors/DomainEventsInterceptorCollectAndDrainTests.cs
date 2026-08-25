@@ -97,6 +97,38 @@ public class DomainEventsInterceptorCollectAndDrainTests
             .WithParameterName("context");
     }
 
+    [Fact]
+    public void CollectEvents_WithNullContext_ThrowsArgumentNullException()
+    {
+        var act = () => DomainEventsInterceptor.CollectEvents(null!);
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("context");
+    }
+
+    [Fact]
+    public void ClearEvents_WithNullContext_ThrowsArgumentNullException()
+    {
+        var act = () => DomainEventsInterceptor.ClearEvents(null!);
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("context");
+    }
+
+    [Fact]
+    public async Task ClearEvents_WithValidContext_ClearsPendingEvents()
+    {
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options);
+
+        var customer = new CustomerAggregate(CustomerId.New(), "ClearEvents User");
+        context.Customers.Add(customer);
+        customer.PendingDomainEventsCount.Should().Be(1);
+
+        DomainEventsInterceptor.ClearEvents(context);
+        customer.PendingDomainEventsCount.Should().Be(0);
+    }
+
     #endregion
 
     #region CollectAndDrainEvents Core Behavior
@@ -108,6 +140,44 @@ public class DomainEventsInterceptorCollectAndDrainTests
         await using var context = new TestSharedKernelDbContext(options);
 
         context.PlainEntities.Add(new PlainEntity { Id = 1, Description = "Test" });
+
+        var events = DomainEventsInterceptor.CollectAndDrainEvents(context);
+        events.Should().BeSameAs(Array.Empty<IDomainEvent>());
+    }
+
+    [Fact]
+    public async Task CollectEvents_WithNoTrackedEntities_ReturnsEmptyArraySingleton()
+    {
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options);
+
+        var events = DomainEventsInterceptor.CollectEvents(context);
+        events.Should().BeSameAs(Array.Empty<IDomainEvent>());
+    }
+
+    [Fact]
+    public async Task CollectEvents_WithTrackedEntitiesHavingNoEvents_ReturnsEmptyArraySingleton()
+    {
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options);
+
+        var customer = new CustomerAggregate(CustomerId.New(), "No Events User");
+        customer.DrainDomainEvents();
+        context.Customers.Add(customer);
+
+        var events = DomainEventsInterceptor.CollectEvents(context);
+        events.Should().BeSameAs(Array.Empty<IDomainEvent>());
+    }
+
+    [Fact]
+    public async Task CollectAndDrainEvents_WithTrackedEntitiesHavingNoEvents_ReturnsEmptyArraySingleton()
+    {
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options);
+
+        var customer = new CustomerAggregate(CustomerId.New(), "No Events User");
+        customer.DrainDomainEvents();
+        context.Customers.Add(customer);
 
         var events = DomainEventsInterceptor.CollectAndDrainEvents(context);
         events.Should().BeSameAs(Array.Empty<IDomainEvent>());
@@ -203,7 +273,7 @@ public class DomainEventsInterceptorCollectAndDrainTests
             .WithAggregateCount(aggregateCount)
             .WithEventsPerAggregate(eventsPerAggregate)
             .WithNamePrefix("User");
-            
+
         var aggregates = builder.Build();
 
         context.Customers.AddRange(aggregates);

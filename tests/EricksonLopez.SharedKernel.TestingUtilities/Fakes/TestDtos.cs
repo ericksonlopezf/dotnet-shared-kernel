@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 namespace EricksonLopez.SharedKernel.TestingUtilities.Fakes;
 
 /// <summary>

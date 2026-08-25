@@ -1,12 +1,14 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 using System.Linq;
 
 namespace EricksonLopez.SharedKernel.Json.Tests;
 
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using AwesomeAssertions;
 using EricksonLopez.DomainPrimitives;
 using EricksonLopez.SharedKernel;
@@ -320,6 +322,134 @@ public class StrongIdJsonConverterTests
         var act = () => JsonSerializer.Deserialize<OrderDto>(json, _options);
 
         act.Should().Throw<JsonException>();
+    }
+
+    #endregion
+
+    #region Factory Tests & Cache Mutations
+
+    [Fact]
+    public void Factory_CreateConverter_CachesAndReturnsSameInstance()
+    {
+        var factory = new StrongIdJsonConverterFactory();
+
+        var c1 = factory.CreateConverter(typeof(OrderId), _options);
+        var c2 = factory.CreateConverter(typeof(OrderId), _options);
+
+        c1.Should().NotBeNull();
+        c2.Should().BeSameAs(c1);
+    }
+
+    [Fact]
+    public void Factory_CreateConverter_WhenCacheReachesMaxCapacity_BypassesCache()
+    {
+        var factory = new StrongIdJsonConverterFactory();
+        var cacheField = typeof(StrongIdJsonConverterFactory).GetField("_converterCache", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!;
+        var cache = (System.Collections.Concurrent.ConcurrentDictionary<Type, JsonConverter>)cacheField.GetValue(null)!;
+
+        // Clear existing cache to have a known starting point
+        cache.Clear();
+
+        // Fill up to exactly 1024 dummy entries using 32x32 Tuple combinations
+        var dummyConverter = new StrongIdJsonConverter<OrderId, Guid>();
+        Type[] seedTypes =
+        [
+            typeof(int), typeof(long), typeof(short), typeof(byte), typeof(sbyte), typeof(uint), typeof(ulong), typeof(ushort),
+            typeof(float), typeof(double), typeof(decimal), typeof(bool), typeof(char), typeof(string), typeof(DateTime), typeof(DateTimeOffset),
+            typeof(TimeSpan), typeof(Guid), typeof(DayOfWeek), typeof(TypeCode), typeof(Uri), typeof(Version), typeof(System.Threading.CancellationToken), typeof(MemoryStream),
+            typeof(Exception), typeof(Attribute), typeof(EventArgs), typeof(StringBuilder), typeof(ConsoleColor), typeof(PlatformID), typeof(MidpointRounding), typeof(GCCollectionMode)
+        ];
+
+        for (var i = 0; i < 32; i++)
+        {
+            for (var j = 0; j < 32; j++)
+            {
+                var uniqueType = typeof(Tuple<,>).MakeGenericType(seedTypes[i], seedTypes[j]);
+                cache.TryAdd(uniqueType, dummyConverter);
+            }
+        }
+
+        cache.Count.Should().Be(1024);
+
+        // Requesting a converter for a type not yet cached when cache is at capacity (1024)
+        // should create a valid instance WITHOUT adding it to _converterCache.
+        var uncachedConverter = factory.CreateConverter(typeof(CustomerId), _options);
+
+        uncachedConverter.Should().NotBeNull();
+        cache.ContainsKey(typeof(CustomerId)).Should().BeFalse();
+
+        // Clean up cache after test
+        cache.Clear();
+    }
+
+    [Fact]
+    public void Factory_CreateConverter_WhenCacheNotFull_AddsToCache()
+    {
+        var factory = new StrongIdJsonConverterFactory();
+        var cacheField = typeof(StrongIdJsonConverterFactory).GetField("_converterCache", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!;
+        var cache = (System.Collections.Concurrent.ConcurrentDictionary<Type, JsonConverter>)cacheField.GetValue(null)!;
+        cache.Clear();
+
+        cache.ContainsKey(typeof(OrderId)).Should().BeFalse();
+        var converter = factory.CreateConverter(typeof(OrderId), _options);
+        converter.Should().NotBeNull();
+        cache.ContainsKey(typeof(OrderId)).Should().BeTrue();
+        cache[typeof(OrderId)].Should().BeSameAs(converter);
+
+        cache.Clear();
+    }
+
+    [Fact]
+    public void Factory_CreateConverter_WhenCacheAtCapacity_AndTypeAlreadyInCache_ReturnsCachedInstance()
+    {
+        var factory = new StrongIdJsonConverterFactory();
+        var cacheField = typeof(StrongIdJsonConverterFactory).GetField("_converterCache", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!;
+        var cache = (System.Collections.Concurrent.ConcurrentDictionary<Type, JsonConverter>)cacheField.GetValue(null)!;
+        cache.Clear();
+
+        var cachedConverter = factory.CreateConverter(typeof(OrderId), _options);
+        cache.ContainsKey(typeof(OrderId)).Should().BeTrue();
+
+        var dummyConverter = new StrongIdJsonConverter<OrderId, Guid>();
+        Type[] seedTypes =
+        [
+            typeof(int), typeof(long), typeof(short), typeof(byte), typeof(sbyte), typeof(uint), typeof(ulong), typeof(ushort),
+            typeof(float), typeof(double), typeof(decimal), typeof(bool), typeof(char), typeof(string), typeof(DateTime), typeof(DateTimeOffset),
+            typeof(TimeSpan), typeof(Guid), typeof(DayOfWeek), typeof(TypeCode), typeof(Uri), typeof(Version), typeof(System.Threading.CancellationToken), typeof(MemoryStream),
+            typeof(Exception), typeof(Attribute), typeof(EventArgs), typeof(StringBuilder), typeof(ConsoleColor), typeof(PlatformID), typeof(MidpointRounding), typeof(GCCollectionMode)
+        ];
+
+        for (var i = 0; i < 32; i++)
+        {
+            for (var j = 0; j < 32; j++)
+            {
+                if (cache.Count >= 1024) break;
+                var uniqueType = typeof(Tuple<,>).MakeGenericType(seedTypes[i], seedTypes[j]);
+                cache.TryAdd(uniqueType, dummyConverter);
+            }
+        }
+
+        cache.Count.Should().Be(1024);
+
+        var second = factory.CreateConverter(typeof(OrderId), _options);
+        second.Should().BeSameAs(cachedConverter);
+
+        cache.Clear();
+    }
+
+    [Fact]
+    public void Factory_CreateConverter_NullArguments_ThrowsArgumentNullException()
+    {
+        var factory = new StrongIdJsonConverterFactory();
+
+        var actNullType = () => factory.CreateConverter(null!, _options);
+        actNullType.Should().Throw<ArgumentNullException>().WithParameterName("typeToConvert");
+
+        var actNullOptions = () => factory.CreateConverter(typeof(OrderId), null!);
+        actNullOptions.Should().Throw<ArgumentNullException>().WithParameterName("options");
+
+        var actCanConvertNull = () => factory.CanConvert(null!);
+        actCanConvertNull.Should().Throw<ArgumentNullException>().WithParameterName("typeToConvert");
     }
 
     #endregion

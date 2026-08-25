@@ -3,6 +3,9 @@
 ## Status
 Accepted
 
+## Date
+2026-09-04
+
 ## Context
 As required by the project's performance constraints ("PERFORMANCE FIRST: The happy path must have minimal allocations"), we evaluated the heap allocations of the core primitives: `Result`, `ValueObject`, and `Specification`.
 This evaluation was conducted using `BenchmarkDotNet` to measure both speed and memory allocations on `.NET 10`.

@@ -1,5 +1,11 @@
 # ADR-029: Mutation Testing Strategy and BCL Redundancy Policy
 
+## Status
+Accepted
+
+## Date
+2026-08-16
+
 **Date:** 2026-08-16  
 **Status:** Accepted  
 **Deciders:** Erickson Lopez  

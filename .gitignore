@@ -1,44 +1,42 @@
-# .NET
-bin/
-obj/
-**/bin/
-**/obj/
+# =============================================================================
+# Build & Compilation Artifacts (.NET / MSBuild / Native AOT)
+# =============================================================================
+[Bb]in/
+[Oo]bj/
+[Aa]rtifacts/
+out/
+[Pp]ublish/
+aot-output/
+.temp/
+[Bb]uild[Ll]og.*
+*.binlog
+*.log
 
-# Backup files
-*.bak
+# =============================================================================
+# MSBuild / Roslyn Compiler Caches & User Overrides
+# =============================================================================
+*.props.user
+*.targets.user
+.cache/
+*.cache
+*.FileListAbsolute.txt
+*.IncrementalClean.txt
 
-# Strong Name Keys
-# *.snk (Allowed for Open Source projects)
-# Allow the public-key-only file (safe to commit — contains NO private key)
-!public.snk
-
-# NuGet packages
-nupkgs/
+# =============================================================================
+# NuGet Packaging & Local Packages
+# =============================================================================
+[Nn]upkgs/
+[Nn]ewGetPackages/
 *.nupkg
 *.snupkg
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-*.code-workspace
-
-# Visual Studio / Rider
-.vs/
-*.user
-*.suo
-.idea/
-*.DotSettings.user
-
-# Test & Analysis artifacts
+# =============================================================================
+# Testing, Code Coverage & Mutation Testing (Stryker)
+# =============================================================================
 [Tt]est[Rr]esults*/
-test-results/
-**/TestResults/
-**/test-results/
+[Tt]est-[Rr]esults*/
 [Cc]overage[Rr]eport*/
-coverage-report*/
+[Cc]overage-[Rr]eport*/
 coverage-results/
 temp-coverage/
 temp-coverage-report/
@@ -48,28 +46,123 @@ temp-coverage-report/
 *.cobertura.xml
 *.opencover.xml
 coverage.*/
-**/coverage.*
-**/coverage.*.xml
-**/coverage.*.cobertura.xml
-**/coverage.*.opencover.xml
-**/coverage.cobertura.xml
-**/coverage.opencover.xml
-**/coverage.json
-BenchmarkDotNet.Artifacts/
-benchmarks/results/*.log
-StrykerOutput/
+coverage.json
+[Ss]tryker[Oo]utput/
+stryker-tmp/
+.stryker-tmp/
 
-# Secrets & Local Config
+# =============================================================================
+# Performance Benchmarks (BenchmarkDotNet)
+# =============================================================================
+BenchmarkDotNet.Artifacts/
+BenchmarkDotNet.Artifacts*/
+benchmarks/pr-results/
+benchmarks/results/*.log
+!benchmarks/results/baseline.json
+
+# =============================================================================
+# Cryptographic Keys & Certificates
+# =============================================================================
+*.pfx
+*.p12
+*.key
+*.pem
+*.cer
+*.crt
+*.snk
+!public.snk
+!EricksonLopez.snk
+
+# =============================================================================
+# Secrets, Environment & Local Configuration
+# =============================================================================
 appsettings.Development.json
 appsettings.Local.json
+appsettings.*.local.json
+*.local.json
 secrets.json
+.env
+.env.*
+!.env.example
+!.env.template
 
-# OS files
+# =============================================================================
+# IDEs & Developer Tooling
+# =============================================================================
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userprefs
+*.sln.docstates
+*.userosscache
+UpgradeLog*.XML
+UpgradeLog*.htm
+
+# JetBrains Rider & ReSharper
+.idea/
+*.DotSettings.user
+_ReSharper*/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/snippets/
+*.code-workspace
+.history/
+
+# Other Editors
+*.sublime-project
+*.sublime-workspace
+
+# =============================================================================
+# Diagnostic Dumps & Native Interop Artifacts
+# =============================================================================
+*.dmp
+*.dump
+*.tlog
+*.idb
+*.ipch
+*.pch
+
+# =============================================================================
+# Operating System Artifacts
+# =============================================================================
+# Windows
 Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
 Desktop.ini
-.DS_Store
+$RECYCLE.BIN/
 
-# Documentation & Generated Artifacts
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux / VCS Merge & Scratch
+*~
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej
+
+# =============================================================================
+# Documentation & Static Generation
+# =============================================================================
 docs/*.html
-*.binlog
-aot-output/
+_site/
+
+# =============================================================================
+# Scripts & Node.js Tooling
+# =============================================================================
+node_modules/
+npm-debug.log*

@@ -3,6 +3,9 @@
 ## Status
 Accepted
 
+## Date
+2026-09-04
+
 ## Context
 We evaluated whether to create a dedicated `ValidationError` type (e.g., inheriting from `Error`) to model validation failures with fields such as `Field`, `AttemptedValue`, and `Message`. 
 

@@ -3,6 +3,9 @@
 ## Status
 Accepted — August 2026
 
+## Date
+2026-09-04
+
 ## Context
 The `EricksonLopez.*` ecosystem addresses domain modeling and Primitive Obsession through two distinct mechanisms:
 1. Compile-time metaprogramming via Roslyn Source Generators (`EricksonLopez.DomainPrimitives`).

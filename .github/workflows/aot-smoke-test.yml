@@ -44,10 +44,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
         with:
           dotnet-version: "10.0.x"
           cache: true
@@ -76,10 +76,10 @@ jobs:
       # TreatWarningsAsErrors=true ensures that any IL2026 / IL3050 warning
       # from the ILC trimmer is treated as a hard build error — not just a hint.
       # This is the primary validation gate for NativeAOT compatibility.
-      - name: Publish NativeAotTests (NativeAOT)
+      - name: Publish AotSmokeTest (NativeAOT)
         run: >
           dotnet publish
-          tests/EricksonLopez.SharedKernel.NativeAotTests/EricksonLopez.SharedKernel.NativeAotTests.csproj
+          tests/EricksonLopez.SharedKernel.AotSmokeTest/EricksonLopez.SharedKernel.AotSmokeTest.csproj
           --configuration Release
           --runtime linux-x64
           --self-contained
@@ -89,10 +89,10 @@ jobs:
         env:
           DOTNET_EnableAotCompilationWarningsAsErrors: true
 
-      - name: Run NativeAotTests binary
+      - name: Run AotSmokeTest binary
         run: |
-          chmod +x ./aot-output/native-aot-tests/EricksonLopez.SharedKernel.NativeAotTests
-          ./aot-output/native-aot-tests/EricksonLopez.SharedKernel.NativeAotTests
+          chmod +x ./aot-output/native-aot-tests/EricksonLopez.SharedKernel.AotSmokeTest
+          ./aot-output/native-aot-tests/EricksonLopez.SharedKernel.AotSmokeTest
           echo "Exit code: $?"
 
       - name: Publish Sample Showcase (NativeAOT)
@@ -117,7 +117,7 @@ jobs:
       # ─── Upload binary for debugging if needed ────────────────────────────
       - name: Upload AOT artifacts (on failure)
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: aot-output-${{ github.run_id }}
           path: ./aot-output/

@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -20,11 +20,21 @@ public class TestDispatcher : IDomainEventDispatcher
         DispatchedEvents.AddRange(domainEvents);
         return ValueTask.CompletedTask;
     }
+
+    public void Dispatch(IReadOnlyList<IDomainEvent> domainEvents)
+    {
+        DispatchedEvents.AddRange(domainEvents);
+    }
 }
 
 public class ThrowingDispatcher : IDomainEventDispatcher
 {
     public ValueTask DispatchAsync(IReadOnlyList<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
+    {
+        throw new InvalidOperationException("Dispatched event handling failed intentionally.");
+    }
+
+    public void Dispatch(IReadOnlyList<IDomainEvent> domainEvents)
     {
         throw new InvalidOperationException("Dispatched event handling failed intentionally.");
     }

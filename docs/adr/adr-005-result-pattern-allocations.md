@@ -3,6 +3,9 @@
 ## Status
 Superseded by [ADR-014](ADR-014-removal-of-result-dependency.md)
 
+## Date
+2026-09-04
+
 > **Historical note:** The `Result` and `Result<T>` types analyzed in this ADR were removed from the core library in ADR-014. The allocation optimization described below is preserved for historical reference only — the types it references no longer exist in `EricksonLopez.SharedKernel`.
 
 ## Context

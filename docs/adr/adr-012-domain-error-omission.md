@@ -3,6 +3,9 @@
 ## Status
 Superseded by [ADR-028](ADR-028-result-first-architecture-over-domain-exceptions.md)
 
+## Date
+2026-09-04
+
 > **Historical note:** This ADR referenced `EricksonLopez.Result.Error` as the unified error type. That dependency was removed from the core library in ADR-014. ADR-028 supersedes this ADR with the correct and current decision: Result-First Architecture via an external `EricksonLopez.Result` package, not embedded in the core.
 
 ## Context

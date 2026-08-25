@@ -39,7 +39,7 @@ Your Domain Layer
 │
 ├── AggregateRoot<TId>   ← Transactional Consistency Boundary & Event Recorder
 │     ├── Entity<TId>    ← Identity-based Domain Objects (Type + ID Equality)
-│     ├── ValueObject    ← Structural Value Objects (Attribute Equality + with-mutations)
+│     ├── Value Objects  ← Structural Domain Concepts (C# records with structural equality)
 │     └── DomainEvent    ← Sequential UUIDv7 Domain Event Facts (UTC OccurredOn)
 │
 └── IStrongId<TSelf, TValue> ← Strongly-Typed Entity Identifiers (CRTP)
@@ -65,14 +65,13 @@ public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
 public readonly record struct CustomerId(Guid Value) : IStrongId<CustomerId, Guid>;
 ```
 
-### Value Object
+### Value Objects
+Value Objects represent concepts defined by their attributes rather than an identity. Per ADR-003 and ADR-017, use standard C# `record` or `readonly record struct` types for zero-allocation structural equality:
 
 ```csharp
-[ValueObject]
-public sealed record Address(string Street, string City, string PostalCode) : ValueObject;
+public sealed record Address(string Street, string City, string PostalCode);
 
-[ValueObject]
-public sealed record Money(decimal Amount, string Currency) : ValueObject;
+public readonly record struct Money(decimal Amount, string Currency);
 ```
 
 ---

@@ -351,21 +351,25 @@ public sealed record OrderPlacedEvent(OrderId OrderId, decimal Amount) : DomainE
 
 ## `ValueObject`
 
-Base abstract record for Domain-Driven Design Value Objects.
+Base abstract record for Domain-Driven Design Value Objects. Provided by the companion foundational package `EricksonLopez.DomainPrimitives` (per ADR-017).
 
 ### Declaration
 
 ```csharp
+namespace EricksonLopez.DomainPrimitives;
+
 public abstract record ValueObject;
 ```
 
 ### Remarks
 
-A Value Object is an immutable conceptual whole defined entirely by its structural attributes rather than an explicit identity (`Entity<TId>.Id`). Value Objects leverage compiler-generated structural equality (`IEquatable<T>`), deterministic hashing, and `with`-expression non-destructive mutation.
+A Value Object is an immutable conceptual whole defined entirely by its structural attributes rather than an explicit identity (`Entity<TId>.Id`). Value Objects leverage compiler-generated structural equality (`IEquatable<T>`), deterministic hashing, and `with`-expression non-destructive mutation. Defined in `EricksonLopez.DomainPrimitives` and referenced across the `EricksonLopez.*` ecosystem.
 
 ### Code Example
 
 ```csharp
+using EricksonLopez.DomainPrimitives;
+
 public sealed record Address(string Street, string City, string PostalCode) : ValueObject;
 
 var addr1 = new Address("123 Main St", "Springfield", "97477");
