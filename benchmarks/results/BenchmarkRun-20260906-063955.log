@@ -1,0 +1,2918 @@
+// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 45 benchmark(s) in total *****
+// ***** Building 3 exe(s) in Parallel: Start   *****
+// ***** Done, took 00:00:13 (13.83 sec)   *****
+// ***** Failed to build in Parallel, switching to sequential build   *****
+// ***** Done, took 00:00:03 (3.07 sec)   *****
+// Found 12 benchmarks:
+//   AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+
+// **************************
+// Benchmark: AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 114 118 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents --job ".NET 10.0" --benchmarkId 0 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 235198.00 ns, 235.1980 us/op
+WorkloadJitting  1: 1 op, 415443.00 ns, 415.4430 us/op
+
+OverheadJitting  2: 16 op, 477299.00 ns, 29.8312 us/op
+WorkloadJitting  2: 16 op, 779521.00 ns, 48.7201 us/op
+
+WorkloadPilot    1: 16 op, 2936.00 ns, 183.5000 ns/op
+WorkloadPilot    2: 32 op, 3366.00 ns, 105.1875 ns/op
+WorkloadPilot    3: 64 op, 19587.00 ns, 306.0469 ns/op
+WorkloadPilot    4: 128 op, 20338.00 ns, 158.8906 ns/op
+WorkloadPilot    5: 256 op, 26890.00 ns, 105.0391 ns/op
+WorkloadPilot    6: 512 op, 38923.00 ns, 76.0215 ns/op
+WorkloadPilot    7: 1024 op, 79357.00 ns, 77.4971 ns/op
+WorkloadPilot    8: 2048 op, 142415.00 ns, 69.5386 ns/op
+WorkloadPilot    9: 4096 op, 279640.00 ns, 68.2715 ns/op
+WorkloadPilot   10: 8192 op, 473892.00 ns, 57.8481 ns/op
+WorkloadPilot   11: 16384 op, 956340.00 ns, 58.3704 ns/op
+WorkloadPilot   12: 32768 op, 1827060.00 ns, 55.7574 ns/op
+WorkloadPilot   13: 65536 op, 3676402.00 ns, 56.0974 ns/op
+WorkloadPilot   14: 131072 op, 7348406.00 ns, 56.0639 ns/op
+WorkloadPilot   15: 262144 op, 13049165.00 ns, 49.7786 ns/op
+WorkloadPilot   16: 524288 op, 17394172.00 ns, 33.1768 ns/op
+WorkloadPilot   17: 1048576 op, 30513628.00 ns, 29.1001 ns/op
+WorkloadPilot   18: 2097152 op, 58990816.00 ns, 28.1290 ns/op
+WorkloadPilot   19: 4194304 op, 86461220.00 ns, 20.6140 ns/op
+WorkloadPilot   20: 8388608 op, 148178521.00 ns, 17.6643 ns/op
+WorkloadPilot   21: 16777216 op, 301345704.00 ns, 17.9616 ns/op
+WorkloadPilot   22: 33554432 op, 608646893.00 ns, 18.1391 ns/op
+
+OverheadWarmup   1: 33554432 op, 153331480.00 ns, 4.5696 ns/op
+OverheadWarmup   2: 33554432 op, 156084443.00 ns, 4.6517 ns/op
+OverheadWarmup   3: 33554432 op, 111027790.00 ns, 3.3089 ns/op
+OverheadWarmup   4: 33554432 op, 115793028.00 ns, 3.4509 ns/op
+OverheadWarmup   5: 33554432 op, 112291462.00 ns, 3.3465 ns/op
+
+OverheadActual   1: 33554432 op, 111122736.00 ns, 3.3117 ns/op
+OverheadActual   2: 33554432 op, 111931351.00 ns, 3.3358 ns/op
+OverheadActual   3: 33554432 op, 111253851.00 ns, 3.3156 ns/op
+OverheadActual   4: 33554432 op, 111388883.00 ns, 3.3196 ns/op
+OverheadActual   5: 33554432 op, 110997665.00 ns, 3.3080 ns/op
+OverheadActual   6: 33554432 op, 111402978.00 ns, 3.3201 ns/op
+OverheadActual   7: 33554432 op, 111006381.00 ns, 3.3082 ns/op
+OverheadActual   8: 33554432 op, 111523172.00 ns, 3.3236 ns/op
+OverheadActual   9: 33554432 op, 111011450.00 ns, 3.3084 ns/op
+OverheadActual  10: 33554432 op, 111325864.00 ns, 3.3178 ns/op
+OverheadActual  11: 33554432 op, 110881568.00 ns, 3.3045 ns/op
+OverheadActual  12: 33554432 op, 113891640.00 ns, 3.3942 ns/op
+OverheadActual  13: 33554432 op, 110954914.00 ns, 3.3067 ns/op
+OverheadActual  14: 33554432 op, 111028321.00 ns, 3.3089 ns/op
+OverheadActual  15: 33554432 op, 112874617.00 ns, 3.3639 ns/op
+
+WorkloadWarmup   1: 33554432 op, 605507187.00 ns, 18.0455 ns/op
+WorkloadWarmup   2: 33554432 op, 613282474.00 ns, 18.2772 ns/op
+WorkloadWarmup   3: 33554432 op, 606033695.00 ns, 18.0612 ns/op
+WorkloadWarmup   4: 33554432 op, 600698865.00 ns, 17.9022 ns/op
+WorkloadWarmup   5: 33554432 op, 600696071.00 ns, 17.9021 ns/op
+WorkloadWarmup   6: 33554432 op, 617600701.00 ns, 18.4059 ns/op
+WorkloadWarmup   7: 33554432 op, 628469549.00 ns, 18.7299 ns/op
+WorkloadWarmup   8: 33554432 op, 633531579.00 ns, 18.8807 ns/op
+WorkloadWarmup   9: 33554432 op, 621954253.00 ns, 18.5357 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 33554432 op, 633495894.00 ns, 18.8796 ns/op
+WorkloadActual   2: 33554432 op, 658879674.00 ns, 19.6361 ns/op
+WorkloadActual   3: 33554432 op, 637635978.00 ns, 19.0030 ns/op
+WorkloadActual   4: 33554432 op, 629010213.00 ns, 18.7460 ns/op
+WorkloadActual   5: 33554432 op, 603400594.00 ns, 17.9827 ns/op
+WorkloadActual   6: 33554432 op, 617586078.00 ns, 18.4055 ns/op
+WorkloadActual   7: 33554432 op, 621434519.00 ns, 18.5202 ns/op
+WorkloadActual   8: 33554432 op, 606666090.00 ns, 18.0801 ns/op
+WorkloadActual   9: 33554432 op, 613753437.00 ns, 18.2913 ns/op
+WorkloadActual  10: 33554432 op, 623133099.00 ns, 18.5708 ns/op
+WorkloadActual  11: 33554432 op, 624119364.00 ns, 18.6002 ns/op
+WorkloadActual  12: 33554432 op, 630538339.00 ns, 18.7915 ns/op
+WorkloadActual  13: 33554432 op, 628440615.00 ns, 18.7290 ns/op
+WorkloadActual  14: 33554432 op, 634233253.00 ns, 18.9016 ns/op
+WorkloadActual  15: 33554432 op, 634928968.00 ns, 18.9224 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 33554432 op, 522242043.00 ns, 15.5640 ns/op
+WorkloadResult   2: 33554432 op, 526382127.00 ns, 15.6874 ns/op
+WorkloadResult   3: 33554432 op, 517756362.00 ns, 15.4303 ns/op
+WorkloadResult   4: 33554432 op, 492146743.00 ns, 14.6671 ns/op
+WorkloadResult   5: 33554432 op, 506332227.00 ns, 15.0899 ns/op
+WorkloadResult   6: 33554432 op, 510180668.00 ns, 15.2046 ns/op
+WorkloadResult   7: 33554432 op, 495412239.00 ns, 14.7644 ns/op
+WorkloadResult   8: 33554432 op, 502499586.00 ns, 14.9757 ns/op
+WorkloadResult   9: 33554432 op, 511879248.00 ns, 15.2552 ns/op
+WorkloadResult  10: 33554432 op, 512865513.00 ns, 15.2846 ns/op
+WorkloadResult  11: 33554432 op, 519284488.00 ns, 15.4759 ns/op
+WorkloadResult  12: 33554432 op, 517186764.00 ns, 15.4134 ns/op
+WorkloadResult  13: 33554432 op, 522979402.00 ns, 15.5860 ns/op
+WorkloadResult  14: 33554432 op, 523675117.00 ns, 15.6067 ns/op
+// GC:  144 0 0 2415919104 33554432
+// Threading:  0 0 33554432
+
+// AfterAll
+// Benchmark Process 3568 has exited with code 0.
+
+Mean = 15.286 ns, StdErr = 0.085 ns (0.55%), N = 14, StdDev = 0.316 ns
+Min = 14.667 ns, Q1 = 15.119 ns, Median = 15.349 ns, Q3 = 15.542 ns, Max = 15.687 ns
+IQR = 0.423 ns, LowerFence = 14.483 ns, UpperFence = 16.177 ns
+ConfidenceInterval = [14.929 ns; 15.643 ns] (CI 99.9%), Margin = 0.357 ns (2.34% of Mean)
+Skewness = -0.58, Kurtosis = 2.02, MValue = 2
+
+// ** Remained 44 (97.8 %) benchmark(s) to run. Estimated finish 2026-09-06 6:54 (0h 14m from now) **
+// **************************
+// Benchmark: AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 114 118 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents --job ".NET 10.0" --benchmarkId 1 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 241469.00 ns, 241.4690 us/op
+WorkloadJitting  1: 1 op, 597332.00 ns, 597.3320 us/op
+
+OverheadJitting  2: 16 op, 506182.00 ns, 31.6364 us/op
+WorkloadJitting  2: 16 op, 527381.00 ns, 32.9613 us/op
+
+WorkloadPilot    1: 16 op, 3727.00 ns, 232.9375 ns/op
+WorkloadPilot    2: 32 op, 4077.00 ns, 127.4063 ns/op
+WorkloadPilot    3: 64 op, 5180.00 ns, 80.9375 ns/op
+WorkloadPilot    4: 128 op, 21680.00 ns, 169.3750 ns/op
+WorkloadPilot    5: 256 op, 25417.00 ns, 99.2852 ns/op
+WorkloadPilot    6: 512 op, 33301.00 ns, 65.0410 ns/op
+WorkloadPilot    7: 1024 op, 63488.00 ns, 62.0000 ns/op
+WorkloadPilot    8: 2048 op, 135181.00 ns, 66.0063 ns/op
+WorkloadPilot    9: 4096 op, 197318.00 ns, 48.1733 ns/op
+WorkloadPilot   10: 8192 op, 292715.00 ns, 35.7318 ns/op
+WorkloadPilot   11: 16384 op, 661731.00 ns, 40.3889 ns/op
+WorkloadPilot   12: 32768 op, 1372053.00 ns, 41.8717 ns/op
+WorkloadPilot   13: 65536 op, 2640493.00 ns, 40.2907 ns/op
+WorkloadPilot   14: 131072 op, 5654151.00 ns, 43.1377 ns/op
+WorkloadPilot   15: 262144 op, 11008172.00 ns, 41.9928 ns/op
+WorkloadPilot   16: 524288 op, 18498199.00 ns, 35.2825 ns/op
+WorkloadPilot   17: 1048576 op, 27670916.00 ns, 26.3890 ns/op
+WorkloadPilot   18: 2097152 op, 56536546.00 ns, 26.9587 ns/op
+WorkloadPilot   19: 4194304 op, 91508608.00 ns, 21.8174 ns/op
+WorkloadPilot   20: 8388608 op, 101037308.00 ns, 12.0446 ns/op
+WorkloadPilot   21: 16777216 op, 191741645.00 ns, 11.4287 ns/op
+WorkloadPilot   22: 33554432 op, 370590698.00 ns, 11.0445 ns/op
+WorkloadPilot   23: 67108864 op, 730771623.00 ns, 10.8893 ns/op
+
+OverheadWarmup   1: 67108864 op, 276209726.00 ns, 4.1158 ns/op
+OverheadWarmup   2: 67108864 op, 221373736.00 ns, 3.2987 ns/op
+OverheadWarmup   3: 67108864 op, 225398536.00 ns, 3.3587 ns/op
+OverheadWarmup   4: 67108864 op, 219594424.00 ns, 3.2722 ns/op
+OverheadWarmup   5: 67108864 op, 219578816.00 ns, 3.2720 ns/op
+OverheadWarmup   6: 67108864 op, 221250947.00 ns, 3.2969 ns/op
+OverheadWarmup   7: 67108864 op, 219919018.00 ns, 3.2770 ns/op
+
+OverheadActual   1: 67108864 op, 219561864.00 ns, 3.2717 ns/op
+OverheadActual   2: 67108864 op, 219592621.00 ns, 3.2722 ns/op
+OverheadActual   3: 67108864 op, 219545884.00 ns, 3.2715 ns/op
+OverheadActual   4: 67108864 op, 224306254.00 ns, 3.3424 ns/op
+OverheadActual   5: 67108864 op, 220005479.00 ns, 3.2783 ns/op
+OverheadActual   6: 67108864 op, 219294216.00 ns, 3.2677 ns/op
+OverheadActual   7: 67108864 op, 219653425.00 ns, 3.2731 ns/op
+OverheadActual   8: 67108864 op, 219766164.00 ns, 3.2748 ns/op
+OverheadActual   9: 67108864 op, 220086781.00 ns, 3.2795 ns/op
+OverheadActual  10: 67108864 op, 219250054.00 ns, 3.2671 ns/op
+OverheadActual  11: 67108864 op, 219384053.00 ns, 3.2691 ns/op
+OverheadActual  12: 67108864 op, 219534743.00 ns, 3.2713 ns/op
+OverheadActual  13: 67108864 op, 219482516.00 ns, 3.2705 ns/op
+OverheadActual  14: 67108864 op, 220177480.00 ns, 3.2809 ns/op
+OverheadActual  15: 67108864 op, 219307550.00 ns, 3.2679 ns/op
+
+WorkloadWarmup   1: 67108864 op, 728572150.00 ns, 10.8566 ns/op
+WorkloadWarmup   2: 67108864 op, 756083098.00 ns, 11.2665 ns/op
+WorkloadWarmup   3: 67108864 op, 746953519.00 ns, 11.1305 ns/op
+WorkloadWarmup   4: 67108864 op, 754619294.00 ns, 11.2447 ns/op
+WorkloadWarmup   5: 67108864 op, 822094391.00 ns, 12.2502 ns/op
+WorkloadWarmup   6: 67108864 op, 808488070.00 ns, 12.0474 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 67108864 op, 729473019.00 ns, 10.8700 ns/op
+WorkloadActual   2: 67108864 op, 770301066.00 ns, 11.4784 ns/op
+WorkloadActual   3: 67108864 op, 724349735.00 ns, 10.7937 ns/op
+WorkloadActual   4: 67108864 op, 754600439.00 ns, 11.2444 ns/op
+WorkloadActual   5: 67108864 op, 810391542.00 ns, 12.0758 ns/op
+WorkloadActual   6: 67108864 op, 786774974.00 ns, 11.7239 ns/op
+WorkloadActual   7: 67108864 op, 869426553.00 ns, 12.9555 ns/op
+WorkloadActual   8: 67108864 op, 730258650.00 ns, 10.8817 ns/op
+WorkloadActual   9: 67108864 op, 767270609.00 ns, 11.4332 ns/op
+WorkloadActual  10: 67108864 op, 744713576.00 ns, 11.0971 ns/op
+WorkloadActual  11: 67108864 op, 748263141.00 ns, 11.1500 ns/op
+WorkloadActual  12: 67108864 op, 755412725.00 ns, 11.2565 ns/op
+WorkloadActual  13: 67108864 op, 773622061.00 ns, 11.5279 ns/op
+WorkloadActual  14: 67108864 op, 831900876.00 ns, 12.3963 ns/op
+WorkloadActual  15: 67108864 op, 813247006.00 ns, 12.1183 ns/op
+WorkloadActual  16: 67108864 op, 765677955.00 ns, 11.4095 ns/op
+WorkloadActual  17: 67108864 op, 800057245.00 ns, 11.9218 ns/op
+WorkloadActual  18: 67108864 op, 769338172.00 ns, 11.4640 ns/op
+WorkloadActual  19: 67108864 op, 751928175.00 ns, 11.2046 ns/op
+WorkloadActual  20: 67108864 op, 797416209.00 ns, 11.8824 ns/op
+WorkloadActual  21: 67108864 op, 790468859.00 ns, 11.7789 ns/op
+WorkloadActual  22: 67108864 op, 756102903.00 ns, 11.2668 ns/op
+WorkloadActual  23: 67108864 op, 836124072.00 ns, 12.4592 ns/op
+WorkloadActual  24: 67108864 op, 801031695.00 ns, 11.9363 ns/op
+WorkloadActual  25: 67108864 op, 727006075.00 ns, 10.8332 ns/op
+WorkloadActual  26: 67108864 op, 812638576.00 ns, 12.1093 ns/op
+WorkloadActual  27: 67108864 op, 795155920.00 ns, 11.8487 ns/op
+WorkloadActual  28: 67108864 op, 746628281.00 ns, 11.1256 ns/op
+WorkloadActual  29: 67108864 op, 735759771.00 ns, 10.9637 ns/op
+WorkloadActual  30: 67108864 op, 756429511.00 ns, 11.2717 ns/op
+WorkloadActual  31: 67108864 op, 724684474.00 ns, 10.7986 ns/op
+WorkloadActual  32: 67108864 op, 732421170.00 ns, 10.9139 ns/op
+WorkloadActual  33: 67108864 op, 708184031.00 ns, 10.5528 ns/op
+WorkloadActual  34: 67108864 op, 742605125.00 ns, 11.0657 ns/op
+WorkloadActual  35: 67108864 op, 745422964.00 ns, 11.1077 ns/op
+WorkloadActual  36: 67108864 op, 745426560.00 ns, 11.1077 ns/op
+WorkloadActual  37: 67108864 op, 745913456.00 ns, 11.1150 ns/op
+WorkloadActual  38: 67108864 op, 732258537.00 ns, 10.9115 ns/op
+WorkloadActual  39: 67108864 op, 731958453.00 ns, 10.9070 ns/op
+WorkloadActual  40: 67108864 op, 728529083.00 ns, 10.8559 ns/op
+WorkloadActual  41: 67108864 op, 743094705.00 ns, 11.0730 ns/op
+WorkloadActual  42: 67108864 op, 720590481.00 ns, 10.7376 ns/op
+WorkloadActual  43: 67108864 op, 718432566.00 ns, 10.7055 ns/op
+WorkloadActual  44: 67108864 op, 727745694.00 ns, 10.8443 ns/op
+WorkloadActual  45: 67108864 op, 727391686.00 ns, 10.8390 ns/op
+WorkloadActual  46: 67108864 op, 715477757.00 ns, 10.6614 ns/op
+WorkloadActual  47: 67108864 op, 725464771.00 ns, 10.8103 ns/op
+WorkloadActual  48: 67108864 op, 697013952.00 ns, 10.3863 ns/op
+WorkloadActual  49: 67108864 op, 766237028.00 ns, 11.4178 ns/op
+WorkloadActual  50: 67108864 op, 776168430.00 ns, 11.5658 ns/op
+WorkloadActual  51: 67108864 op, 786086500.00 ns, 11.7136 ns/op
+WorkloadActual  52: 67108864 op, 804884028.00 ns, 11.9937 ns/op
+WorkloadActual  53: 67108864 op, 747972728.00 ns, 11.1457 ns/op
+WorkloadActual  54: 67108864 op, 754158161.00 ns, 11.2378 ns/op
+WorkloadActual  55: 67108864 op, 752542664.00 ns, 11.2138 ns/op
+WorkloadActual  56: 67108864 op, 753749090.00 ns, 11.2317 ns/op
+WorkloadActual  57: 67108864 op, 752442999.00 ns, 11.2123 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 67108864 op, 509911155.00 ns, 7.5983 ns/op
+WorkloadResult   2: 67108864 op, 550739202.00 ns, 8.2067 ns/op
+WorkloadResult   3: 67108864 op, 504787871.00 ns, 7.5219 ns/op
+WorkloadResult   4: 67108864 op, 535038575.00 ns, 7.9727 ns/op
+WorkloadResult   5: 67108864 op, 590829678.00 ns, 8.8040 ns/op
+WorkloadResult   6: 67108864 op, 567213110.00 ns, 8.4521 ns/op
+WorkloadResult   7: 67108864 op, 510696786.00 ns, 7.6100 ns/op
+WorkloadResult   8: 67108864 op, 547708745.00 ns, 8.1615 ns/op
+WorkloadResult   9: 67108864 op, 525151712.00 ns, 7.8254 ns/op
+WorkloadResult  10: 67108864 op, 528701277.00 ns, 7.8783 ns/op
+WorkloadResult  11: 67108864 op, 535850861.00 ns, 7.9848 ns/op
+WorkloadResult  12: 67108864 op, 554060197.00 ns, 8.2561 ns/op
+WorkloadResult  13: 67108864 op, 612339012.00 ns, 9.1246 ns/op
+WorkloadResult  14: 67108864 op, 593685142.00 ns, 8.8466 ns/op
+WorkloadResult  15: 67108864 op, 546116091.00 ns, 8.1378 ns/op
+WorkloadResult  16: 67108864 op, 580495381.00 ns, 8.6501 ns/op
+WorkloadResult  17: 67108864 op, 549776308.00 ns, 8.1923 ns/op
+WorkloadResult  18: 67108864 op, 532366311.00 ns, 7.9329 ns/op
+WorkloadResult  19: 67108864 op, 577854345.00 ns, 8.6107 ns/op
+WorkloadResult  20: 67108864 op, 570906995.00 ns, 8.5072 ns/op
+WorkloadResult  21: 67108864 op, 536541039.00 ns, 7.9951 ns/op
+WorkloadResult  22: 67108864 op, 616562208.00 ns, 9.1875 ns/op
+WorkloadResult  23: 67108864 op, 581469831.00 ns, 8.6646 ns/op
+WorkloadResult  24: 67108864 op, 507444211.00 ns, 7.5615 ns/op
+WorkloadResult  25: 67108864 op, 593076712.00 ns, 8.8375 ns/op
+WorkloadResult  26: 67108864 op, 575594056.00 ns, 8.5770 ns/op
+WorkloadResult  27: 67108864 op, 527066417.00 ns, 7.8539 ns/op
+WorkloadResult  28: 67108864 op, 516197907.00 ns, 7.6919 ns/op
+WorkloadResult  29: 67108864 op, 536867647.00 ns, 8.0000 ns/op
+WorkloadResult  30: 67108864 op, 505122610.00 ns, 7.5269 ns/op
+WorkloadResult  31: 67108864 op, 512859306.00 ns, 7.6422 ns/op
+WorkloadResult  32: 67108864 op, 488622167.00 ns, 7.2810 ns/op
+WorkloadResult  33: 67108864 op, 523043261.00 ns, 7.7940 ns/op
+WorkloadResult  34: 67108864 op, 525861100.00 ns, 7.8359 ns/op
+WorkloadResult  35: 67108864 op, 525864696.00 ns, 7.8360 ns/op
+WorkloadResult  36: 67108864 op, 526351592.00 ns, 7.8432 ns/op
+WorkloadResult  37: 67108864 op, 512696673.00 ns, 7.6398 ns/op
+WorkloadResult  38: 67108864 op, 512396589.00 ns, 7.6353 ns/op
+WorkloadResult  39: 67108864 op, 508967219.00 ns, 7.5842 ns/op
+WorkloadResult  40: 67108864 op, 523532841.00 ns, 7.8012 ns/op
+WorkloadResult  41: 67108864 op, 501028617.00 ns, 7.4659 ns/op
+WorkloadResult  42: 67108864 op, 498870702.00 ns, 7.4338 ns/op
+WorkloadResult  43: 67108864 op, 508183830.00 ns, 7.5725 ns/op
+WorkloadResult  44: 67108864 op, 507829822.00 ns, 7.5673 ns/op
+WorkloadResult  45: 67108864 op, 495915893.00 ns, 7.3897 ns/op
+WorkloadResult  46: 67108864 op, 505902907.00 ns, 7.5385 ns/op
+WorkloadResult  47: 67108864 op, 477452088.00 ns, 7.1146 ns/op
+WorkloadResult  48: 67108864 op, 546675164.00 ns, 8.1461 ns/op
+WorkloadResult  49: 67108864 op, 556606566.00 ns, 8.2941 ns/op
+WorkloadResult  50: 67108864 op, 566524636.00 ns, 8.4419 ns/op
+WorkloadResult  51: 67108864 op, 585322164.00 ns, 8.7220 ns/op
+WorkloadResult  52: 67108864 op, 528410864.00 ns, 7.8739 ns/op
+WorkloadResult  53: 67108864 op, 534596297.00 ns, 7.9661 ns/op
+WorkloadResult  54: 67108864 op, 532980800.00 ns, 7.9420 ns/op
+WorkloadResult  55: 67108864 op, 534187226.00 ns, 7.9600 ns/op
+WorkloadResult  56: 67108864 op, 532881135.00 ns, 7.9405 ns/op
+// GC:  160 0 0 2684354560 67108864
+// Threading:  0 0 67108864
+
+// AfterAll
+// Benchmark Process 3587 has exited with code 0.
+
+Mean = 8.008 ns, StdErr = 0.064 ns (0.80%), N = 56, StdDev = 0.477 ns
+Min = 7.115 ns, Q1 = 7.629 ns, Median = 7.937 ns, Q3 = 8.266 ns, Max = 9.187 ns
+IQR = 0.637 ns, LowerFence = 6.674 ns, UpperFence = 9.221 ns
+ConfidenceInterval = [7.786 ns; 8.229 ns] (CI 99.9%), Margin = 0.222 ns (2.77% of Mean)
+Skewness = 0.6, Kurtosis = 2.6, MValue = 2
+
+// ** Remained 43 (95.6 %) benchmark(s) to run. Estimated finish 2026-09-06 7:08 (0h 26m from now) **
+// **************************
+// Benchmark: AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 114 118 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents --job ".NET 10.0" --benchmarkId 2 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 237933.00 ns, 237.9330 us/op
+WorkloadJitting  1: 1 op, 847016.00 ns, 847.0160 us/op
+
+OverheadJitting  2: 16 op, 328051.00 ns, 20.5032 us/op
+WorkloadJitting  2: 16 op, 431072.00 ns, 26.9420 us/op
+
+WorkloadPilot    1: 16 op, 12924.00 ns, 807.7500 ns/op
+WorkloadPilot    2: 32 op, 39974.00 ns, 1.2492 us/op
+WorkloadPilot    3: 64 op, 49412.00 ns, 772.0625 ns/op
+WorkloadPilot    4: 128 op, 69480.00 ns, 542.8125 ns/op
+WorkloadPilot    5: 256 op, 123189.00 ns, 481.2070 ns/op
+WorkloadPilot    6: 512 op, 205632.00 ns, 401.6250 ns/op
+WorkloadPilot    7: 1024 op, 420443.00 ns, 410.5889 ns/op
+WorkloadPilot    8: 2048 op, 710953.00 ns, 347.1450 ns/op
+WorkloadPilot    9: 4096 op, 1528645.00 ns, 373.2043 ns/op
+WorkloadPilot   10: 8192 op, 3007037.00 ns, 367.0699 ns/op
+WorkloadPilot   11: 16384 op, 6086018.00 ns, 371.4611 ns/op
+WorkloadPilot   12: 32768 op, 11999104.00 ns, 366.1836 ns/op
+WorkloadPilot   13: 65536 op, 24381982.00 ns, 372.0395 ns/op
+WorkloadPilot   14: 131072 op, 37498977.00 ns, 286.0945 ns/op
+WorkloadPilot   15: 262144 op, 76140000.00 ns, 290.4510 ns/op
+WorkloadPilot   16: 524288 op, 96791769.00 ns, 184.6156 ns/op
+WorkloadPilot   17: 1048576 op, 99427065.00 ns, 94.8210 ns/op
+WorkloadPilot   18: 2097152 op, 163963034.00 ns, 78.1837 ns/op
+WorkloadPilot   19: 4194304 op, 328539264.00 ns, 78.3299 ns/op
+WorkloadPilot   20: 8388608 op, 645361614.00 ns, 76.9331 ns/op
+
+OverheadWarmup   1: 8388608 op, 21763025.00 ns, 2.5944 ns/op
+OverheadWarmup   2: 8388608 op, 21799572.00 ns, 2.5987 ns/op
+OverheadWarmup   3: 8388608 op, 21723471.00 ns, 2.5896 ns/op
+OverheadWarmup   4: 8388608 op, 21727268.00 ns, 2.5901 ns/op
+OverheadWarmup   5: 8388608 op, 21719313.00 ns, 2.5891 ns/op
+
+OverheadActual   1: 8388608 op, 21795815.00 ns, 2.5983 ns/op
+OverheadActual   2: 8388608 op, 21831652.00 ns, 2.6025 ns/op
+OverheadActual   3: 8388608 op, 21739340.00 ns, 2.5915 ns/op
+OverheadActual   4: 8388608 op, 21742085.00 ns, 2.5919 ns/op
+OverheadActual   5: 8388608 op, 21748968.00 ns, 2.5927 ns/op
+OverheadActual   6: 8388608 op, 21768564.00 ns, 2.5950 ns/op
+OverheadActual   7: 8388608 op, 21913935.00 ns, 2.6123 ns/op
+OverheadActual   8: 8388608 op, 21723651.00 ns, 2.5897 ns/op
+OverheadActual   9: 8388608 op, 21792980.00 ns, 2.5979 ns/op
+OverheadActual  10: 8388608 op, 21747416.00 ns, 2.5925 ns/op
+OverheadActual  11: 8388608 op, 21728901.00 ns, 2.5903 ns/op
+OverheadActual  12: 8388608 op, 21764187.00 ns, 2.5945 ns/op
+OverheadActual  13: 8388608 op, 23231938.00 ns, 2.7695 ns/op
+OverheadActual  14: 8388608 op, 13958312.00 ns, 1.6640 ns/op
+OverheadActual  15: 8388608 op, 13882251.00 ns, 1.6549 ns/op
+OverheadActual  16: 8388608 op, 13882020.00 ns, 1.6549 ns/op
+OverheadActual  17: 8388608 op, 14143396.00 ns, 1.6860 ns/op
+OverheadActual  18: 8388608 op, 13879505.00 ns, 1.6546 ns/op
+OverheadActual  19: 8388608 op, 13880327.00 ns, 1.6547 ns/op
+OverheadActual  20: 8388608 op, 13918107.00 ns, 1.6592 ns/op
+
+WorkloadWarmup   1: 8388608 op, 656631520.00 ns, 78.2766 ns/op
+WorkloadWarmup   2: 8388608 op, 632636442.00 ns, 75.4161 ns/op
+WorkloadWarmup   3: 8388608 op, 628849526.00 ns, 74.9647 ns/op
+WorkloadWarmup   4: 8388608 op, 628205768.00 ns, 74.8880 ns/op
+WorkloadWarmup   5: 8388608 op, 630406553.00 ns, 75.1503 ns/op
+WorkloadWarmup   6: 8388608 op, 638927949.00 ns, 76.1661 ns/op
+WorkloadWarmup   7: 8388608 op, 642798300.00 ns, 76.6275 ns/op
+WorkloadWarmup   8: 8388608 op, 624008117.00 ns, 74.3876 ns/op
+WorkloadWarmup   9: 8388608 op, 635532601.00 ns, 75.7614 ns/op
+WorkloadWarmup  10: 8388608 op, 641652047.00 ns, 76.4909 ns/op
+WorkloadWarmup  11: 8388608 op, 647491964.00 ns, 77.1871 ns/op
+WorkloadWarmup  12: 8388608 op, 627987197.00 ns, 74.8619 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 8388608 op, 632732028.00 ns, 75.4275 ns/op
+WorkloadActual   2: 8388608 op, 637945219.00 ns, 76.0490 ns/op
+WorkloadActual   3: 8388608 op, 641949549.00 ns, 76.5263 ns/op
+WorkloadActual   4: 8388608 op, 651685745.00 ns, 77.6870 ns/op
+WorkloadActual   5: 8388608 op, 652844481.00 ns, 77.8251 ns/op
+WorkloadActual   6: 8388608 op, 645582800.00 ns, 76.9595 ns/op
+WorkloadActual   7: 8388608 op, 642979926.00 ns, 76.6492 ns/op
+WorkloadActual   8: 8388608 op, 636620343.00 ns, 75.8911 ns/op
+WorkloadActual   9: 8388608 op, 640829956.00 ns, 76.3929 ns/op
+WorkloadActual  10: 8388608 op, 640351496.00 ns, 76.3358 ns/op
+WorkloadActual  11: 8388608 op, 644089483.00 ns, 76.7814 ns/op
+WorkloadActual  12: 8388608 op, 632170537.00 ns, 75.3606 ns/op
+WorkloadActual  13: 8388608 op, 643461769.00 ns, 76.7066 ns/op
+WorkloadActual  14: 8388608 op, 642397749.00 ns, 76.5798 ns/op
+WorkloadActual  15: 8388608 op, 638924768.00 ns, 76.1658 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 8388608 op, 610991315.50 ns, 72.8358 ns/op
+WorkloadResult   2: 8388608 op, 616204506.50 ns, 73.4573 ns/op
+WorkloadResult   3: 8388608 op, 620208836.50 ns, 73.9347 ns/op
+WorkloadResult   4: 8388608 op, 629945032.50 ns, 75.0953 ns/op
+WorkloadResult   5: 8388608 op, 623842087.50 ns, 74.3678 ns/op
+WorkloadResult   6: 8388608 op, 621239213.50 ns, 74.0575 ns/op
+WorkloadResult   7: 8388608 op, 614879630.50 ns, 73.2994 ns/op
+WorkloadResult   8: 8388608 op, 619089243.50 ns, 73.8012 ns/op
+WorkloadResult   9: 8388608 op, 618610783.50 ns, 73.7442 ns/op
+WorkloadResult  10: 8388608 op, 622348770.50 ns, 74.1898 ns/op
+WorkloadResult  11: 8388608 op, 610429824.50 ns, 72.7689 ns/op
+WorkloadResult  12: 8388608 op, 621721056.50 ns, 74.1149 ns/op
+WorkloadResult  13: 8388608 op, 620657036.50 ns, 73.9881 ns/op
+WorkloadResult  14: 8388608 op, 617184055.50 ns, 73.5741 ns/op
+// GC:  100 0 0 1677721632 8388608
+// Threading:  0 0 8388608
+
+// AfterAll
+// Benchmark Process 3628 has exited with code 0.
+
+Mean = 73.802 ns, StdErr = 0.162 ns (0.22%), N = 14, StdDev = 0.607 ns
+Min = 72.769 ns, Q1 = 73.486 ns, Median = 73.868 ns, Q3 = 74.101 ns, Max = 75.095 ns
+IQR = 0.614 ns, LowerFence = 72.565 ns, UpperFence = 75.022 ns
+ConfidenceInterval = [73.118 ns; 74.487 ns] (CI 99.9%), Margin = 0.684 ns (0.93% of Mean)
+Skewness = 0.09, Kurtosis = 2.65, MValue = 2
+
+// ** Remained 42 (93.3 %) benchmark(s) to run. Estimated finish 2026-09-06 7:03 (0h 22m from now) **
+// **************************
+// Benchmark: AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 114 118 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents --job ".NET 10.0" --benchmarkId 3 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 213637.00 ns, 213.6370 us/op
+WorkloadJitting  1: 1 op, 1150841.00 ns, 1.1508 ms/op
+
+OverheadJitting  2: 16 op, 360811.00 ns, 22.5507 us/op
+WorkloadJitting  2: 16 op, 394194.00 ns, 24.6371 us/op
+
+WorkloadPilot    1: 16 op, 6362.00 ns, 397.6250 ns/op
+WorkloadPilot    2: 32 op, 27762.00 ns, 867.5625 ns/op
+WorkloadPilot    3: 64 op, 34223.00 ns, 534.7344 ns/op
+WorkloadPilot    4: 128 op, 45676.00 ns, 356.8438 ns/op
+WorkloadPilot    5: 256 op, 98393.00 ns, 384.3477 ns/op
+WorkloadPilot    6: 512 op, 125223.00 ns, 244.5762 ns/op
+WorkloadPilot    7: 1024 op, 245948.00 ns, 240.1836 ns/op
+WorkloadPilot    8: 2048 op, 467650.00 ns, 228.3447 ns/op
+WorkloadPilot    9: 4096 op, 819455.00 ns, 200.0623 ns/op
+WorkloadPilot   10: 8192 op, 1727174.00 ns, 210.8367 ns/op
+WorkloadPilot   11: 16384 op, 3390147.00 ns, 206.9182 ns/op
+WorkloadPilot   12: 32768 op, 6775306.00 ns, 206.7659 ns/op
+WorkloadPilot   13: 65536 op, 13452067.00 ns, 205.2623 ns/op
+WorkloadPilot   14: 131072 op, 25028304.00 ns, 190.9508 ns/op
+WorkloadPilot   15: 262144 op, 40922596.00 ns, 156.1073 ns/op
+WorkloadPilot   16: 524288 op, 78213225.00 ns, 149.1799 ns/op
+WorkloadPilot   17: 1048576 op, 40391578.00 ns, 38.5204 ns/op
+WorkloadPilot   18: 2097152 op, 61469293.00 ns, 29.3108 ns/op
+WorkloadPilot   19: 4194304 op, 121459133.00 ns, 28.9581 ns/op
+WorkloadPilot   20: 8388608 op, 245450597.00 ns, 29.2600 ns/op
+WorkloadPilot   21: 16777216 op, 492829720.00 ns, 29.3749 ns/op
+WorkloadPilot   22: 33554432 op, 981683814.00 ns, 29.2565 ns/op
+
+OverheadWarmup   1: 33554432 op, 99556534.00 ns, 2.9670 ns/op
+OverheadWarmup   2: 33554432 op, 99749732.00 ns, 2.9728 ns/op
+OverheadWarmup   3: 33554432 op, 58182247.00 ns, 1.7340 ns/op
+OverheadWarmup   4: 33554432 op, 55444954.00 ns, 1.6524 ns/op
+OverheadWarmup   5: 33554432 op, 55472896.00 ns, 1.6532 ns/op
+OverheadWarmup   6: 33554432 op, 55586217.00 ns, 1.6566 ns/op
+OverheadWarmup   7: 33554432 op, 55614590.00 ns, 1.6574 ns/op
+OverheadWarmup   8: 33554432 op, 55718344.00 ns, 1.6605 ns/op
+OverheadWarmup   9: 33554432 op, 55501599.00 ns, 1.6541 ns/op
+
+OverheadActual   1: 33554432 op, 55482173.00 ns, 1.6535 ns/op
+OverheadActual   2: 33554432 op, 55445486.00 ns, 1.6524 ns/op
+OverheadActual   3: 33554432 op, 56019924.00 ns, 1.6695 ns/op
+OverheadActual   4: 33554432 op, 55445235.00 ns, 1.6524 ns/op
+OverheadActual   5: 33554432 op, 55550611.00 ns, 1.6555 ns/op
+OverheadActual   6: 33554432 op, 55432191.00 ns, 1.6520 ns/op
+OverheadActual   7: 33554432 op, 55418886.00 ns, 1.6516 ns/op
+OverheadActual   8: 33554432 op, 72112374.00 ns, 2.1491 ns/op
+OverheadActual   9: 33554432 op, 55546784.00 ns, 1.6554 ns/op
+OverheadActual  10: 33554432 op, 56283975.00 ns, 1.6774 ns/op
+OverheadActual  11: 33554432 op, 57412645.00 ns, 1.7110 ns/op
+OverheadActual  12: 33554432 op, 55973989.00 ns, 1.6682 ns/op
+OverheadActual  13: 33554432 op, 55524402.00 ns, 1.6548 ns/op
+OverheadActual  14: 33554432 op, 55603780.00 ns, 1.6571 ns/op
+OverheadActual  15: 33554432 op, 55469079.00 ns, 1.6531 ns/op
+
+WorkloadWarmup   1: 33554432 op, 1005974427.00 ns, 29.9804 ns/op
+WorkloadWarmup   2: 33554432 op, 1014788266.00 ns, 30.2430 ns/op
+WorkloadWarmup   3: 33554432 op, 986739784.00 ns, 29.4071 ns/op
+WorkloadWarmup   4: 33554432 op, 970689589.00 ns, 28.9288 ns/op
+WorkloadWarmup   5: 33554432 op, 988988167.00 ns, 29.4741 ns/op
+WorkloadWarmup   6: 33554432 op, 979300872.00 ns, 29.1854 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 33554432 op, 986230667.00 ns, 29.3920 ns/op
+WorkloadActual   2: 33554432 op, 1002734346.00 ns, 29.8838 ns/op
+WorkloadActual   3: 33554432 op, 1006829054.00 ns, 30.0058 ns/op
+WorkloadActual   4: 33554432 op, 1031788627.00 ns, 30.7497 ns/op
+WorkloadActual   5: 33554432 op, 1029072684.00 ns, 30.6688 ns/op
+WorkloadActual   6: 33554432 op, 1050452947.00 ns, 31.3059 ns/op
+WorkloadActual   7: 33554432 op, 1008681952.00 ns, 30.0611 ns/op
+WorkloadActual   8: 33554432 op, 992482148.00 ns, 29.5783 ns/op
+WorkloadActual   9: 33554432 op, 1032003798.00 ns, 30.7561 ns/op
+WorkloadActual  10: 33554432 op, 1017897399.00 ns, 30.3357 ns/op
+WorkloadActual  11: 33554432 op, 996308037.00 ns, 29.6923 ns/op
+WorkloadActual  12: 33554432 op, 999963718.00 ns, 29.8012 ns/op
+WorkloadActual  13: 33554432 op, 988604292.00 ns, 29.4627 ns/op
+WorkloadActual  14: 33554432 op, 993675037.00 ns, 29.6138 ns/op
+WorkloadActual  15: 33554432 op, 992151883.00 ns, 29.5684 ns/op
+WorkloadActual  16: 33554432 op, 1001864587.00 ns, 29.8579 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 33554432 op, 930683883.00 ns, 27.7365 ns/op
+WorkloadResult   2: 33554432 op, 947187562.00 ns, 28.2284 ns/op
+WorkloadResult   3: 33554432 op, 951282270.00 ns, 28.3504 ns/op
+WorkloadResult   4: 33554432 op, 976241843.00 ns, 29.0943 ns/op
+WorkloadResult   5: 33554432 op, 973525900.00 ns, 29.0133 ns/op
+WorkloadResult   6: 33554432 op, 994906163.00 ns, 29.6505 ns/op
+WorkloadResult   7: 33554432 op, 953135168.00 ns, 28.4056 ns/op
+WorkloadResult   8: 33554432 op, 936935364.00 ns, 27.9228 ns/op
+WorkloadResult   9: 33554432 op, 976457014.00 ns, 29.1007 ns/op
+WorkloadResult  10: 33554432 op, 962350615.00 ns, 28.6803 ns/op
+WorkloadResult  11: 33554432 op, 940761253.00 ns, 28.0369 ns/op
+WorkloadResult  12: 33554432 op, 944416934.00 ns, 28.1458 ns/op
+WorkloadResult  13: 33554432 op, 933057508.00 ns, 27.8073 ns/op
+WorkloadResult  14: 33554432 op, 938128253.00 ns, 27.9584 ns/op
+WorkloadResult  15: 33554432 op, 936605099.00 ns, 27.9130 ns/op
+WorkloadResult  16: 33554432 op, 946317803.00 ns, 28.2025 ns/op
+// GC:  224 0 0 3758096384 33554432
+// Threading:  0 0 33554432
+
+// AfterAll
+// Benchmark Process 3647 has exited with code 0.
+
+Mean = 28.390 ns, StdErr = 0.140 ns (0.49%), N = 16, StdDev = 0.560 ns
+Min = 27.737 ns, Q1 = 27.950 ns, Median = 28.215 ns, Q3 = 28.764 ns, Max = 29.651 ns
+IQR = 0.814 ns, LowerFence = 26.728 ns, UpperFence = 29.985 ns
+ConfidenceInterval = [27.820 ns; 28.961 ns] (CI 99.9%), Margin = 0.570 ns (2.01% of Mean)
+Skewness = 0.76, Kurtosis = 2.3, MValue = 2
+
+// ** Remained 41 (91.1 %) benchmark(s) to run. Estimated finish 2026-09-06 7:03 (0h 20m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 40 (88.9 %) benchmark(s) to run. Estimated finish 2026-09-06 6:58 (0h 16m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 39 (86.7 %) benchmark(s) to run. Estimated finish 2026-09-06 6:55 (0h 13m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 38 (84.4 %) benchmark(s) to run. Estimated finish 2026-09-06 6:53 (0h 11m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 37 (82.2 %) benchmark(s) to run. Estimated finish 2026-09-06 6:51 (0h 9m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 36 (80.0 %) benchmark(s) to run. Estimated finish 2026-09-06 6:50 (0h 8m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 35 (77.8 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 7m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 34 (75.6 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 6m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 33 (73.3 %) benchmark(s) to run. Estimated finish 2026-09-06 6:47 (0h 5m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks-report.csv
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks-report-github.md
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks-report.html
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks-report-full-compressed.json
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks-report-default.md
+
+// * Detailed results *
+AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 15.286 ns, StdErr = 0.085 ns (0.55%), N = 14, StdDev = 0.316 ns
+Min = 14.667 ns, Q1 = 15.119 ns, Median = 15.349 ns, Q3 = 15.542 ns, Max = 15.687 ns
+IQR = 0.423 ns, LowerFence = 14.483 ns, UpperFence = 16.177 ns
+ConfidenceInterval = [14.929 ns; 15.643 ns] (CI 99.9%), Margin = 0.357 ns (2.34% of Mean)
+Skewness = -0.58, Kurtosis = 2.02, MValue = 2
+-------------------- Histogram --------------------
+[14.543 ns ; 14.888 ns) | @@
+[14.888 ns ; 15.302 ns) | @@@@@
+[15.302 ns ; 15.723 ns) | @@@@@@@
+---------------------------------------------------
+
+AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 8.008 ns, StdErr = 0.064 ns (0.80%), N = 56, StdDev = 0.477 ns
+Min = 7.115 ns, Q1 = 7.629 ns, Median = 7.937 ns, Q3 = 8.266 ns, Max = 9.187 ns
+IQR = 0.637 ns, LowerFence = 6.674 ns, UpperFence = 9.221 ns
+ConfidenceInterval = [7.786 ns; 8.229 ns] (CI 99.9%), Margin = 0.222 ns (2.77% of Mean)
+Skewness = 0.6, Kurtosis = 2.6, MValue = 2
+-------------------- Histogram --------------------
+[7.034 ns ; 7.352 ns) | @@
+[7.352 ns ; 7.682 ns) | @@@@@@@@@@@@@@@
+[7.682 ns ; 8.131 ns) | @@@@@@@@@@@@@@@@@@@
+[8.131 ns ; 8.459 ns) | @@@@@@@@@
+[8.459 ns ; 8.876 ns) | @@@@@@@@@
+[8.876 ns ; 9.351 ns) | @@
+---------------------------------------------------
+
+AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 73.802 ns, StdErr = 0.162 ns (0.22%), N = 14, StdDev = 0.607 ns
+Min = 72.769 ns, Q1 = 73.486 ns, Median = 73.868 ns, Q3 = 74.101 ns, Max = 75.095 ns
+IQR = 0.614 ns, LowerFence = 72.565 ns, UpperFence = 75.022 ns
+ConfidenceInterval = [73.118 ns; 74.487 ns] (CI 99.9%), Margin = 0.684 ns (0.93% of Mean)
+Skewness = 0.09, Kurtosis = 2.65, MValue = 2
+-------------------- Histogram --------------------
+[72.438 ns ; 75.426 ns) | @@@@@@@@@@@@@@
+---------------------------------------------------
+
+AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 28.390 ns, StdErr = 0.140 ns (0.49%), N = 16, StdDev = 0.560 ns
+Min = 27.737 ns, Q1 = 27.950 ns, Median = 28.215 ns, Q3 = 28.764 ns, Max = 29.651 ns
+IQR = 0.814 ns, LowerFence = 26.728 ns, UpperFence = 29.985 ns
+ConfidenceInterval = [27.820 ns; 28.961 ns] (CI 99.9%), Margin = 0.570 ns (2.01% of Mean)
+Skewness = 0.76, Kurtosis = 2.3, MValue = 2
+-------------------- Histogram --------------------
+[27.691 ns ; 28.274 ns) | @@@@@@@@@
+[28.274 ns ; 29.182 ns) | @@@@@@
+[29.182 ns ; 29.942 ns) | @
+---------------------------------------------------
+
+AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.4 LTS (Noble Numbat)
+AMD EPYC 7763 2.81GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.400
+  [Host]    : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+  .NET 10.0 : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+
+
+| Method                                      | Job       | Runtime   | Mean      | Error     | StdDev    | Ratio | RatioSD | Rank | Gen0   | Allocated | Alloc Ratio |
+|-------------------------------------------- |---------- |---------- |----------:|----------:|----------:|------:|--------:|-----:|-------:|----------:|------------:|
+| Ardalis_AggregateHydration_ZeroEvents       | .NET 10.0 | .NET 10.0 | 15.286 ns | 0.3570 ns | 0.3164 ns |     ? |       ? |    2 | 0.0043 |      72 B |           ? |
+| EricksonLopez_AggregateHydration_ZeroEvents | .NET 10.0 | .NET 10.0 |  8.008 ns | 0.2216 ns | 0.4771 ns |     ? |       ? |    1 | 0.0024 |      40 B |           ? |
+| Ardalis_DrainEvents_WithEvents              | .NET 10.0 | .NET 10.0 | 73.802 ns | 0.6845 ns | 0.6068 ns |     ? |       ? |    4 | 0.0119 |     200 B |           ? |
+| EricksonLopez_DrainEvents_WithEvents        | .NET 10.0 | .NET 10.0 | 28.390 ns | 0.5705 ns | 0.5603 ns |     ? |       ? |    3 | 0.0067 |     112 B |           ? |
+| Ardalis_AggregateHydration_ZeroEvents       | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |     NA |        NA |           ? |
+| EricksonLopez_AggregateHydration_ZeroEvents | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |     NA |        NA |           ? |
+| Ardalis_DrainEvents_WithEvents              | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |     NA |        NA |           ? |
+| EricksonLopez_DrainEvents_WithEvents        | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |     NA |        NA |           ? |
+| Ardalis_AggregateHydration_ZeroEvents       | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |    ? |     NA |        NA |           ? |
+| EricksonLopez_AggregateHydration_ZeroEvents | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |    ? |     NA |        NA |           ? |
+| Ardalis_DrainEvents_WithEvents              | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |    ? |     NA |        NA |           ? |
+| EricksonLopez_DrainEvents_WithEvents        | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |    ? |     NA |        NA |           ? |
+
+Benchmarks with issues:
+  AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  AggregateHydrationBenchmarks.EricksonLopez_DrainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+
+// * Warnings *
+BaselineCustomAnalyzer
+  Summary -> A question mark '?' symbol indicates that it was not possible to compute the (Ratio, RatioSD, Alloc Ratio) column(s) because the baseline or benchmark could not be found, or the baseline value is too close to zero.
+
+// * Hints *
+Outliers
+  AggregateHydrationBenchmarks.Ardalis_AggregateHydration_ZeroEvents: .NET 10.0       -> 1 outlier  was  removed (19.64 ns)
+  AggregateHydrationBenchmarks.EricksonLopez_AggregateHydration_ZeroEvents: .NET 10.0 -> 1 outlier  was  removed (12.96 ns)
+  AggregateHydrationBenchmarks.Ardalis_DrainEvents_WithEvents: .NET 10.0              -> 1 outlier  was  removed (77.83 ns)
+
+// * Legends *
+  Mean        : Arithmetic mean of all measurements
+  Error       : Half of 99.9% confidence interval
+  StdDev      : Standard deviation of all measurements
+  Ratio       : Mean of the ratio distribution ([Current]/[Baseline])
+  RatioSD     : Standard deviation of the ratio distribution ([Current]/[Baseline])
+  Rank        : Relative position of current benchmark mean among all benchmarks (Arabic style)
+  Gen0        : GC Generation 0 collects per 1000 operations
+  Allocated   : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  Alloc Ratio : Allocated memory ratio distribution ([Current]/[Baseline])
+  1 ns        : 1 Nanosecond (0.000000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:02:01 (121.92 sec), executed benchmarks: 4
+
+// Found 12 benchmarks:
+//   EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+
+// **************************
+// Benchmark: EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 123 124 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId --job ".NET 10.0" --benchmarkId 4 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 227854.00 ns, 227.8540 us/op
+WorkloadJitting  1: 1 op, 326086.00 ns, 326.0860 us/op
+
+OverheadJitting  2: 16 op, 382161.00 ns, 23.8851 us/op
+WorkloadJitting  2: 16 op, 323692.00 ns, 20.2308 us/op
+
+WorkloadPilot    1: 16 op, 912.00 ns, 57.0000 ns/op
+WorkloadPilot    2: 32 op, 1372.00 ns, 42.8750 ns/op
+WorkloadPilot    3: 64 op, 2074.00 ns, 32.4063 ns/op
+WorkloadPilot    4: 128 op, 3817.00 ns, 29.8203 ns/op
+WorkloadPilot    5: 256 op, 6903.00 ns, 26.9648 ns/op
+WorkloadPilot    6: 512 op, 13795.00 ns, 26.9434 ns/op
+WorkloadPilot    7: 1024 op, 33272.00 ns, 32.4922 ns/op
+WorkloadPilot    8: 2048 op, 57767.00 ns, 28.2065 ns/op
+WorkloadPilot    9: 4096 op, 107280.00 ns, 26.1914 ns/op
+WorkloadPilot   10: 8192 op, 233645.00 ns, 28.5211 ns/op
+WorkloadPilot   11: 16384 op, 431914.00 ns, 26.3619 ns/op
+WorkloadPilot   12: 32768 op, 822700.00 ns, 25.1068 ns/op
+WorkloadPilot   13: 65536 op, 1683353.00 ns, 25.6859 ns/op
+WorkloadPilot   14: 131072 op, 3351416.00 ns, 25.5693 ns/op
+WorkloadPilot   15: 262144 op, 6797579.00 ns, 25.9307 ns/op
+WorkloadPilot   16: 524288 op, 11718280.00 ns, 22.3508 ns/op
+WorkloadPilot   17: 1048576 op, 22540804.00 ns, 21.4966 ns/op
+WorkloadPilot   18: 2097152 op, 44946255.00 ns, 21.4320 ns/op
+WorkloadPilot   19: 4194304 op, 80144251.00 ns, 19.1079 ns/op
+WorkloadPilot   20: 8388608 op, 20106675.00 ns, 2.3969 ns/op
+WorkloadPilot   21: 16777216 op, 39772107.00 ns, 2.3706 ns/op
+WorkloadPilot   22: 33554432 op, 78668765.00 ns, 2.3445 ns/op
+WorkloadPilot   23: 67108864 op, 158440904.00 ns, 2.3610 ns/op
+WorkloadPilot   24: 134217728 op, 318633847.00 ns, 2.3740 ns/op
+WorkloadPilot   25: 268435456 op, 639079634.00 ns, 2.3808 ns/op
+
+OverheadWarmup   1: 268435456 op, 734733361.00 ns, 2.7371 ns/op
+OverheadWarmup   2: 268435456 op, 499283920.00 ns, 1.8600 ns/op
+OverheadWarmup   3: 268435456 op, 500379889.00 ns, 1.8641 ns/op
+OverheadWarmup   4: 268435456 op, 497926885.00 ns, 1.8549 ns/op
+OverheadWarmup   5: 268435456 op, 498513236.00 ns, 1.8571 ns/op
+OverheadWarmup   6: 268435456 op, 498237372.00 ns, 1.8561 ns/op
+
+OverheadActual   1: 268435456 op, 499477821.00 ns, 1.8607 ns/op
+OverheadActual   2: 268435456 op, 497409341.00 ns, 1.8530 ns/op
+OverheadActual   3: 268435456 op, 499383715.00 ns, 1.8603 ns/op
+OverheadActual   4: 268435456 op, 498950910.00 ns, 1.8587 ns/op
+OverheadActual   5: 268435456 op, 498381390.00 ns, 1.8566 ns/op
+OverheadActual   6: 268435456 op, 498580010.00 ns, 1.8574 ns/op
+OverheadActual   7: 268435456 op, 502230092.00 ns, 1.8710 ns/op
+OverheadActual   8: 268435456 op, 499478461.00 ns, 1.8607 ns/op
+OverheadActual   9: 268435456 op, 498568899.00 ns, 1.8573 ns/op
+OverheadActual  10: 268435456 op, 500310660.00 ns, 1.8638 ns/op
+OverheadActual  11: 268435456 op, 497217426.00 ns, 1.8523 ns/op
+OverheadActual  12: 268435456 op, 497695263.00 ns, 1.8541 ns/op
+OverheadActual  13: 268435456 op, 496057986.00 ns, 1.8480 ns/op
+OverheadActual  14: 268435456 op, 497769031.00 ns, 1.8543 ns/op
+OverheadActual  15: 268435456 op, 497003076.00 ns, 1.8515 ns/op
+
+WorkloadWarmup   1: 268435456 op, 638914260.00 ns, 2.3801 ns/op
+WorkloadWarmup   2: 268435456 op, 637465024.00 ns, 2.3747 ns/op
+WorkloadWarmup   3: 268435456 op, 640916515.00 ns, 2.3876 ns/op
+WorkloadWarmup   4: 268435456 op, 635293163.00 ns, 2.3667 ns/op
+WorkloadWarmup   5: 268435456 op, 637155006.00 ns, 2.3736 ns/op
+WorkloadWarmup   6: 268435456 op, 636572502.00 ns, 2.3714 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 268435456 op, 636542798.00 ns, 2.3713 ns/op
+WorkloadActual   2: 268435456 op, 638164986.00 ns, 2.3773 ns/op
+WorkloadActual   3: 268435456 op, 639553810.00 ns, 2.3825 ns/op
+WorkloadActual   4: 268435456 op, 636009341.00 ns, 2.3693 ns/op
+WorkloadActual   5: 268435456 op, 636609715.00 ns, 2.3716 ns/op
+WorkloadActual   6: 268435456 op, 635493218.00 ns, 2.3674 ns/op
+WorkloadActual   7: 268435456 op, 636216094.00 ns, 2.3701 ns/op
+WorkloadActual   8: 268435456 op, 638984894.00 ns, 2.3804 ns/op
+WorkloadActual   9: 268435456 op, 635606148.00 ns, 2.3678 ns/op
+WorkloadActual  10: 268435456 op, 636978010.00 ns, 2.3729 ns/op
+WorkloadActual  11: 268435456 op, 636148548.00 ns, 2.3698 ns/op
+WorkloadActual  12: 268435456 op, 637831338.00 ns, 2.3761 ns/op
+WorkloadActual  13: 268435456 op, 636779561.00 ns, 2.3722 ns/op
+WorkloadActual  14: 268435456 op, 635840465.00 ns, 2.3687 ns/op
+WorkloadActual  15: 268435456 op, 635301211.00 ns, 2.3667 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 268435456 op, 137973899.00 ns, 0.5140 ns/op
+WorkloadResult   2: 268435456 op, 139596087.00 ns, 0.5200 ns/op
+WorkloadResult   3: 268435456 op, 140984911.00 ns, 0.5252 ns/op
+WorkloadResult   4: 268435456 op, 137440442.00 ns, 0.5120 ns/op
+WorkloadResult   5: 268435456 op, 138040816.00 ns, 0.5142 ns/op
+WorkloadResult   6: 268435456 op, 136924319.00 ns, 0.5101 ns/op
+WorkloadResult   7: 268435456 op, 137647195.00 ns, 0.5128 ns/op
+WorkloadResult   8: 268435456 op, 140415995.00 ns, 0.5231 ns/op
+WorkloadResult   9: 268435456 op, 137037249.00 ns, 0.5105 ns/op
+WorkloadResult  10: 268435456 op, 138409111.00 ns, 0.5156 ns/op
+WorkloadResult  11: 268435456 op, 137579649.00 ns, 0.5125 ns/op
+WorkloadResult  12: 268435456 op, 139262439.00 ns, 0.5188 ns/op
+WorkloadResult  13: 268435456 op, 138210662.00 ns, 0.5149 ns/op
+WorkloadResult  14: 268435456 op, 137271566.00 ns, 0.5114 ns/op
+WorkloadResult  15: 268435456 op, 136732312.00 ns, 0.5094 ns/op
+// GC:  0 0 0 0 268435456
+// Threading:  0 0 268435456
+
+// AfterAll
+// Benchmark Process 3674 has exited with code 0.
+
+Mean = 0.515 ns, StdErr = 0.001 ns (0.24%), N = 15, StdDev = 0.005 ns
+Min = 0.509 ns, Q1 = 0.512 ns, Median = 0.514 ns, Q3 = 0.517 ns, Max = 0.525 ns
+IQR = 0.006 ns, LowerFence = 0.503 ns, UpperFence = 0.525 ns
+ConfidenceInterval = [0.510 ns; 0.520 ns] (CI 99.9%), Margin = 0.005 ns (0.99% of Mean)
+Skewness = 0.8, Kurtosis = 2.35, MValue = 2
+
+// ** Remained 32 (71.1 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 6m from now) **
+// **************************
+// Benchmark: EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 123 124 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId --job ".NET 10.0" --benchmarkId 5 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 196616.00 ns, 196.6160 us/op
+WorkloadJitting  1: 1 op, 358266.00 ns, 358.2660 us/op
+
+OverheadJitting  2: 16 op, 483139.00 ns, 30.1962 us/op
+WorkloadJitting  2: 16 op, 356514.00 ns, 22.2821 us/op
+
+WorkloadPilot    1: 16 op, 2064.00 ns, 129.0000 ns/op
+WorkloadPilot    2: 32 op, 1854.00 ns, 57.9375 ns/op
+WorkloadPilot    3: 64 op, 2605.00 ns, 40.7031 ns/op
+WorkloadPilot    4: 128 op, 4297.00 ns, 33.5703 ns/op
+WorkloadPilot    5: 256 op, 7795.00 ns, 30.4492 ns/op
+WorkloadPilot    6: 512 op, 13966.00 ns, 27.2773 ns/op
+WorkloadPilot    7: 1024 op, 27501.00 ns, 26.8564 ns/op
+WorkloadPilot    8: 2048 op, 52958.00 ns, 25.8584 ns/op
+WorkloadPilot    9: 4096 op, 105546.00 ns, 25.7681 ns/op
+WorkloadPilot   10: 8192 op, 209560.00 ns, 25.5811 ns/op
+WorkloadPilot   11: 16384 op, 420422.00 ns, 25.6605 ns/op
+WorkloadPilot   12: 32768 op, 842748.00 ns, 25.7186 ns/op
+WorkloadPilot   13: 65536 op, 1709661.00 ns, 26.0874 ns/op
+WorkloadPilot   14: 131072 op, 3418130.00 ns, 26.0783 ns/op
+WorkloadPilot   15: 262144 op, 6845608.00 ns, 26.1139 ns/op
+WorkloadPilot   16: 524288 op, 13595948.00 ns, 25.9322 ns/op
+WorkloadPilot   17: 1048576 op, 27146311.00 ns, 25.8887 ns/op
+WorkloadPilot   18: 2097152 op, 53903068.00 ns, 25.7030 ns/op
+WorkloadPilot   19: 4194304 op, 75842600.00 ns, 18.0823 ns/op
+WorkloadPilot   20: 8388608 op, 22334007.00 ns, 2.6624 ns/op
+WorkloadPilot   21: 16777216 op, 44522944.00 ns, 2.6538 ns/op
+WorkloadPilot   22: 33554432 op, 88255487.00 ns, 2.6302 ns/op
+WorkloadPilot   23: 67108864 op, 178891774.00 ns, 2.6657 ns/op
+WorkloadPilot   24: 134217728 op, 356846905.00 ns, 2.6587 ns/op
+WorkloadPilot   25: 268435456 op, 712472128.00 ns, 2.6542 ns/op
+
+OverheadWarmup   1: 268435456 op, 735787150.00 ns, 2.7410 ns/op
+OverheadWarmup   2: 268435456 op, 504531933.00 ns, 1.8795 ns/op
+OverheadWarmup   3: 268435456 op, 501643819.00 ns, 1.8688 ns/op
+OverheadWarmup   4: 268435456 op, 499737231.00 ns, 1.8617 ns/op
+OverheadWarmup   5: 268435456 op, 502701237.00 ns, 1.8727 ns/op
+OverheadWarmup   6: 268435456 op, 502069811.00 ns, 1.8704 ns/op
+OverheadWarmup   7: 268435456 op, 500499560.00 ns, 1.8645 ns/op
+OverheadWarmup   8: 268435456 op, 499658785.00 ns, 1.8614 ns/op
+OverheadWarmup   9: 268435456 op, 502804479.00 ns, 1.8731 ns/op
+OverheadWarmup  10: 268435456 op, 510953221.00 ns, 1.9034 ns/op
+
+OverheadActual   1: 268435456 op, 500590168.00 ns, 1.8648 ns/op
+OverheadActual   2: 268435456 op, 501733091.00 ns, 1.8691 ns/op
+OverheadActual   3: 268435456 op, 500105984.00 ns, 1.8630 ns/op
+OverheadActual   4: 268435456 op, 500897036.00 ns, 1.8660 ns/op
+OverheadActual   5: 268435456 op, 502138457.00 ns, 1.8706 ns/op
+OverheadActual   6: 268435456 op, 500192024.00 ns, 1.8634 ns/op
+OverheadActual   7: 268435456 op, 502706604.00 ns, 1.8727 ns/op
+OverheadActual   8: 268435456 op, 501842136.00 ns, 1.8695 ns/op
+OverheadActual   9: 268435456 op, 500480340.00 ns, 1.8644 ns/op
+OverheadActual  10: 268435456 op, 503638058.00 ns, 1.8762 ns/op
+OverheadActual  11: 268435456 op, 501362803.00 ns, 1.8677 ns/op
+OverheadActual  12: 268435456 op, 504005101.00 ns, 1.8776 ns/op
+OverheadActual  13: 268435456 op, 501770362.00 ns, 1.8692 ns/op
+OverheadActual  14: 268435456 op, 500280669.00 ns, 1.8637 ns/op
+OverheadActual  15: 268435456 op, 501008724.00 ns, 1.8664 ns/op
+
+WorkloadWarmup   1: 268435456 op, 712055801.00 ns, 2.6526 ns/op
+WorkloadWarmup   2: 268435456 op, 713624253.00 ns, 2.6585 ns/op
+WorkloadWarmup   3: 268435456 op, 713089221.00 ns, 2.6565 ns/op
+WorkloadWarmup   4: 268435456 op, 713352322.00 ns, 2.6574 ns/op
+WorkloadWarmup   5: 268435456 op, 712667996.00 ns, 2.6549 ns/op
+WorkloadWarmup   6: 268435456 op, 715251341.00 ns, 2.6645 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 268435456 op, 712289972.00 ns, 2.6535 ns/op
+WorkloadActual   2: 268435456 op, 713824392.00 ns, 2.6592 ns/op
+WorkloadActual   3: 268435456 op, 713610817.00 ns, 2.6584 ns/op
+WorkloadActual   4: 268435456 op, 723168100.00 ns, 2.6940 ns/op
+WorkloadActual   5: 268435456 op, 725831235.00 ns, 2.7039 ns/op
+WorkloadActual   6: 268435456 op, 726371240.00 ns, 2.7059 ns/op
+WorkloadActual   7: 268435456 op, 721760247.00 ns, 2.6888 ns/op
+WorkloadActual   8: 268435456 op, 711909326.00 ns, 2.6521 ns/op
+WorkloadActual   9: 268435456 op, 715958311.00 ns, 2.6672 ns/op
+WorkloadActual  10: 268435456 op, 713927122.00 ns, 2.6596 ns/op
+WorkloadActual  11: 268435456 op, 726589963.00 ns, 2.7068 ns/op
+WorkloadActual  12: 268435456 op, 724661816.00 ns, 2.6996 ns/op
+WorkloadActual  13: 268435456 op, 725462927.00 ns, 2.7026 ns/op
+WorkloadActual  14: 268435456 op, 713264940.00 ns, 2.6571 ns/op
+WorkloadActual  15: 268435456 op, 715512031.00 ns, 2.6655 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 268435456 op, 210927169.00 ns, 0.7858 ns/op
+WorkloadResult   2: 268435456 op, 212461589.00 ns, 0.7915 ns/op
+WorkloadResult   3: 268435456 op, 212248014.00 ns, 0.7907 ns/op
+WorkloadResult   4: 268435456 op, 221805297.00 ns, 0.8263 ns/op
+WorkloadResult   5: 268435456 op, 224468432.00 ns, 0.8362 ns/op
+WorkloadResult   6: 268435456 op, 225008437.00 ns, 0.8382 ns/op
+WorkloadResult   7: 268435456 op, 220397444.00 ns, 0.8210 ns/op
+WorkloadResult   8: 268435456 op, 210546523.00 ns, 0.7843 ns/op
+WorkloadResult   9: 268435456 op, 214595508.00 ns, 0.7994 ns/op
+WorkloadResult  10: 268435456 op, 212564319.00 ns, 0.7919 ns/op
+WorkloadResult  11: 268435456 op, 225227160.00 ns, 0.8390 ns/op
+WorkloadResult  12: 268435456 op, 223299013.00 ns, 0.8319 ns/op
+WorkloadResult  13: 268435456 op, 224100124.00 ns, 0.8348 ns/op
+WorkloadResult  14: 268435456 op, 211902137.00 ns, 0.7894 ns/op
+WorkloadResult  15: 268435456 op, 214149228.00 ns, 0.7978 ns/op
+// GC:  0 0 0 32 268435456
+// Threading:  0 0 268435456
+
+// AfterAll
+// Benchmark Process 3694 has exited with code 0.
+
+Mean = 0.811 ns, StdErr = 0.006 ns (0.70%), N = 15, StdDev = 0.022 ns
+Min = 0.784 ns, Q1 = 0.791 ns, Median = 0.799 ns, Q3 = 0.833 ns, Max = 0.839 ns
+IQR = 0.042 ns, LowerFence = 0.728 ns, UpperFence = 0.897 ns
+ConfidenceInterval = [0.787 ns; 0.834 ns] (CI 99.9%), Margin = 0.024 ns (2.90% of Mean)
+Skewness = 0.14, Kurtosis = 1.08, MValue = 2
+
+// ** Remained 31 (68.9 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 6m from now) **
+// **************************
+// Benchmark: EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 123 124 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId --job ".NET 10.0" --benchmarkId 6 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 232573.00 ns, 232.5730 us/op
+WorkloadJitting  1: 1 op, 329764.00 ns, 329.7640 us/op
+
+OverheadJitting  2: 16 op, 381580.00 ns, 23.8488 us/op
+WorkloadJitting  2: 16 op, 324534.00 ns, 20.2834 us/op
+
+WorkloadPilot    1: 16 op, 802.00 ns, 50.1250 ns/op
+WorkloadPilot    2: 32 op, 1042.00 ns, 32.5625 ns/op
+WorkloadPilot    3: 64 op, 1693.00 ns, 26.4531 ns/op
+WorkloadPilot    4: 128 op, 2996.00 ns, 23.4063 ns/op
+WorkloadPilot    5: 256 op, 5641.00 ns, 22.0352 ns/op
+WorkloadPilot    6: 512 op, 10961.00 ns, 21.4082 ns/op
+WorkloadPilot    7: 1024 op, 21430.00 ns, 20.9277 ns/op
+WorkloadPilot    8: 2048 op, 42419.00 ns, 20.7124 ns/op
+WorkloadPilot    9: 4096 op, 84247.00 ns, 20.5681 ns/op
+WorkloadPilot   10: 8192 op, 195183.00 ns, 23.8260 ns/op
+WorkloadPilot   11: 16384 op, 358207.00 ns, 21.8632 ns/op
+WorkloadPilot   12: 32768 op, 696917.00 ns, 21.2682 ns/op
+WorkloadPilot   13: 65536 op, 1390407.00 ns, 21.2159 ns/op
+WorkloadPilot   14: 131072 op, 2740659.00 ns, 20.9096 ns/op
+WorkloadPilot   15: 262144 op, 5450231.00 ns, 20.7910 ns/op
+WorkloadPilot   16: 524288 op, 10913576.00 ns, 20.8160 ns/op
+WorkloadPilot   17: 1048576 op, 21726677.00 ns, 20.7202 ns/op
+WorkloadPilot   18: 2097152 op, 43504820.00 ns, 20.7447 ns/op
+WorkloadPilot   19: 4194304 op, 81925219.00 ns, 19.5325 ns/op
+WorkloadPilot   20: 8388608 op, 23008932.00 ns, 2.7429 ns/op
+WorkloadPilot   21: 16777216 op, 45422298.00 ns, 2.7074 ns/op
+WorkloadPilot   22: 33554432 op, 90928201.00 ns, 2.7099 ns/op
+WorkloadPilot   23: 67108864 op, 181417075.00 ns, 2.7033 ns/op
+WorkloadPilot   24: 134217728 op, 362678199.00 ns, 2.7022 ns/op
+WorkloadPilot   25: 268435456 op, 726044668.00 ns, 2.7047 ns/op
+
+OverheadWarmup   1: 268435456 op, 735151327.00 ns, 2.7387 ns/op
+OverheadWarmup   2: 268435456 op, 500938722.00 ns, 1.8661 ns/op
+OverheadWarmup   3: 268435456 op, 499464028.00 ns, 1.8606 ns/op
+OverheadWarmup   4: 268435456 op, 498504131.00 ns, 1.8571 ns/op
+OverheadWarmup   5: 268435456 op, 497597544.00 ns, 1.8537 ns/op
+OverheadWarmup   6: 268435456 op, 498897183.00 ns, 1.8585 ns/op
+OverheadWarmup   7: 268435456 op, 497388285.00 ns, 1.8529 ns/op
+OverheadWarmup   8: 268435456 op, 497378868.00 ns, 1.8529 ns/op
+OverheadWarmup   9: 268435456 op, 505172450.00 ns, 1.8819 ns/op
+OverheadWarmup  10: 268435456 op, 496668365.00 ns, 1.8502 ns/op
+
+OverheadActual   1: 268435456 op, 499382816.00 ns, 1.8603 ns/op
+OverheadActual   2: 268435456 op, 496515100.00 ns, 1.8497 ns/op
+OverheadActual   3: 268435456 op, 500043596.00 ns, 1.8628 ns/op
+OverheadActual   4: 268435456 op, 497683024.00 ns, 1.8540 ns/op
+OverheadActual   5: 268435456 op, 498607975.00 ns, 1.8575 ns/op
+OverheadActual   6: 268435456 op, 500840543.00 ns, 1.8658 ns/op
+OverheadActual   7: 268435456 op, 498108469.00 ns, 1.8556 ns/op
+OverheadActual   8: 268435456 op, 497761835.00 ns, 1.8543 ns/op
+OverheadActual   9: 268435456 op, 503587619.00 ns, 1.8760 ns/op
+OverheadActual  10: 268435456 op, 500059029.00 ns, 1.8629 ns/op
+OverheadActual  11: 268435456 op, 497300496.00 ns, 1.8526 ns/op
+OverheadActual  12: 268435456 op, 499279779.00 ns, 1.8600 ns/op
+OverheadActual  13: 268435456 op, 498955055.00 ns, 1.8588 ns/op
+OverheadActual  14: 268435456 op, 499048429.00 ns, 1.8591 ns/op
+OverheadActual  15: 268435456 op, 497824911.00 ns, 1.8545 ns/op
+
+WorkloadWarmup   1: 268435456 op, 725087937.00 ns, 2.7012 ns/op
+WorkloadWarmup   2: 268435456 op, 728578262.00 ns, 2.7142 ns/op
+WorkloadWarmup   3: 268435456 op, 726226325.00 ns, 2.7054 ns/op
+WorkloadWarmup   4: 268435456 op, 727954581.00 ns, 2.7118 ns/op
+WorkloadWarmup   5: 268435456 op, 727712913.00 ns, 2.7109 ns/op
+WorkloadWarmup   6: 268435456 op, 727217467.00 ns, 2.7091 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 268435456 op, 727157044.00 ns, 2.7089 ns/op
+WorkloadActual   2: 268435456 op, 726236792.00 ns, 2.7054 ns/op
+WorkloadActual   3: 268435456 op, 725215001.00 ns, 2.7016 ns/op
+WorkloadActual   4: 268435456 op, 727271708.00 ns, 2.7093 ns/op
+WorkloadActual   5: 268435456 op, 725864198.00 ns, 2.7041 ns/op
+WorkloadActual   6: 268435456 op, 728676482.00 ns, 2.7145 ns/op
+WorkloadActual   7: 268435456 op, 727089058.00 ns, 2.7086 ns/op
+WorkloadActual   8: 268435456 op, 727024388.00 ns, 2.7084 ns/op
+WorkloadActual   9: 268435456 op, 724873064.00 ns, 2.7004 ns/op
+WorkloadActual  10: 268435456 op, 727670563.00 ns, 2.7108 ns/op
+WorkloadActual  11: 268435456 op, 723972819.00 ns, 2.6970 ns/op
+WorkloadActual  12: 268435456 op, 726920415.00 ns, 2.7080 ns/op
+WorkloadActual  13: 268435456 op, 728132120.00 ns, 2.7125 ns/op
+WorkloadActual  14: 268435456 op, 726538374.00 ns, 2.7066 ns/op
+WorkloadActual  15: 268435456 op, 725413189.00 ns, 2.7024 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 268435456 op, 228201989.00 ns, 0.8501 ns/op
+WorkloadResult   2: 268435456 op, 227281737.00 ns, 0.8467 ns/op
+WorkloadResult   3: 268435456 op, 226259946.00 ns, 0.8429 ns/op
+WorkloadResult   4: 268435456 op, 228316653.00 ns, 0.8505 ns/op
+WorkloadResult   5: 268435456 op, 226909143.00 ns, 0.8453 ns/op
+WorkloadResult   6: 268435456 op, 229721427.00 ns, 0.8558 ns/op
+WorkloadResult   7: 268435456 op, 228134003.00 ns, 0.8499 ns/op
+WorkloadResult   8: 268435456 op, 228069333.00 ns, 0.8496 ns/op
+WorkloadResult   9: 268435456 op, 225918009.00 ns, 0.8416 ns/op
+WorkloadResult  10: 268435456 op, 228715508.00 ns, 0.8520 ns/op
+WorkloadResult  11: 268435456 op, 225017764.00 ns, 0.8383 ns/op
+WorkloadResult  12: 268435456 op, 227965360.00 ns, 0.8492 ns/op
+WorkloadResult  13: 268435456 op, 229177065.00 ns, 0.8538 ns/op
+WorkloadResult  14: 268435456 op, 227583319.00 ns, 0.8478 ns/op
+WorkloadResult  15: 268435456 op, 226458134.00 ns, 0.8436 ns/op
+// GC:  0 0 0 32 268435456
+// Threading:  0 0 268435456
+
+// AfterAll
+// Benchmark Process 3739 has exited with code 0.
+
+Mean = 0.848 ns, StdErr = 0.001 ns (0.15%), N = 15, StdDev = 0.005 ns
+Min = 0.838 ns, Q1 = 0.844 ns, Median = 0.849 ns, Q3 = 0.850 ns, Max = 0.856 ns
+IQR = 0.006 ns, LowerFence = 0.836 ns, UpperFence = 0.859 ns
+ConfidenceInterval = [0.843 ns; 0.853 ns] (CI 99.9%), Margin = 0.005 ns (0.60% of Mean)
+Skewness = -0.29, Kurtosis = 2.13, MValue = 2
+
+// ** Remained 30 (66.7 %) benchmark(s) to run. Estimated finish 2026-09-06 6:50 (0h 6m from now) **
+// **************************
+// Benchmark: EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 123 124 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId --job ".NET 10.0" --benchmarkId 7 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 208077.00 ns, 208.0770 us/op
+WorkloadJitting  1: 1 op, 372373.00 ns, 372.3730 us/op
+
+OverheadJitting  2: 16 op, 382973.00 ns, 23.9358 us/op
+WorkloadJitting  2: 16 op, 326358.00 ns, 20.3974 us/op
+
+WorkloadPilot    1: 16 op, 1563.00 ns, 97.6875 ns/op
+WorkloadPilot    2: 32 op, 1723.00 ns, 53.8438 ns/op
+WorkloadPilot    3: 64 op, 2625.00 ns, 41.0156 ns/op
+WorkloadPilot    4: 128 op, 4188.00 ns, 32.7188 ns/op
+WorkloadPilot    5: 256 op, 7644.00 ns, 29.8594 ns/op
+WorkloadPilot    6: 512 op, 19897.00 ns, 38.8613 ns/op
+WorkloadPilot    7: 1024 op, 38091.00 ns, 37.1982 ns/op
+WorkloadPilot    8: 2048 op, 60322.00 ns, 29.4541 ns/op
+WorkloadPilot    9: 4096 op, 111587.00 ns, 27.2429 ns/op
+WorkloadPilot   10: 8192 op, 213527.00 ns, 26.0653 ns/op
+WorkloadPilot   11: 16384 op, 572565.00 ns, 34.9466 ns/op
+WorkloadPilot   12: 32768 op, 847507.00 ns, 25.8639 ns/op
+WorkloadPilot   13: 65536 op, 1689324.00 ns, 25.7770 ns/op
+WorkloadPilot   14: 131072 op, 3329305.00 ns, 25.4006 ns/op
+WorkloadPilot   15: 262144 op, 6706750.00 ns, 25.5842 ns/op
+WorkloadPilot   16: 524288 op, 13349041.00 ns, 25.4613 ns/op
+WorkloadPilot   17: 1048576 op, 26698132.00 ns, 25.4613 ns/op
+WorkloadPilot   18: 2097152 op, 53034963.00 ns, 25.2890 ns/op
+WorkloadPilot   19: 4194304 op, 72034787.00 ns, 17.1744 ns/op
+WorkloadPilot   20: 8388608 op, 19977807.00 ns, 2.3815 ns/op
+WorkloadPilot   21: 16777216 op, 40533998.00 ns, 2.4160 ns/op
+WorkloadPilot   22: 33554432 op, 79116536.00 ns, 2.3579 ns/op
+WorkloadPilot   23: 67108864 op, 157728732.00 ns, 2.3503 ns/op
+WorkloadPilot   24: 134217728 op, 318029181.00 ns, 2.3695 ns/op
+WorkloadPilot   25: 268435456 op, 635984304.00 ns, 2.3692 ns/op
+
+OverheadWarmup   1: 268435456 op, 737092774.00 ns, 2.7459 ns/op
+OverheadWarmup   2: 268435456 op, 498058272.00 ns, 1.8554 ns/op
+OverheadWarmup   3: 268435456 op, 500716344.00 ns, 1.8653 ns/op
+OverheadWarmup   4: 268435456 op, 498151414.00 ns, 1.8558 ns/op
+OverheadWarmup   5: 268435456 op, 496635775.00 ns, 1.8501 ns/op
+OverheadWarmup   6: 268435456 op, 500272430.00 ns, 1.8637 ns/op
+OverheadWarmup   7: 268435456 op, 502177483.00 ns, 1.8708 ns/op
+OverheadWarmup   8: 268435456 op, 498880451.00 ns, 1.8585 ns/op
+
+OverheadActual   1: 268435456 op, 499170110.00 ns, 1.8596 ns/op
+OverheadActual   2: 268435456 op, 500136657.00 ns, 1.8632 ns/op
+OverheadActual   3: 268435456 op, 500096142.00 ns, 1.8630 ns/op
+OverheadActual   4: 268435456 op, 499583559.00 ns, 1.8611 ns/op
+OverheadActual   5: 268435456 op, 499538966.00 ns, 1.8609 ns/op
+OverheadActual   6: 268435456 op, 499826470.00 ns, 1.8620 ns/op
+OverheadActual   7: 268435456 op, 501318215.00 ns, 1.8676 ns/op
+OverheadActual   8: 268435456 op, 501738587.00 ns, 1.8691 ns/op
+OverheadActual   9: 268435456 op, 497260688.00 ns, 1.8524 ns/op
+OverheadActual  10: 268435456 op, 503386976.00 ns, 1.8753 ns/op
+OverheadActual  11: 268435456 op, 497424566.00 ns, 1.8531 ns/op
+OverheadActual  12: 268435456 op, 501482360.00 ns, 1.8682 ns/op
+OverheadActual  13: 268435456 op, 500300260.00 ns, 1.8638 ns/op
+OverheadActual  14: 268435456 op, 499638709.00 ns, 1.8613 ns/op
+OverheadActual  15: 268435456 op, 499092903.00 ns, 1.8593 ns/op
+
+WorkloadWarmup   1: 268435456 op, 637294685.00 ns, 2.3741 ns/op
+WorkloadWarmup   2: 268435456 op, 634370823.00 ns, 2.3632 ns/op
+WorkloadWarmup   3: 268435456 op, 631636454.00 ns, 2.3530 ns/op
+WorkloadWarmup   4: 268435456 op, 636051149.00 ns, 2.3695 ns/op
+WorkloadWarmup   5: 268435456 op, 634016533.00 ns, 2.3619 ns/op
+WorkloadWarmup   6: 268435456 op, 635466862.00 ns, 2.3673 ns/op
+WorkloadWarmup   7: 268435456 op, 634046920.00 ns, 2.3620 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 268435456 op, 635364373.00 ns, 2.3669 ns/op
+WorkloadActual   2: 268435456 op, 633393529.00 ns, 2.3596 ns/op
+WorkloadActual   3: 268435456 op, 634820360.00 ns, 2.3649 ns/op
+WorkloadActual   4: 268435456 op, 634199395.00 ns, 2.3626 ns/op
+WorkloadActual   5: 268435456 op, 638526446.00 ns, 2.3787 ns/op
+WorkloadActual   6: 268435456 op, 636092097.00 ns, 2.3696 ns/op
+WorkloadActual   7: 268435456 op, 641417591.00 ns, 2.3895 ns/op
+WorkloadActual   8: 268435456 op, 632438245.00 ns, 2.3560 ns/op
+WorkloadActual   9: 268435456 op, 635054615.00 ns, 2.3658 ns/op
+WorkloadActual  10: 268435456 op, 638195090.00 ns, 2.3775 ns/op
+WorkloadActual  11: 268435456 op, 635017307.00 ns, 2.3656 ns/op
+WorkloadActual  12: 268435456 op, 632592945.00 ns, 2.3566 ns/op
+WorkloadActual  13: 268435456 op, 635201299.00 ns, 2.3663 ns/op
+WorkloadActual  14: 268435456 op, 635215436.00 ns, 2.3664 ns/op
+WorkloadActual  15: 268435456 op, 638483332.00 ns, 2.3785 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 268435456 op, 135537903.00 ns, 0.5049 ns/op
+WorkloadResult   2: 268435456 op, 133567059.00 ns, 0.4976 ns/op
+WorkloadResult   3: 268435456 op, 134993890.00 ns, 0.5029 ns/op
+WorkloadResult   4: 268435456 op, 134372925.00 ns, 0.5006 ns/op
+WorkloadResult   5: 268435456 op, 138699976.00 ns, 0.5167 ns/op
+WorkloadResult   6: 268435456 op, 136265627.00 ns, 0.5076 ns/op
+WorkloadResult   7: 268435456 op, 132611775.00 ns, 0.4940 ns/op
+WorkloadResult   8: 268435456 op, 135228145.00 ns, 0.5038 ns/op
+WorkloadResult   9: 268435456 op, 138368620.00 ns, 0.5155 ns/op
+WorkloadResult  10: 268435456 op, 135190837.00 ns, 0.5036 ns/op
+WorkloadResult  11: 268435456 op, 132766475.00 ns, 0.4946 ns/op
+WorkloadResult  12: 268435456 op, 135374829.00 ns, 0.5043 ns/op
+WorkloadResult  13: 268435456 op, 135388966.00 ns, 0.5044 ns/op
+WorkloadResult  14: 268435456 op, 138656862.00 ns, 0.5165 ns/op
+// GC:  0 0 0 0 268435456
+// Threading:  0 0 268435456
+
+// AfterAll
+// Benchmark Process 3764 has exited with code 0.
+
+Mean = 0.505 ns, StdErr = 0.002 ns (0.39%), N = 14, StdDev = 0.007 ns
+Min = 0.494 ns, Q1 = 0.501 ns, Median = 0.504 ns, Q3 = 0.507 ns, Max = 0.517 ns
+IQR = 0.006 ns, LowerFence = 0.492 ns, UpperFence = 0.516 ns
+ConfidenceInterval = [0.497 ns; 0.513 ns] (CI 99.9%), Margin = 0.008 ns (1.64% of Mean)
+Skewness = 0.33, Kurtosis = 1.97, MValue = 2
+
+// ** Remained 29 (64.4 %) benchmark(s) to run. Estimated finish 2026-09-06 6:51 (0h 7m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 28 (62.2 %) benchmark(s) to run. Estimated finish 2026-09-06 6:50 (0h 6m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 27 (60.0 %) benchmark(s) to run. Estimated finish 2026-09-06 6:50 (0h 5m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 26 (57.8 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 5m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 25 (55.6 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 4m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 24 (53.3 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 4m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 23 (51.1 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 4m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 22 (48.9 %) benchmark(s) to run. Estimated finish 2026-09-06 6:47 (0h 3m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 21 (46.7 %) benchmark(s) to run. Estimated finish 2026-09-06 6:47 (0h 3m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-report.csv
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-report-github.md
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-report.html
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-report-full-compressed.json
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-report-default.md
+
+// * Detailed results *
+EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 0.515 ns, StdErr = 0.001 ns (0.24%), N = 15, StdDev = 0.005 ns
+Min = 0.509 ns, Q1 = 0.512 ns, Median = 0.514 ns, Q3 = 0.517 ns, Max = 0.525 ns
+IQR = 0.006 ns, LowerFence = 0.503 ns, UpperFence = 0.525 ns
+ConfidenceInterval = [0.510 ns; 0.520 ns] (CI 99.9%), Margin = 0.005 ns (0.99% of Mean)
+Skewness = 0.8, Kurtosis = 2.35, MValue = 2
+-------------------- Histogram --------------------
+[0.507 ns ; 0.528 ns) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 0.811 ns, StdErr = 0.006 ns (0.70%), N = 15, StdDev = 0.022 ns
+Min = 0.784 ns, Q1 = 0.791 ns, Median = 0.799 ns, Q3 = 0.833 ns, Max = 0.839 ns
+IQR = 0.042 ns, LowerFence = 0.728 ns, UpperFence = 0.897 ns
+ConfidenceInterval = [0.787 ns; 0.834 ns] (CI 99.9%), Margin = 0.024 ns (2.90% of Mean)
+Skewness = 0.14, Kurtosis = 1.08, MValue = 2
+-------------------- Histogram --------------------
+[0.780 ns ; 0.804 ns) | @@@@@@@@
+[0.804 ns ; 0.842 ns) | @@@@@@@
+---------------------------------------------------
+
+EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 0.848 ns, StdErr = 0.001 ns (0.15%), N = 15, StdDev = 0.005 ns
+Min = 0.838 ns, Q1 = 0.844 ns, Median = 0.849 ns, Q3 = 0.850 ns, Max = 0.856 ns
+IQR = 0.006 ns, LowerFence = 0.836 ns, UpperFence = 0.859 ns
+ConfidenceInterval = [0.843 ns; 0.853 ns] (CI 99.9%), Margin = 0.005 ns (0.60% of Mean)
+Skewness = -0.29, Kurtosis = 2.13, MValue = 2
+-------------------- Histogram --------------------
+[0.836 ns ; 0.857 ns) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 0.505 ns, StdErr = 0.002 ns (0.39%), N = 14, StdDev = 0.007 ns
+Min = 0.494 ns, Q1 = 0.501 ns, Median = 0.504 ns, Q3 = 0.507 ns, Max = 0.517 ns
+IQR = 0.006 ns, LowerFence = 0.492 ns, UpperFence = 0.516 ns
+ConfidenceInterval = [0.497 ns; 0.513 ns] (CI 99.9%), Margin = 0.008 ns (1.64% of Mean)
+Skewness = 0.33, Kurtosis = 1.97, MValue = 2
+-------------------- Histogram --------------------
+[0.490 ns ; 0.509 ns) | @@@@@@@@@@@
+[0.509 ns ; 0.521 ns) | @@@
+---------------------------------------------------
+
+EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.4 LTS (Noble Numbat)
+AMD EPYC 7763 2.81GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.400
+  [Host]    : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+  .NET 10.0 : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+
+
+| Method                                   | Job       | Runtime   | Mean      | Error     | StdDev    | Ratio | RatioSD | Rank | Allocated | Alloc Ratio |
+|----------------------------------------- |---------- |---------- |----------:|----------:|----------:|------:|--------:|-----:|----------:|------------:|
+| Ardalis_EntityEquality_SameId            | .NET 10.0 | .NET 10.0 | 0.5150 ns | 0.0051 ns | 0.0048 ns |     ? |       ? |    1 |         - |           ? |
+| EricksonLopez_EntityEquality_SameId      | .NET 10.0 | .NET 10.0 | 0.8105 ns | 0.0235 ns | 0.0220 ns |     ? |       ? |    2 |         - |           ? |
+| Ardalis_EntityEquality_DifferentId       | .NET 10.0 | .NET 10.0 | 0.8478 ns | 0.0051 ns | 0.0048 ns |     ? |       ? |    2 |         - |           ? |
+| EricksonLopez_EntityEquality_DifferentId | .NET 10.0 | .NET 10.0 | 0.5048 ns | 0.0083 ns | 0.0073 ns |     ? |       ? |    1 |         - |           ? |
+| Ardalis_EntityEquality_SameId            | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
+| EricksonLopez_EntityEquality_SameId      | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
+| Ardalis_EntityEquality_DifferentId       | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
+| EricksonLopez_EntityEquality_DifferentId | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
+| Ardalis_EntityEquality_SameId            | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
+| EricksonLopez_EntityEquality_SameId      | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
+| Ardalis_EntityEquality_DifferentId       | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
+| EricksonLopez_EntityEquality_DifferentId | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
+
+Benchmarks with issues:
+  EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  EntityComparisonBenchmarks.Ardalis_EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  EntityComparisonBenchmarks.EricksonLopez_EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  EntityComparisonBenchmarks.Ardalis_EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+
+// * Warnings *
+BaselineCustomAnalyzer
+  Summary -> A question mark '?' symbol indicates that it was not possible to compute the (Ratio, RatioSD, Alloc Ratio) column(s) because the baseline or benchmark could not be found, or the baseline value is too close to zero.
+
+// * Hints *
+Outliers
+  EntityComparisonBenchmarks.EricksonLopez_EntityEquality_DifferentId: .NET 10.0 -> 1 outlier  was  removed (2.39 ns)
+
+// * Legends *
+  Mean        : Arithmetic mean of all measurements
+  Error       : Half of 99.9% confidence interval
+  StdDev      : Standard deviation of all measurements
+  Ratio       : Mean of the ratio distribution ([Current]/[Baseline])
+  RatioSD     : Standard deviation of the ratio distribution ([Current]/[Baseline])
+  Rank        : Relative position of current benchmark mean among all benchmarks (Arabic style)
+  Allocated   : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  Alloc Ratio : Allocated memory ratio distribution ([Current]/[Baseline])
+  1 ns        : 1 Nanosecond (0.000000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:01:55 (115.35 sec), executed benchmarks: 4
+
+// Found 21 benchmarks:
+//   SharedKernelBenchmarks.EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   SharedKernelBenchmarks.EntityGetHashCode: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+//   SharedKernelBenchmarks.EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   SharedKernelBenchmarks.EntityGetHashCode: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+//   SharedKernelBenchmarks.EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   SharedKernelBenchmarks.EntityGetHashCode: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+//   SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+
+// **************************
+// Benchmark: SharedKernelBenchmarks.EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 121 122 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks.EntityEquality_SameId --job ".NET 10.0" --benchmarkId 8 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 204501.00 ns, 204.5010 us/op
+WorkloadJitting  1: 1 op, 343720.00 ns, 343.7200 us/op
+
+OverheadJitting  2: 16 op, 333190.00 ns, 20.8244 us/op
+WorkloadJitting  2: 16 op, 339211.00 ns, 21.2007 us/op
+
+WorkloadPilot    1: 16 op, 2194.00 ns, 137.1250 ns/op
+WorkloadPilot    2: 32 op, 2595.00 ns, 81.0938 ns/op
+WorkloadPilot    3: 64 op, 2565.00 ns, 40.0781 ns/op
+WorkloadPilot    4: 128 op, 4178.00 ns, 32.6406 ns/op
+WorkloadPilot    5: 256 op, 7233.00 ns, 28.2539 ns/op
+WorkloadPilot    6: 512 op, 13545.00 ns, 26.4551 ns/op
+WorkloadPilot    7: 1024 op, 26329.00 ns, 25.7119 ns/op
+WorkloadPilot    8: 2048 op, 50995.00 ns, 24.8999 ns/op
+WorkloadPilot    9: 4096 op, 100578.00 ns, 24.5552 ns/op
+WorkloadPilot   10: 8192 op, 226541.00 ns, 27.6539 ns/op
+WorkloadPilot   11: 16384 op, 428778.00 ns, 26.1705 ns/op
+WorkloadPilot   12: 32768 op, 826307.00 ns, 25.2169 ns/op
+WorkloadPilot   13: 65536 op, 1632978.00 ns, 24.9173 ns/op
+WorkloadPilot   14: 131072 op, 3266128.00 ns, 24.9186 ns/op
+WorkloadPilot   15: 262144 op, 6507379.00 ns, 24.8237 ns/op
+WorkloadPilot   16: 524288 op, 12984652.00 ns, 24.7663 ns/op
+WorkloadPilot   17: 1048576 op, 26254014.00 ns, 25.0378 ns/op
+WorkloadPilot   18: 2097152 op, 52105628.00 ns, 24.8459 ns/op
+WorkloadPilot   19: 4194304 op, 73672681.00 ns, 17.5649 ns/op
+WorkloadPilot   20: 8388608 op, 20011177.00 ns, 2.3855 ns/op
+WorkloadPilot   21: 16777216 op, 40040067.00 ns, 2.3866 ns/op
+WorkloadPilot   22: 33554432 op, 80064054.00 ns, 2.3861 ns/op
+WorkloadPilot   23: 67108864 op, 161661022.00 ns, 2.4089 ns/op
+WorkloadPilot   24: 134217728 op, 317851714.00 ns, 2.3682 ns/op
+WorkloadPilot   25: 268435456 op, 630980580.00 ns, 2.3506 ns/op
+
+OverheadWarmup   1: 268435456 op, 735063029.00 ns, 2.7383 ns/op
+OverheadWarmup   2: 268435456 op, 502355993.00 ns, 1.8714 ns/op
+OverheadWarmup   3: 268435456 op, 498750152.00 ns, 1.8580 ns/op
+OverheadWarmup   4: 268435456 op, 500118319.00 ns, 1.8631 ns/op
+OverheadWarmup   5: 268435456 op, 503290165.00 ns, 1.8749 ns/op
+OverheadWarmup   6: 268435456 op, 498742349.00 ns, 1.8580 ns/op
+OverheadWarmup   7: 268435456 op, 498606415.00 ns, 1.8575 ns/op
+OverheadWarmup   8: 268435456 op, 500723746.00 ns, 1.8653 ns/op
+OverheadWarmup   9: 268435456 op, 503039395.00 ns, 1.8740 ns/op
+OverheadWarmup  10: 268435456 op, 501283447.00 ns, 1.8674 ns/op
+
+OverheadActual   1: 268435456 op, 498635978.00 ns, 1.8576 ns/op
+OverheadActual   2: 268435456 op, 499863596.00 ns, 1.8621 ns/op
+OverheadActual   3: 268435456 op, 497695671.00 ns, 1.8541 ns/op
+OverheadActual   4: 268435456 op, 500738616.00 ns, 1.8654 ns/op
+OverheadActual   5: 268435456 op, 500178553.00 ns, 1.8633 ns/op
+OverheadActual   6: 268435456 op, 500463723.00 ns, 1.8644 ns/op
+OverheadActual   7: 268435456 op, 505077206.00 ns, 1.8816 ns/op
+OverheadActual   8: 268435456 op, 499035846.00 ns, 1.8591 ns/op
+OverheadActual   9: 268435456 op, 498085026.00 ns, 1.8555 ns/op
+OverheadActual  10: 268435456 op, 497544489.00 ns, 1.8535 ns/op
+OverheadActual  11: 268435456 op, 499303874.00 ns, 1.8601 ns/op
+OverheadActual  12: 268435456 op, 511102300.00 ns, 1.9040 ns/op
+OverheadActual  13: 268435456 op, 500122088.00 ns, 1.8631 ns/op
+OverheadActual  14: 268435456 op, 500722765.00 ns, 1.8653 ns/op
+OverheadActual  15: 268435456 op, 514182139.00 ns, 1.9155 ns/op
+
+WorkloadWarmup   1: 268435456 op, 630665053.00 ns, 2.3494 ns/op
+WorkloadWarmup   2: 268435456 op, 634064509.00 ns, 2.3621 ns/op
+WorkloadWarmup   3: 268435456 op, 630049677.00 ns, 2.3471 ns/op
+WorkloadWarmup   4: 268435456 op, 635982688.00 ns, 2.3692 ns/op
+WorkloadWarmup   5: 268435456 op, 634404882.00 ns, 2.3633 ns/op
+WorkloadWarmup   6: 268435456 op, 631123847.00 ns, 2.3511 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 268435456 op, 632109892.00 ns, 2.3548 ns/op
+WorkloadActual   2: 268435456 op, 631363873.00 ns, 2.3520 ns/op
+WorkloadActual   3: 268435456 op, 630768306.00 ns, 2.3498 ns/op
+WorkloadActual   4: 268435456 op, 634184983.00 ns, 2.3625 ns/op
+WorkloadActual   5: 268435456 op, 634224025.00 ns, 2.3627 ns/op
+WorkloadActual   6: 268435456 op, 633582623.00 ns, 2.3603 ns/op
+WorkloadActual   7: 268435456 op, 632018381.00 ns, 2.3545 ns/op
+WorkloadActual   8: 268435456 op, 633381162.00 ns, 2.3595 ns/op
+WorkloadActual   9: 268435456 op, 634899232.00 ns, 2.3652 ns/op
+WorkloadActual  10: 268435456 op, 628411419.00 ns, 2.3410 ns/op
+WorkloadActual  11: 268435456 op, 633930899.00 ns, 2.3616 ns/op
+WorkloadActual  12: 268435456 op, 628394498.00 ns, 2.3410 ns/op
+WorkloadActual  13: 268435456 op, 632729344.00 ns, 2.3571 ns/op
+WorkloadActual  14: 268435456 op, 629636058.00 ns, 2.3456 ns/op
+WorkloadActual  15: 268435456 op, 629612885.00 ns, 2.3455 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 268435456 op, 131987804.00 ns, 0.4917 ns/op
+WorkloadResult   2: 268435456 op, 131241785.00 ns, 0.4889 ns/op
+WorkloadResult   3: 268435456 op, 130646218.00 ns, 0.4867 ns/op
+WorkloadResult   4: 268435456 op, 134062895.00 ns, 0.4994 ns/op
+WorkloadResult   5: 268435456 op, 134101937.00 ns, 0.4996 ns/op
+WorkloadResult   6: 268435456 op, 133460535.00 ns, 0.4972 ns/op
+WorkloadResult   7: 268435456 op, 131896293.00 ns, 0.4914 ns/op
+WorkloadResult   8: 268435456 op, 133259074.00 ns, 0.4964 ns/op
+WorkloadResult   9: 268435456 op, 134777144.00 ns, 0.5021 ns/op
+WorkloadResult  10: 268435456 op, 128289331.00 ns, 0.4779 ns/op
+WorkloadResult  11: 268435456 op, 133808811.00 ns, 0.4985 ns/op
+WorkloadResult  12: 268435456 op, 128272410.00 ns, 0.4779 ns/op
+WorkloadResult  13: 268435456 op, 132607256.00 ns, 0.4940 ns/op
+WorkloadResult  14: 268435456 op, 129513970.00 ns, 0.4825 ns/op
+WorkloadResult  15: 268435456 op, 129490797.00 ns, 0.4824 ns/op
+// GC:  0 0 0 32 268435456
+// Threading:  0 0 268435456
+
+// AfterAll
+// Benchmark Process 3785 has exited with code 0.
+
+Mean = 0.491 ns, StdErr = 0.002 ns (0.42%), N = 15, StdDev = 0.008 ns
+Min = 0.478 ns, Q1 = 0.485 ns, Median = 0.492 ns, Q3 = 0.498 ns, Max = 0.502 ns
+IQR = 0.013 ns, LowerFence = 0.465 ns, UpperFence = 0.518 ns
+ConfidenceInterval = [0.482 ns; 0.500 ns] (CI 99.9%), Margin = 0.009 ns (1.76% of Mean)
+Skewness = -0.34, Kurtosis = 1.6, MValue = 2
+
+// ** Remained 20 (44.4 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 3m from now) **
+// **************************
+// Benchmark: SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 121 122 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks.EntityEquality_DifferentId --job ".NET 10.0" --benchmarkId 9 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 200583.00 ns, 200.5830 us/op
+WorkloadJitting  1: 1 op, 357765.00 ns, 357.7650 us/op
+
+OverheadJitting  2: 16 op, 332379.00 ns, 20.7737 us/op
+WorkloadJitting  2: 16 op, 325315.00 ns, 20.3322 us/op
+
+WorkloadPilot    1: 16 op, 1503.00 ns, 93.9375 ns/op
+WorkloadPilot    2: 32 op, 1813.00 ns, 56.6563 ns/op
+WorkloadPilot    3: 64 op, 2605.00 ns, 40.7031 ns/op
+WorkloadPilot    4: 128 op, 4268.00 ns, 33.3438 ns/op
+WorkloadPilot    5: 256 op, 7505.00 ns, 29.3164 ns/op
+WorkloadPilot    6: 512 op, 13996.00 ns, 27.3359 ns/op
+WorkloadPilot    7: 1024 op, 27011.00 ns, 26.3779 ns/op
+WorkloadPilot    8: 2048 op, 52918.00 ns, 25.8389 ns/op
+WorkloadPilot    9: 4096 op, 104665.00 ns, 25.5530 ns/op
+WorkloadPilot   10: 8192 op, 208018.00 ns, 25.3928 ns/op
+WorkloadPilot   11: 16384 op, 415243.00 ns, 25.3444 ns/op
+WorkloadPilot   12: 32768 op, 863748.00 ns, 26.3595 ns/op
+WorkloadPilot   13: 65536 op, 1683793.00 ns, 25.6926 ns/op
+WorkloadPilot   14: 131072 op, 3371774.00 ns, 25.7246 ns/op
+WorkloadPilot   15: 262144 op, 6732680.00 ns, 25.6831 ns/op
+WorkloadPilot   16: 524288 op, 13466801.00 ns, 25.6859 ns/op
+WorkloadPilot   17: 1048576 op, 26867128.00 ns, 25.6225 ns/op
+WorkloadPilot   18: 2097152 op, 53518645.00 ns, 25.5197 ns/op
+WorkloadPilot   19: 4194304 op, 76693050.00 ns, 18.2850 ns/op
+WorkloadPilot   20: 8388608 op, 20152803.00 ns, 2.4024 ns/op
+WorkloadPilot   21: 16777216 op, 39862662.00 ns, 2.3760 ns/op
+WorkloadPilot   22: 33554432 op, 79697712.00 ns, 2.3752 ns/op
+WorkloadPilot   23: 67108864 op, 161519326.00 ns, 2.4068 ns/op
+WorkloadPilot   24: 134217728 op, 318282722.00 ns, 2.3714 ns/op
+WorkloadPilot   25: 268435456 op, 637460498.00 ns, 2.3747 ns/op
+
+OverheadWarmup   1: 268435456 op, 626715253.00 ns, 2.3347 ns/op
+OverheadWarmup   2: 268435456 op, 501328557.00 ns, 1.8676 ns/op
+OverheadWarmup   3: 268435456 op, 498330563.00 ns, 1.8564 ns/op
+OverheadWarmup   4: 268435456 op, 499881610.00 ns, 1.8622 ns/op
+OverheadWarmup   5: 268435456 op, 499941221.00 ns, 1.8624 ns/op
+OverheadWarmup   6: 268435456 op, 499190373.00 ns, 1.8596 ns/op
+OverheadWarmup   7: 268435456 op, 499079306.00 ns, 1.8592 ns/op
+OverheadWarmup   8: 268435456 op, 499363856.00 ns, 1.8603 ns/op
+OverheadWarmup   9: 268435456 op, 502535348.00 ns, 1.8721 ns/op
+OverheadWarmup  10: 268435456 op, 501081863.00 ns, 1.8667 ns/op
+
+OverheadActual   1: 268435456 op, 500042910.00 ns, 1.8628 ns/op
+OverheadActual   2: 268435456 op, 499133427.00 ns, 1.8594 ns/op
+OverheadActual   3: 268435456 op, 499017331.00 ns, 1.8590 ns/op
+OverheadActual   4: 268435456 op, 500794218.00 ns, 1.8656 ns/op
+OverheadActual   5: 268435456 op, 499916845.00 ns, 1.8623 ns/op
+OverheadActual   6: 268435456 op, 498745205.00 ns, 1.8580 ns/op
+OverheadActual   7: 268435456 op, 499926773.00 ns, 1.8624 ns/op
+OverheadActual   8: 268435456 op, 499852436.00 ns, 1.8621 ns/op
+OverheadActual   9: 268435456 op, 499775794.00 ns, 1.8618 ns/op
+OverheadActual  10: 268435456 op, 499631195.00 ns, 1.8613 ns/op
+OverheadActual  11: 268435456 op, 499539684.00 ns, 1.8609 ns/op
+OverheadActual  12: 268435456 op, 500086142.00 ns, 1.8630 ns/op
+OverheadActual  13: 268435456 op, 498995132.00 ns, 1.8589 ns/op
+OverheadActual  14: 268435456 op, 500900126.00 ns, 1.8660 ns/op
+OverheadActual  15: 268435456 op, 500189264.00 ns, 1.8634 ns/op
+
+WorkloadWarmup   1: 268435456 op, 645374215.00 ns, 2.4042 ns/op
+WorkloadWarmup   2: 268435456 op, 639755853.00 ns, 2.3833 ns/op
+WorkloadWarmup   3: 268435456 op, 634944489.00 ns, 2.3654 ns/op
+WorkloadWarmup   4: 268435456 op, 638359964.00 ns, 2.3781 ns/op
+WorkloadWarmup   5: 268435456 op, 637618004.00 ns, 2.3753 ns/op
+WorkloadWarmup   6: 268435456 op, 635037492.00 ns, 2.3657 ns/op
+WorkloadWarmup   7: 268435456 op, 638114982.00 ns, 2.3772 ns/op
+WorkloadWarmup   8: 268435456 op, 634755564.00 ns, 2.3646 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 268435456 op, 636224007.00 ns, 2.3701 ns/op
+WorkloadActual   2: 268435456 op, 633344919.00 ns, 2.3594 ns/op
+WorkloadActual   3: 268435456 op, 635767227.00 ns, 2.3684 ns/op
+WorkloadActual   4: 268435456 op, 637728978.00 ns, 2.3757 ns/op
+WorkloadActual   5: 268435456 op, 633750214.00 ns, 2.3609 ns/op
+WorkloadActual   6: 268435456 op, 639428670.00 ns, 2.3821 ns/op
+WorkloadActual   7: 268435456 op, 634280230.00 ns, 2.3629 ns/op
+WorkloadActual   8: 268435456 op, 637094557.00 ns, 2.3734 ns/op
+WorkloadActual   9: 268435456 op, 636700494.00 ns, 2.3719 ns/op
+WorkloadActual  10: 268435456 op, 637419571.00 ns, 2.3746 ns/op
+WorkloadActual  11: 268435456 op, 650602294.00 ns, 2.4237 ns/op
+WorkloadActual  12: 268435456 op, 634337568.00 ns, 2.3631 ns/op
+WorkloadActual  13: 268435456 op, 637107473.00 ns, 2.3734 ns/op
+WorkloadActual  14: 268435456 op, 635062627.00 ns, 2.3658 ns/op
+WorkloadActual  15: 268435456 op, 636519017.00 ns, 2.3712 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 268435456 op, 136371571.00 ns, 0.5080 ns/op
+WorkloadResult   2: 268435456 op, 133492483.00 ns, 0.4973 ns/op
+WorkloadResult   3: 268435456 op, 135914791.00 ns, 0.5063 ns/op
+WorkloadResult   4: 268435456 op, 137876542.00 ns, 0.5136 ns/op
+WorkloadResult   5: 268435456 op, 133897778.00 ns, 0.4988 ns/op
+WorkloadResult   6: 268435456 op, 139576234.00 ns, 0.5200 ns/op
+WorkloadResult   7: 268435456 op, 134427794.00 ns, 0.5008 ns/op
+WorkloadResult   8: 268435456 op, 137242121.00 ns, 0.5113 ns/op
+WorkloadResult   9: 268435456 op, 136848058.00 ns, 0.5098 ns/op
+WorkloadResult  10: 268435456 op, 137567135.00 ns, 0.5125 ns/op
+WorkloadResult  11: 268435456 op, 134485132.00 ns, 0.5010 ns/op
+WorkloadResult  12: 268435456 op, 137255037.00 ns, 0.5113 ns/op
+WorkloadResult  13: 268435456 op, 135210191.00 ns, 0.5037 ns/op
+WorkloadResult  14: 268435456 op, 136666581.00 ns, 0.5091 ns/op
+// GC:  0 0 0 0 268435456
+// Threading:  0 0 268435456
+
+// AfterAll
+// Benchmark Process 3805 has exited with code 0.
+
+Mean = 0.507 ns, StdErr = 0.002 ns (0.34%), N = 14, StdDev = 0.006 ns
+Min = 0.497 ns, Q1 = 0.502 ns, Median = 0.509 ns, Q3 = 0.511 ns, Max = 0.520 ns
+IQR = 0.010 ns, LowerFence = 0.487 ns, UpperFence = 0.526 ns
+ConfidenceInterval = [0.500 ns; 0.515 ns] (CI 99.9%), Margin = 0.007 ns (1.43% of Mean)
+Skewness = 0.06, Kurtosis = 1.97, MValue = 2
+
+// ** Remained 19 (42.2 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 3m from now) **
+// **************************
+// Benchmark: SharedKernelBenchmarks.EntityGetHashCode: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 121 122 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks.EntityGetHashCode --job ".NET 10.0" --benchmarkId 10 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 197898.00 ns, 197.8980 us/op
+WorkloadJitting  1: 1 op, 454706.00 ns, 454.7060 us/op
+
+OverheadJitting  2: 16 op, 328932.00 ns, 20.5583 us/op
+WorkloadJitting  2: 16 op, 319795.00 ns, 19.9872 us/op
+
+WorkloadPilot    1: 16 op, 1844.00 ns, 115.2500 ns/op
+WorkloadPilot    2: 32 op, 2314.00 ns, 72.3125 ns/op
+WorkloadPilot    3: 64 op, 3567.00 ns, 55.7344 ns/op
+WorkloadPilot    4: 128 op, 6021.00 ns, 47.0391 ns/op
+WorkloadPilot    5: 256 op, 10580.00 ns, 41.3281 ns/op
+WorkloadPilot    6: 512 op, 20127.00 ns, 39.3105 ns/op
+WorkloadPilot    7: 1024 op, 37971.00 ns, 37.0811 ns/op
+WorkloadPilot    8: 2048 op, 75620.00 ns, 36.9238 ns/op
+WorkloadPilot    9: 4096 op, 149278.00 ns, 36.4448 ns/op
+WorkloadPilot   10: 8192 op, 313674.00 ns, 38.2903 ns/op
+WorkloadPilot   11: 16384 op, 608753.00 ns, 37.1553 ns/op
+WorkloadPilot   12: 32768 op, 1205573.00 ns, 36.7912 ns/op
+WorkloadPilot   13: 65536 op, 2398874.00 ns, 36.6039 ns/op
+WorkloadPilot   14: 131072 op, 4803879.00 ns, 36.6507 ns/op
+WorkloadPilot   15: 262144 op, 9558688.00 ns, 36.4635 ns/op
+WorkloadPilot   16: 524288 op, 19107506.00 ns, 36.4447 ns/op
+WorkloadPilot   17: 1048576 op, 38199876.00 ns, 36.4302 ns/op
+WorkloadPilot   18: 2097152 op, 76643575.00 ns, 36.5465 ns/op
+WorkloadPilot   19: 4194304 op, 59023917.00 ns, 14.0724 ns/op
+WorkloadPilot   20: 8388608 op, 77236628.00 ns, 9.2073 ns/op
+WorkloadPilot   21: 16777216 op, 154535202.00 ns, 9.2110 ns/op
+WorkloadPilot   22: 33554432 op, 307857557.00 ns, 9.1749 ns/op
+WorkloadPilot   23: 67108864 op, 655021850.00 ns, 9.7606 ns/op
+
+OverheadWarmup   1: 67108864 op, 155636691.00 ns, 2.3192 ns/op
+OverheadWarmup   2: 67108864 op, 185024519.00 ns, 2.7571 ns/op
+OverheadWarmup   3: 67108864 op, 114166361.00 ns, 1.7012 ns/op
+OverheadWarmup   4: 67108864 op, 113893353.00 ns, 1.6971 ns/op
+OverheadWarmup   5: 67108864 op, 113615034.00 ns, 1.6930 ns/op
+OverheadWarmup   6: 67108864 op, 113605617.00 ns, 1.6929 ns/op
+OverheadWarmup   7: 67108864 op, 113583055.00 ns, 1.6925 ns/op
+OverheadWarmup   8: 67108864 op, 113721573.00 ns, 1.6946 ns/op
+OverheadWarmup   9: 67108864 op, 113556576.00 ns, 1.6921 ns/op
+
+OverheadActual   1: 67108864 op, 113572515.00 ns, 1.6924 ns/op
+OverheadActual   2: 67108864 op, 113793827.00 ns, 1.6957 ns/op
+OverheadActual   3: 67108864 op, 114322071.00 ns, 1.7035 ns/op
+OverheadActual   4: 67108864 op, 114186197.00 ns, 1.7015 ns/op
+OverheadActual   5: 67108864 op, 113682350.00 ns, 1.6940 ns/op
+OverheadActual   6: 67108864 op, 113657273.00 ns, 1.6936 ns/op
+OverheadActual   7: 67108864 op, 113556154.00 ns, 1.6921 ns/op
+OverheadActual   8: 67108864 op, 115762621.00 ns, 1.7250 ns/op
+OverheadActual   9: 67108864 op, 113481806.00 ns, 1.6910 ns/op
+OverheadActual  10: 67108864 op, 113721222.00 ns, 1.6946 ns/op
+OverheadActual  11: 67108864 op, 113494551.00 ns, 1.6912 ns/op
+OverheadActual  12: 67108864 op, 114304056.00 ns, 1.7033 ns/op
+OverheadActual  13: 67108864 op, 113571603.00 ns, 1.6923 ns/op
+OverheadActual  14: 67108864 op, 113626195.00 ns, 1.6932 ns/op
+OverheadActual  15: 67108864 op, 113668423.00 ns, 1.6938 ns/op
+
+WorkloadWarmup   1: 67108864 op, 617786679.00 ns, 9.2057 ns/op
+WorkloadWarmup   2: 67108864 op, 625660261.00 ns, 9.3231 ns/op
+WorkloadWarmup   3: 67108864 op, 618199758.00 ns, 9.2119 ns/op
+WorkloadWarmup   4: 67108864 op, 615374781.00 ns, 9.1698 ns/op
+WorkloadWarmup   5: 67108864 op, 615112734.00 ns, 9.1659 ns/op
+WorkloadWarmup   6: 67108864 op, 617893488.00 ns, 9.2073 ns/op
+WorkloadWarmup   7: 67108864 op, 615298830.00 ns, 9.1687 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 67108864 op, 619304244.00 ns, 9.2284 ns/op
+WorkloadActual   2: 67108864 op, 614809880.00 ns, 9.1614 ns/op
+WorkloadActual   3: 67108864 op, 616999995.00 ns, 9.1940 ns/op
+WorkloadActual   4: 67108864 op, 615488012.00 ns, 9.1715 ns/op
+WorkloadActual   5: 67108864 op, 614237214.00 ns, 9.1528 ns/op
+WorkloadActual   6: 67108864 op, 617790195.00 ns, 9.2058 ns/op
+WorkloadActual   7: 67108864 op, 615475859.00 ns, 9.1713 ns/op
+WorkloadActual   8: 67108864 op, 617307782.00 ns, 9.1986 ns/op
+WorkloadActual   9: 67108864 op, 620011192.00 ns, 9.2389 ns/op
+WorkloadActual  10: 67108864 op, 621284632.00 ns, 9.2579 ns/op
+WorkloadActual  11: 67108864 op, 617453453.00 ns, 9.2008 ns/op
+WorkloadActual  12: 67108864 op, 618309426.00 ns, 9.2135 ns/op
+WorkloadActual  13: 67108864 op, 614798904.00 ns, 9.1612 ns/op
+WorkloadActual  14: 67108864 op, 615045862.00 ns, 9.1649 ns/op
+WorkloadActual  15: 67108864 op, 617606767.00 ns, 9.2031 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 67108864 op, 505635821.00 ns, 7.5346 ns/op
+WorkloadResult   2: 67108864 op, 501141457.00 ns, 7.4676 ns/op
+WorkloadResult   3: 67108864 op, 503331572.00 ns, 7.5002 ns/op
+WorkloadResult   4: 67108864 op, 501819589.00 ns, 7.4777 ns/op
+WorkloadResult   5: 67108864 op, 500568791.00 ns, 7.4591 ns/op
+WorkloadResult   6: 67108864 op, 504121772.00 ns, 7.5120 ns/op
+WorkloadResult   7: 67108864 op, 501807436.00 ns, 7.4775 ns/op
+WorkloadResult   8: 67108864 op, 503639359.00 ns, 7.5048 ns/op
+WorkloadResult   9: 67108864 op, 506342769.00 ns, 7.5451 ns/op
+WorkloadResult  10: 67108864 op, 507616209.00 ns, 7.5641 ns/op
+WorkloadResult  11: 67108864 op, 503785030.00 ns, 7.5070 ns/op
+WorkloadResult  12: 67108864 op, 504641003.00 ns, 7.5197 ns/op
+WorkloadResult  13: 67108864 op, 501130481.00 ns, 7.4674 ns/op
+WorkloadResult  14: 67108864 op, 501377439.00 ns, 7.4711 ns/op
+WorkloadResult  15: 67108864 op, 503938344.00 ns, 7.5093 ns/op
+// GC:  0 0 0 0 67108864
+// Threading:  0 0 67108864
+
+// AfterAll
+// Benchmark Process 3827 has exited with code 0.
+
+Mean = 7.501 ns, StdErr = 0.008 ns (0.11%), N = 15, StdDev = 0.031 ns
+Min = 7.459 ns, Q1 = 7.474 ns, Median = 7.505 ns, Q3 = 7.516 ns, Max = 7.564 ns
+IQR = 0.042 ns, LowerFence = 7.412 ns, UpperFence = 7.578 ns
+ConfidenceInterval = [7.468 ns; 7.535 ns] (CI 99.9%), Margin = 0.033 ns (0.44% of Mean)
+Skewness = 0.39, Kurtosis = 1.96, MValue = 2
+
+// ** Remained 18 (40.0 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 3m from now) **
+// **************************
+// Benchmark: SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 121 122 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents --job ".NET 10.0" --benchmarkId 11 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 220731.00 ns, 220.7310 us/op
+WorkloadJitting  1: 1 op, 607100.00 ns, 607.1000 us/op
+
+OverheadJitting  2: 16 op, 385277.00 ns, 24.0798 us/op
+WorkloadJitting  2: 16 op, 367494.00 ns, 22.9684 us/op
+
+WorkloadPilot    1: 16 op, 1243.00 ns, 77.6875 ns/op
+WorkloadPilot    2: 32 op, 1393.00 ns, 43.5313 ns/op
+WorkloadPilot    3: 64 op, 1713.00 ns, 26.7656 ns/op
+WorkloadPilot    4: 128 op, 2354.00 ns, 18.3906 ns/op
+WorkloadPilot    5: 256 op, 3597.00 ns, 14.0508 ns/op
+WorkloadPilot    6: 512 op, 6221.00 ns, 12.1504 ns/op
+WorkloadPilot    7: 1024 op, 11301.00 ns, 11.0361 ns/op
+WorkloadPilot    8: 2048 op, 21570.00 ns, 10.5322 ns/op
+WorkloadPilot    9: 4096 op, 41998.00 ns, 10.2534 ns/op
+WorkloadPilot   10: 8192 op, 83024.00 ns, 10.1348 ns/op
+WorkloadPilot   11: 16384 op, 164857.00 ns, 10.0621 ns/op
+WorkloadPilot   12: 32768 op, 356283.00 ns, 10.8729 ns/op
+WorkloadPilot   13: 65536 op, 693009.00 ns, 10.5745 ns/op
+WorkloadPilot   14: 131072 op, 1337569.00 ns, 10.2048 ns/op
+WorkloadPilot   15: 262144 op, 2657074.00 ns, 10.1359 ns/op
+WorkloadPilot   16: 524288 op, 5296816.00 ns, 10.1029 ns/op
+WorkloadPilot   17: 1048576 op, 10595486.00 ns, 10.1046 ns/op
+WorkloadPilot   18: 2097152 op, 21176435.00 ns, 10.0977 ns/op
+WorkloadPilot   19: 4194304 op, 42391673.00 ns, 10.1070 ns/op
+WorkloadPilot   20: 8388608 op, 86554229.00 ns, 10.3181 ns/op
+WorkloadPilot   21: 16777216 op, 47246447.00 ns, 2.8161 ns/op
+WorkloadPilot   22: 33554432 op, 92485325.00 ns, 2.7563 ns/op
+WorkloadPilot   23: 67108864 op, 184946307.00 ns, 2.7559 ns/op
+WorkloadPilot   24: 134217728 op, 371594570.00 ns, 2.7686 ns/op
+WorkloadPilot   25: 268435456 op, 740068875.00 ns, 2.7570 ns/op
+
+OverheadWarmup   1: 268435456 op, 675172345.00 ns, 2.5152 ns/op
+OverheadWarmup   2: 268435456 op, 497990929.00 ns, 1.8552 ns/op
+OverheadWarmup   3: 268435456 op, 477046736.00 ns, 1.7771 ns/op
+OverheadWarmup   4: 268435456 op, 454594177.00 ns, 1.6935 ns/op
+OverheadWarmup   5: 268435456 op, 454482819.00 ns, 1.6931 ns/op
+OverheadWarmup   6: 268435456 op, 455361083.00 ns, 1.6964 ns/op
+OverheadWarmup   7: 268435456 op, 454710162.00 ns, 1.6939 ns/op
+OverheadWarmup   8: 268435456 op, 456664590.00 ns, 1.7012 ns/op
+OverheadWarmup   9: 268435456 op, 482575524.00 ns, 1.7977 ns/op
+OverheadWarmup  10: 268435456 op, 455399776.00 ns, 1.6965 ns/op
+
+OverheadActual   1: 268435456 op, 456190226.00 ns, 1.6994 ns/op
+OverheadActual   2: 268435456 op, 494144922.00 ns, 1.8408 ns/op
+OverheadActual   3: 268435456 op, 454552449.00 ns, 1.6933 ns/op
+OverheadActual   4: 268435456 op, 455495003.00 ns, 1.6969 ns/op
+OverheadActual   5: 268435456 op, 454554704.00 ns, 1.6933 ns/op
+OverheadActual   6: 268435456 op, 454959456.00 ns, 1.6949 ns/op
+OverheadActual   7: 268435456 op, 454749646.00 ns, 1.6941 ns/op
+OverheadActual   8: 268435456 op, 454367074.00 ns, 1.6926 ns/op
+OverheadActual   9: 268435456 op, 455174376.00 ns, 1.6957 ns/op
+OverheadActual  10: 268435456 op, 454620990.00 ns, 1.6936 ns/op
+OverheadActual  11: 268435456 op, 455193845.00 ns, 1.6957 ns/op
+OverheadActual  12: 268435456 op, 454541672.00 ns, 1.6933 ns/op
+OverheadActual  13: 268435456 op, 455518780.00 ns, 1.6969 ns/op
+OverheadActual  14: 268435456 op, 455824168.00 ns, 1.6981 ns/op
+OverheadActual  15: 268435456 op, 455664671.00 ns, 1.6975 ns/op
+
+WorkloadWarmup   1: 268435456 op, 738934851.00 ns, 2.7527 ns/op
+WorkloadWarmup   2: 268435456 op, 740142617.00 ns, 2.7572 ns/op
+WorkloadWarmup   3: 268435456 op, 740286675.00 ns, 2.7578 ns/op
+WorkloadWarmup   4: 268435456 op, 740308185.00 ns, 2.7579 ns/op
+WorkloadWarmup   5: 268435456 op, 739358809.00 ns, 2.7543 ns/op
+WorkloadWarmup   6: 268435456 op, 741963385.00 ns, 2.7640 ns/op
+WorkloadWarmup   7: 268435456 op, 739798034.00 ns, 2.7560 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 268435456 op, 741221907.00 ns, 2.7613 ns/op
+WorkloadActual   2: 268435456 op, 739894888.00 ns, 2.7563 ns/op
+WorkloadActual   3: 268435456 op, 740329085.00 ns, 2.7579 ns/op
+WorkloadActual   4: 268435456 op, 753048989.00 ns, 2.8053 ns/op
+WorkloadActual   5: 268435456 op, 740061097.00 ns, 2.7569 ns/op
+WorkloadActual   6: 268435456 op, 739170671.00 ns, 2.7536 ns/op
+WorkloadActual   7: 268435456 op, 740449399.00 ns, 2.7584 ns/op
+WorkloadActual   8: 268435456 op, 740552261.00 ns, 2.7588 ns/op
+WorkloadActual   9: 268435456 op, 743849153.00 ns, 2.7711 ns/op
+WorkloadActual  10: 268435456 op, 744790424.00 ns, 2.7746 ns/op
+WorkloadActual  11: 268435456 op, 740267047.00 ns, 2.7577 ns/op
+WorkloadActual  12: 268435456 op, 742373083.00 ns, 2.7656 ns/op
+WorkloadActual  13: 268435456 op, 740323840.00 ns, 2.7579 ns/op
+WorkloadActual  14: 268435456 op, 739681245.00 ns, 2.7555 ns/op
+WorkloadActual  15: 268435456 op, 739954613.00 ns, 2.7565 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 268435456 op, 286047531.00 ns, 1.0656 ns/op
+WorkloadResult   2: 268435456 op, 284720512.00 ns, 1.0607 ns/op
+WorkloadResult   3: 268435456 op, 285154709.00 ns, 1.0623 ns/op
+WorkloadResult   4: 268435456 op, 284886721.00 ns, 1.0613 ns/op
+WorkloadResult   5: 268435456 op, 283996295.00 ns, 1.0580 ns/op
+WorkloadResult   6: 268435456 op, 285275023.00 ns, 1.0627 ns/op
+WorkloadResult   7: 268435456 op, 285377885.00 ns, 1.0631 ns/op
+WorkloadResult   8: 268435456 op, 288674777.00 ns, 1.0754 ns/op
+WorkloadResult   9: 268435456 op, 285092671.00 ns, 1.0621 ns/op
+WorkloadResult  10: 268435456 op, 287198707.00 ns, 1.0699 ns/op
+WorkloadResult  11: 268435456 op, 285149464.00 ns, 1.0623 ns/op
+WorkloadResult  12: 268435456 op, 284506869.00 ns, 1.0599 ns/op
+WorkloadResult  13: 268435456 op, 284780237.00 ns, 1.0609 ns/op
+// GC:  0 0 0 32 268435456
+// Threading:  0 0 268435456
+
+// AfterAll
+// Benchmark Process 3842 has exited with code 0.
+
+Mean = 1.063 ns, StdErr = 0.001 ns (0.12%), N = 13, StdDev = 0.005 ns
+Min = 1.058 ns, Q1 = 1.061 ns, Median = 1.062 ns, Q3 = 1.063 ns, Max = 1.075 ns
+IQR = 0.002 ns, LowerFence = 1.058 ns, UpperFence = 1.066 ns
+ConfidenceInterval = [1.058 ns; 1.069 ns] (CI 99.9%), Margin = 0.006 ns (0.52% of Mean)
+Skewness = 1.38, Kurtosis = 4.01, MValue = 2
+
+// ** Remained 17 (37.8 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 3m from now) **
+// **************************
+// Benchmark: SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 121 122 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents --job ".NET 10.0" --benchmarkId 12 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 201074.00 ns, 201.0740 us/op
+WorkloadJitting  1: 1 op, 619112.00 ns, 619.1120 us/op
+
+OverheadJitting  2: 16 op, 354570.00 ns, 22.1606 us/op
+WorkloadJitting  2: 16 op, 402318.00 ns, 25.1449 us/op
+
+WorkloadPilot    1: 16 op, 6492.00 ns, 405.7500 ns/op
+WorkloadPilot    2: 32 op, 24495.00 ns, 765.4688 ns/op
+WorkloadPilot    3: 64 op, 28312.00 ns, 442.3750 ns/op
+WorkloadPilot    4: 128 op, 41186.00 ns, 321.7656 ns/op
+WorkloadPilot    5: 256 op, 73147.00 ns, 285.7305 ns/op
+WorkloadPilot    6: 512 op, 124422.00 ns, 243.0117 ns/op
+WorkloadPilot    7: 1024 op, 248783.00 ns, 242.9521 ns/op
+WorkloadPilot    8: 2048 op, 467500.00 ns, 228.2715 ns/op
+WorkloadPilot    9: 4096 op, 844511.00 ns, 206.1794 ns/op
+WorkloadPilot   10: 8192 op, 1711955.00 ns, 208.9789 ns/op
+WorkloadPilot   11: 16384 op, 3408411.00 ns, 208.0329 ns/op
+WorkloadPilot   12: 32768 op, 6791776.00 ns, 207.2686 ns/op
+WorkloadPilot   13: 65536 op, 13526225.00 ns, 206.3938 ns/op
+WorkloadPilot   14: 131072 op, 24685417.00 ns, 188.3348 ns/op
+WorkloadPilot   15: 262144 op, 42840444.00 ns, 163.4233 ns/op
+WorkloadPilot   16: 524288 op, 77989719.00 ns, 148.7536 ns/op
+WorkloadPilot   17: 1048576 op, 37404180.00 ns, 35.6714 ns/op
+WorkloadPilot   18: 2097152 op, 61698959.00 ns, 29.4204 ns/op
+WorkloadPilot   19: 4194304 op, 126587494.00 ns, 30.1808 ns/op
+WorkloadPilot   20: 8388608 op, 247273738.00 ns, 29.4773 ns/op
+WorkloadPilot   21: 16777216 op, 493599213.00 ns, 29.4208 ns/op
+WorkloadPilot   22: 33554432 op, 980434221.00 ns, 29.2192 ns/op
+
+OverheadWarmup   1: 33554432 op, 77689279.00 ns, 2.3153 ns/op
+OverheadWarmup   2: 33554432 op, 77798263.00 ns, 2.3186 ns/op
+OverheadWarmup   3: 33554432 op, 87814918.00 ns, 2.6171 ns/op
+OverheadWarmup   4: 33554432 op, 56758268.00 ns, 1.6915 ns/op
+OverheadWarmup   5: 33554432 op, 56964040.00 ns, 1.6977 ns/op
+OverheadWarmup   6: 33554432 op, 56871228.00 ns, 1.6949 ns/op
+
+OverheadActual   1: 33554432 op, 56894551.00 ns, 1.6956 ns/op
+OverheadActual   2: 33554432 op, 57181474.00 ns, 1.7041 ns/op
+OverheadActual   3: 33554432 op, 56792371.00 ns, 1.6925 ns/op
+OverheadActual   4: 33554432 op, 56930208.00 ns, 1.6967 ns/op
+OverheadActual   5: 33554432 op, 56785218.00 ns, 1.6923 ns/op
+OverheadActual   6: 33554432 op, 56893108.00 ns, 1.6955 ns/op
+OverheadActual   7: 33554432 op, 56756725.00 ns, 1.6915 ns/op
+OverheadActual   8: 33554432 op, 57031657.00 ns, 1.6997 ns/op
+OverheadActual   9: 33554432 op, 56842094.00 ns, 1.6940 ns/op
+OverheadActual  10: 33554432 op, 56988415.00 ns, 1.6984 ns/op
+OverheadActual  11: 33554432 op, 56854827.00 ns, 1.6944 ns/op
+OverheadActual  12: 33554432 op, 56841713.00 ns, 1.6940 ns/op
+OverheadActual  13: 33554432 op, 56803371.00 ns, 1.6929 ns/op
+OverheadActual  14: 33554432 op, 56980321.00 ns, 1.6981 ns/op
+OverheadActual  15: 33554432 op, 56749853.00 ns, 1.6913 ns/op
+
+WorkloadWarmup   1: 33554432 op, 994557572.00 ns, 29.6401 ns/op
+WorkloadWarmup   2: 33554432 op, 1020088342.00 ns, 30.4010 ns/op
+WorkloadWarmup   3: 33554432 op, 1009584597.00 ns, 30.0880 ns/op
+WorkloadWarmup   4: 33554432 op, 987158998.00 ns, 29.4196 ns/op
+WorkloadWarmup   5: 33554432 op, 987946123.00 ns, 29.4431 ns/op
+WorkloadWarmup   6: 33554432 op, 1025571614.00 ns, 30.5644 ns/op
+WorkloadWarmup   7: 33554432 op, 982925271.00 ns, 29.2935 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 33554432 op, 977454551.00 ns, 29.1304 ns/op
+WorkloadActual   2: 33554432 op, 997492091.00 ns, 29.7276 ns/op
+WorkloadActual   3: 33554432 op, 995271348.00 ns, 29.6614 ns/op
+WorkloadActual   4: 33554432 op, 1003325867.00 ns, 29.9014 ns/op
+WorkloadActual   5: 33554432 op, 996592693.00 ns, 29.7008 ns/op
+WorkloadActual   6: 33554432 op, 1002197137.00 ns, 29.8678 ns/op
+WorkloadActual   7: 33554432 op, 1009509472.00 ns, 30.0857 ns/op
+WorkloadActual   8: 33554432 op, 984848659.00 ns, 29.3508 ns/op
+WorkloadActual   9: 33554432 op, 990497609.00 ns, 29.5191 ns/op
+WorkloadActual  10: 33554432 op, 988373189.00 ns, 29.4558 ns/op
+WorkloadActual  11: 33554432 op, 982339092.00 ns, 29.2760 ns/op
+WorkloadActual  12: 33554432 op, 977786003.00 ns, 29.1403 ns/op
+WorkloadActual  13: 33554432 op, 983288618.00 ns, 29.3043 ns/op
+WorkloadActual  14: 33554432 op, 994253021.00 ns, 29.6310 ns/op
+WorkloadActual  15: 33554432 op, 992370059.00 ns, 29.5749 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 33554432 op, 920599724.00 ns, 27.4360 ns/op
+WorkloadResult   2: 33554432 op, 940637264.00 ns, 28.0332 ns/op
+WorkloadResult   3: 33554432 op, 938416521.00 ns, 27.9670 ns/op
+WorkloadResult   4: 33554432 op, 946471040.00 ns, 28.2070 ns/op
+WorkloadResult   5: 33554432 op, 939737866.00 ns, 28.0064 ns/op
+WorkloadResult   6: 33554432 op, 945342310.00 ns, 28.1734 ns/op
+WorkloadResult   7: 33554432 op, 952654645.00 ns, 28.3913 ns/op
+WorkloadResult   8: 33554432 op, 927993832.00 ns, 27.6564 ns/op
+WorkloadResult   9: 33554432 op, 933642782.00 ns, 27.8247 ns/op
+WorkloadResult  10: 33554432 op, 931518362.00 ns, 27.7614 ns/op
+WorkloadResult  11: 33554432 op, 925484265.00 ns, 27.5816 ns/op
+WorkloadResult  12: 33554432 op, 920931176.00 ns, 27.4459 ns/op
+WorkloadResult  13: 33554432 op, 926433791.00 ns, 27.6099 ns/op
+WorkloadResult  14: 33554432 op, 937398194.00 ns, 27.9366 ns/op
+WorkloadResult  15: 33554432 op, 935515232.00 ns, 27.8805 ns/op
+// GC:  224 0 0 3758096384 33554432
+// Threading:  0 0 33554432
+
+// AfterAll
+// Benchmark Process 3861 has exited with code 0.
+
+Mean = 27.861 ns, StdErr = 0.073 ns (0.26%), N = 15, StdDev = 0.282 ns
+Min = 27.436 ns, Q1 = 27.633 ns, Median = 27.881 ns, Q3 = 28.020 ns, Max = 28.391 ns
+IQR = 0.387 ns, LowerFence = 27.053 ns, UpperFence = 28.600 ns
+ConfidenceInterval = [27.559 ns; 28.162 ns] (CI 99.9%), Margin = 0.302 ns (1.08% of Mean)
+Skewness = 0.11, Kurtosis = 1.88, MValue = 2
+
+// ** Remained 16 (35.6 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 3m from now) **
+// **************************
+// Benchmark: SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 121 122 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime --job ".NET 10.0" --benchmarkId 13 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 243563.00 ns, 243.5630 us/op
+WorkloadJitting  1: 1 op, 235618.00 ns, 235.6180 us/op
+
+OverheadJitting  2: 16 op, 464163.00 ns, 29.0102 us/op
+WorkloadJitting  2: 16 op, 463602.00 ns, 28.9751 us/op
+
+WorkloadPilot    1: 16 op, 11591.00 ns, 724.4375 ns/op
+WorkloadPilot    2: 32 op, 23824.00 ns, 744.5000 ns/op
+WorkloadPilot    3: 64 op, 25498.00 ns, 398.4063 ns/op
+WorkloadPilot    4: 128 op, 34475.00 ns, 269.3359 ns/op
+WorkloadPilot    5: 256 op, 53109.00 ns, 207.4570 ns/op
+WorkloadPilot    6: 512 op, 94787.00 ns, 185.1309 ns/op
+WorkloadPilot    7: 1024 op, 177110.00 ns, 172.9590 ns/op
+WorkloadPilot    8: 2048 op, 337798.00 ns, 164.9404 ns/op
+WorkloadPilot    9: 4096 op, 557848.00 ns, 136.1934 ns/op
+WorkloadPilot   10: 8192 op, 1196826.00 ns, 146.0969 ns/op
+WorkloadPilot   11: 16384 op, 2374146.00 ns, 144.9064 ns/op
+WorkloadPilot   12: 32768 op, 4817420.00 ns, 147.0160 ns/op
+WorkloadPilot   13: 65536 op, 9597672.00 ns, 146.4489 ns/op
+WorkloadPilot   14: 131072 op, 19140481.00 ns, 146.0303 ns/op
+WorkloadPilot   15: 262144 op, 30109313.00 ns, 114.8579 ns/op
+WorkloadPilot   16: 524288 op, 54068796.00 ns, 103.1280 ns/op
+WorkloadPilot   17: 1048576 op, 77373222.00 ns, 73.7889 ns/op
+WorkloadPilot   18: 2097152 op, 79521998.00 ns, 37.9190 ns/op
+WorkloadPilot   19: 4194304 op, 149248589.00 ns, 35.5836 ns/op
+WorkloadPilot   20: 8388608 op, 282872104.00 ns, 33.7210 ns/op
+WorkloadPilot   21: 16777216 op, 577826287.00 ns, 34.4411 ns/op
+
+OverheadWarmup   1: 16777216 op, 71179269.00 ns, 4.2426 ns/op
+OverheadWarmup   2: 16777216 op, 71093870.00 ns, 4.2375 ns/op
+OverheadWarmup   3: 16777216 op, 72280197.00 ns, 4.3082 ns/op
+OverheadWarmup   4: 16777216 op, 55533910.00 ns, 3.3101 ns/op
+OverheadWarmup   5: 16777216 op, 55510797.00 ns, 3.3087 ns/op
+OverheadWarmup   6: 16777216 op, 55532477.00 ns, 3.3100 ns/op
+OverheadWarmup   7: 16777216 op, 55441447.00 ns, 3.3046 ns/op
+
+OverheadActual   1: 16777216 op, 55506339.00 ns, 3.3084 ns/op
+OverheadActual   2: 16777216 op, 55549889.00 ns, 3.3110 ns/op
+OverheadActual   3: 16777216 op, 55500227.00 ns, 3.3081 ns/op
+OverheadActual   4: 16777216 op, 55744672.00 ns, 3.3226 ns/op
+OverheadActual   5: 16777216 op, 55471805.00 ns, 3.3064 ns/op
+OverheadActual   6: 16777216 op, 55605292.00 ns, 3.3143 ns/op
+OverheadActual   7: 16777216 op, 55623446.00 ns, 3.3154 ns/op
+OverheadActual   8: 16777216 op, 73273804.00 ns, 4.3675 ns/op
+OverheadActual   9: 16777216 op, 55554678.00 ns, 3.3113 ns/op
+OverheadActual  10: 16777216 op, 57209627.00 ns, 3.4100 ns/op
+OverheadActual  11: 16777216 op, 55553285.00 ns, 3.3112 ns/op
+OverheadActual  12: 16777216 op, 55979277.00 ns, 3.3366 ns/op
+OverheadActual  13: 16777216 op, 55579755.00 ns, 3.3128 ns/op
+OverheadActual  14: 16777216 op, 56073753.00 ns, 3.3423 ns/op
+OverheadActual  15: 16777216 op, 55445074.00 ns, 3.3048 ns/op
+
+WorkloadWarmup   1: 16777216 op, 574657696.00 ns, 34.2523 ns/op
+WorkloadWarmup   2: 16777216 op, 575501676.00 ns, 34.3026 ns/op
+WorkloadWarmup   3: 16777216 op, 579380180.00 ns, 34.5337 ns/op
+WorkloadWarmup   4: 16777216 op, 586114584.00 ns, 34.9352 ns/op
+WorkloadWarmup   5: 16777216 op, 586046659.00 ns, 34.9311 ns/op
+WorkloadWarmup   6: 16777216 op, 578124144.00 ns, 34.4589 ns/op
+WorkloadWarmup   7: 16777216 op, 588885359.00 ns, 35.1003 ns/op
+WorkloadWarmup   8: 16777216 op, 586415335.00 ns, 34.9531 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 16777216 op, 569754628.00 ns, 33.9600 ns/op
+WorkloadActual   2: 16777216 op, 574652637.00 ns, 34.2520 ns/op
+WorkloadActual   3: 16777216 op, 576471461.00 ns, 34.3604 ns/op
+WorkloadActual   4: 16777216 op, 573903957.00 ns, 34.2073 ns/op
+WorkloadActual   5: 16777216 op, 587175597.00 ns, 34.9984 ns/op
+WorkloadActual   6: 16777216 op, 571530448.00 ns, 34.0659 ns/op
+WorkloadActual   7: 16777216 op, 577266851.00 ns, 34.4078 ns/op
+WorkloadActual   8: 16777216 op, 587014257.00 ns, 34.9888 ns/op
+WorkloadActual   9: 16777216 op, 597367039.00 ns, 35.6059 ns/op
+WorkloadActual  10: 16777216 op, 584892119.00 ns, 34.8623 ns/op
+WorkloadActual  11: 16777216 op, 577563603.00 ns, 34.4255 ns/op
+WorkloadActual  12: 16777216 op, 578169261.00 ns, 34.4616 ns/op
+WorkloadActual  13: 16777216 op, 569272046.00 ns, 33.9313 ns/op
+WorkloadActual  14: 16777216 op, 574567780.00 ns, 34.2469 ns/op
+WorkloadActual  15: 16777216 op, 568534685.00 ns, 33.8873 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 16777216 op, 514174873.00 ns, 30.6472 ns/op
+WorkloadResult   2: 16777216 op, 519072882.00 ns, 30.9392 ns/op
+WorkloadResult   3: 16777216 op, 520891706.00 ns, 31.0476 ns/op
+WorkloadResult   4: 16777216 op, 518324202.00 ns, 30.8945 ns/op
+WorkloadResult   5: 16777216 op, 531595842.00 ns, 31.6856 ns/op
+WorkloadResult   6: 16777216 op, 515950693.00 ns, 30.7531 ns/op
+WorkloadResult   7: 16777216 op, 521687096.00 ns, 31.0950 ns/op
+WorkloadResult   8: 16777216 op, 531434502.00 ns, 31.6760 ns/op
+WorkloadResult   9: 16777216 op, 529312364.00 ns, 31.5495 ns/op
+WorkloadResult  10: 16777216 op, 521983848.00 ns, 31.1127 ns/op
+WorkloadResult  11: 16777216 op, 522589506.00 ns, 31.1488 ns/op
+WorkloadResult  12: 16777216 op, 513692291.00 ns, 30.6184 ns/op
+WorkloadResult  13: 16777216 op, 518988025.00 ns, 30.9341 ns/op
+WorkloadResult  14: 16777216 op, 512954930.00 ns, 30.5745 ns/op
+// GC:  128 0 0 2147483648 16777216
+// Threading:  0 0 16777216
+
+// AfterAll
+// Benchmark Process 3898 has exited with code 0.
+
+Mean = 31.048 ns, StdErr = 0.099 ns (0.32%), N = 14, StdDev = 0.369 ns
+Min = 30.574 ns, Q1 = 30.788 ns, Median = 30.993 ns, Q3 = 31.140 ns, Max = 31.686 ns
+IQR = 0.351 ns, LowerFence = 30.261 ns, UpperFence = 31.667 ns
+ConfidenceInterval = [30.632 ns; 31.465 ns] (CI 99.9%), Margin = 0.417 ns (1.34% of Mean)
+Skewness = 0.5, Kurtosis = 1.93, MValue = 2
+
+// ** Remained 15 (33.3 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 3m from now) **
+// **************************
+// Benchmark: SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.dll" --anonymousPipes 121 122 --benchmarkName EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent --job ".NET 10.0" --benchmarkId 14 in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: .NET 10.0
+
+OverheadJitting  1: 1 op, 168433.00 ns, 168.4330 us/op
+WorkloadJitting  1: 1 op, 163975.00 ns, 163.9750 us/op
+
+OverheadJitting  2: 16 op, 211434.00 ns, 13.2146 us/op
+WorkloadJitting  2: 16 op, 216002.00 ns, 13.5001 us/op
+
+WorkloadPilot    1: 16 op, 3617.00 ns, 226.0625 ns/op
+WorkloadPilot    2: 32 op, 10750.00 ns, 335.9375 ns/op
+WorkloadPilot    3: 64 op, 4088.00 ns, 63.8750 ns/op
+WorkloadPilot    4: 128 op, 25247.00 ns, 197.2422 ns/op
+WorkloadPilot    5: 256 op, 19997.00 ns, 78.1133 ns/op
+WorkloadPilot    6: 512 op, 42189.00 ns, 82.4004 ns/op
+WorkloadPilot    7: 1024 op, 44393.00 ns, 43.3525 ns/op
+WorkloadPilot    8: 2048 op, 124442.00 ns, 60.7627 ns/op
+WorkloadPilot    9: 4096 op, 106529.00 ns, 26.0081 ns/op
+WorkloadPilot   10: 8192 op, 283999.00 ns, 34.6678 ns/op
+WorkloadPilot   11: 16384 op, 526860.00 ns, 32.1570 ns/op
+WorkloadPilot   12: 32768 op, 994660.00 ns, 30.3546 ns/op
+WorkloadPilot   13: 65536 op, 1988419.00 ns, 30.3409 ns/op
+WorkloadPilot   14: 131072 op, 3219610.00 ns, 24.5637 ns/op
+WorkloadPilot   15: 262144 op, 6429312.00 ns, 24.5259 ns/op
+WorkloadPilot   16: 524288 op, 11156427.00 ns, 21.2792 ns/op
+WorkloadPilot   17: 1048576 op, 19945700.00 ns, 19.0217 ns/op
+WorkloadPilot   18: 2097152 op, 35986795.00 ns, 17.1598 ns/op
+WorkloadPilot   19: 4194304 op, 59395809.00 ns, 14.1611 ns/op
+WorkloadPilot   20: 8388608 op, 88750304.00 ns, 10.5799 ns/op
+WorkloadPilot   21: 16777216 op, 174205868.00 ns, 10.3835 ns/op
+WorkloadPilot   22: 33554432 op, 346778899.00 ns, 10.3348 ns/op
+WorkloadPilot   23: 67108864 op, 694734928.00 ns, 10.3524 ns/op
+
+OverheadWarmup   1: 67108864 op, 194024192.00 ns, 2.8912 ns/op
+OverheadWarmup   2: 67108864 op, 110105897.00 ns, 1.6407 ns/op
+OverheadWarmup   3: 67108864 op, 109652332.00 ns, 1.6339 ns/op
+OverheadWarmup   4: 67108864 op, 113515248.00 ns, 1.6915 ns/op
+OverheadWarmup   5: 67108864 op, 109713737.00 ns, 1.6349 ns/op
+OverheadWarmup   6: 67108864 op, 109694231.00 ns, 1.6346 ns/op
+OverheadWarmup   7: 67108864 op, 109617105.00 ns, 1.6334 ns/op
+OverheadWarmup   8: 67108864 op, 109693427.00 ns, 1.6346 ns/op
+OverheadWarmup   9: 67108864 op, 109675975.00 ns, 1.6343 ns/op
+
+OverheadActual   1: 67108864 op, 110083943.00 ns, 1.6404 ns/op
+OverheadActual   2: 67108864 op, 109829871.00 ns, 1.6366 ns/op
+OverheadActual   3: 67108864 op, 109666757.00 ns, 1.6342 ns/op
+OverheadActual   4: 67108864 op, 109701582.00 ns, 1.6347 ns/op
+OverheadActual   5: 67108864 op, 109698717.00 ns, 1.6346 ns/op
+OverheadActual   6: 67108864 op, 109640224.00 ns, 1.6338 ns/op
+OverheadActual   7: 67108864 op, 110392664.00 ns, 1.6450 ns/op
+OverheadActual   8: 67108864 op, 109588528.00 ns, 1.6330 ns/op
+OverheadActual   9: 67108864 op, 109876764.00 ns, 1.6373 ns/op
+OverheadActual  10: 67108864 op, 109577829.00 ns, 1.6328 ns/op
+OverheadActual  11: 67108864 op, 109937518.00 ns, 1.6382 ns/op
+OverheadActual  12: 67108864 op, 109907512.00 ns, 1.6377 ns/op
+OverheadActual  13: 67108864 op, 109647208.00 ns, 1.6339 ns/op
+OverheadActual  14: 67108864 op, 109714801.00 ns, 1.6349 ns/op
+OverheadActual  15: 67108864 op, 115247034.00 ns, 1.7173 ns/op
+
+WorkloadWarmup   1: 67108864 op, 591420612.00 ns, 8.8129 ns/op
+WorkloadWarmup   2: 67108864 op, 802851529.00 ns, 11.9634 ns/op
+WorkloadWarmup   3: 67108864 op, 587949895.00 ns, 8.7611 ns/op
+WorkloadWarmup   4: 67108864 op, 587806993.00 ns, 8.7590 ns/op
+WorkloadWarmup   5: 67108864 op, 586624915.00 ns, 8.7414 ns/op
+WorkloadWarmup   6: 67108864 op, 1001620507.00 ns, 14.9253 ns/op
+WorkloadWarmup   7: 67108864 op, 586337092.00 ns, 8.7371 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 67108864 op, 587877573.00 ns, 8.7601 ns/op
+WorkloadActual   2: 67108864 op, 587301030.00 ns, 8.7515 ns/op
+WorkloadActual   3: 67108864 op, 587169201.00 ns, 8.7495 ns/op
+WorkloadActual   4: 67108864 op, 587017729.00 ns, 8.7472 ns/op
+WorkloadActual   5: 67108864 op, 586945736.00 ns, 8.7462 ns/op
+WorkloadActual   6: 67108864 op, 586494999.00 ns, 8.7395 ns/op
+
+OutOfMemoryException!
+BenchmarkDotNet continues to run additional iterations until desired accuracy level is achieved. It's possible only if the benchmark method doesn't have any side-effects.
+If your benchmark allocates memory and keeps it alive, you are creating a memory leak.
+You should redesign your benchmark and remove the side-effects. You can use `OperationsPerInvoke`, `IterationSetup` and `IterationCleanup` to do that.
+
+System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+ ---> System.OutOfMemoryException: Exception of type 'System.OutOfMemoryException' was thrown.
+   at System.Collections.Generic.List`1.set_Capacity(Int32 value)
+   at System.Collections.Generic.List`1.AddWithResize(T item)
+   at BenchmarkDotNet.Autogenerated.Runnable_14.WorkloadActionUnroll(Int64 invokeCount) in /_/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.notcs:line 3058
+   at BenchmarkDotNet.Engines.Engine.Measure(Action`1 action, Int64 invokeCount)
+   at BenchmarkDotNet.Engines.Engine.RunIteration(IterationData data)
+   at BenchmarkDotNet.Engines.Engine.Run()
+   at BenchmarkDotNet.Autogenerated.Runnable_14.Run(IHost host, String benchmarkName) in /_/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.notcs:line 2936
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   --- End of inner exception stack trace ---
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at BenchmarkDotNet.Autogenerated.UniqueProgramName.AfterAssemblyLoadingAttached(String[] args) in /_/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1/EricksonLopez.SharedKernel.Benchmarks-.NET 10.0-1.notcs:line 57
+// AfterAll
+No Workload Results were obtained from the run.
+// Benchmark Process 3910 has exited with code 255.
+
+// ** Remained 14 (31.1 %) benchmark(s) to run. Estimated finish 2026-09-06 6:51 (0h 3m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 13 (28.9 %) benchmark(s) to run. Estimated finish 2026-09-06 6:51 (0h 3m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 12 (26.7 %) benchmark(s) to run. Estimated finish 2026-09-06 6:51 (0h 2m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 11 (24.4 %) benchmark(s) to run. Estimated finish 2026-09-06 6:50 (0h 2m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 10 (22.2 %) benchmark(s) to run. Estimated finish 2026-09-06 6:50 (0h 2m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 9 (20.0 %) benchmark(s) to run. Estimated finish 2026-09-06 6:50 (0h 1m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 8 (17.8 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 1m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net8.0 (.NETCoreApp,Version=v8.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2/BenchmarkDotNet.Autogenerated.csproj (in 283 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 8.0-2
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 7 (15.6 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 1m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 6 (13.3 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 1m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 5 (11.1 %) benchmark(s) to run. Estimated finish 2026-09-06 6:49 (0h 0m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 4 (8.9 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 0m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 3 (6.7 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 0m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 2 (4.4 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 0m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 1 (2.2 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 0m from now) **
+// Build Error: Standard output: 
+  
+ Standard error: 
+   Determining projects to restore...
+/home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj : error NU1201: Project EricksonLopez.SharedKernel.Benchmarks is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project EricksonLopez.SharedKernel.Benchmarks supports: net10.0 (.NETCoreApp,Version=v10.0)
+  Failed to restore /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3/BenchmarkDotNet.Autogenerated.csproj (in 288 ms).
+  2 of 3 projects are up-to-date for restore.
+
+// BenchmarkDotNet has failed to build the auto-generated boilerplate code.
+// It can be found in /home/runner/work/dotnet-shared-kernel/dotnet-shared-kernel/benchmarks/EricksonLopez.SharedKernel.Benchmarks/bin/Release/net10.0/EricksonLopez.SharedKernel.Benchmarks-.NET 9.0-3
+// Please follow the troubleshooting guide: https://benchmarkdotnet.org/articles/guides/troubleshooting.html
+
+// ** Remained 0 (0.0 %) benchmark(s) to run. Estimated finish 2026-09-06 6:48 (0h 0m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-report.csv
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-report-github.md
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-report.html
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-report-full-compressed.json
+  benchmarks/results/results/EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-report-default.md
+
+// * Detailed results *
+SharedKernelBenchmarks.EntityEquality_SameId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 0.491 ns, StdErr = 0.002 ns (0.42%), N = 15, StdDev = 0.008 ns
+Min = 0.478 ns, Q1 = 0.485 ns, Median = 0.492 ns, Q3 = 0.498 ns, Max = 0.502 ns
+IQR = 0.013 ns, LowerFence = 0.465 ns, UpperFence = 0.518 ns
+ConfidenceInterval = [0.482 ns; 0.500 ns] (CI 99.9%), Margin = 0.009 ns (1.76% of Mean)
+Skewness = -0.34, Kurtosis = 1.6, MValue = 2
+-------------------- Histogram --------------------
+[0.475 ns ; 0.491 ns) | @@@@@@
+[0.491 ns ; 0.507 ns) | @@@@@@@@@
+---------------------------------------------------
+
+SharedKernelBenchmarks.EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 0.507 ns, StdErr = 0.002 ns (0.34%), N = 14, StdDev = 0.006 ns
+Min = 0.497 ns, Q1 = 0.502 ns, Median = 0.509 ns, Q3 = 0.511 ns, Max = 0.520 ns
+IQR = 0.010 ns, LowerFence = 0.487 ns, UpperFence = 0.526 ns
+ConfidenceInterval = [0.500 ns; 0.515 ns] (CI 99.9%), Margin = 0.007 ns (1.43% of Mean)
+Skewness = 0.06, Kurtosis = 1.97, MValue = 2
+-------------------- Histogram --------------------
+[0.495 ns ; 0.506 ns) | @@@@@
+[0.506 ns ; 0.524 ns) | @@@@@@@@@
+---------------------------------------------------
+
+SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.EntityGetHashCode: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 7.501 ns, StdErr = 0.008 ns (0.11%), N = 15, StdDev = 0.031 ns
+Min = 7.459 ns, Q1 = 7.474 ns, Median = 7.505 ns, Q3 = 7.516 ns, Max = 7.564 ns
+IQR = 0.042 ns, LowerFence = 7.412 ns, UpperFence = 7.578 ns
+ConfidenceInterval = [7.468 ns; 7.535 ns] (CI 99.9%), Margin = 0.033 ns (0.44% of Mean)
+Skewness = 0.39, Kurtosis = 1.96, MValue = 2
+-------------------- Histogram --------------------
+[7.442 ns ; 7.581 ns) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+SharedKernelBenchmarks.EntityGetHashCode: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.EntityGetHashCode: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 1.063 ns, StdErr = 0.001 ns (0.12%), N = 13, StdDev = 0.005 ns
+Min = 1.058 ns, Q1 = 1.061 ns, Median = 1.062 ns, Q3 = 1.063 ns, Max = 1.075 ns
+IQR = 0.002 ns, LowerFence = 1.058 ns, UpperFence = 1.066 ns
+ConfidenceInterval = [1.058 ns; 1.069 ns] (CI 99.9%), Margin = 0.006 ns (0.52% of Mean)
+Skewness = 1.38, Kurtosis = 4.01, MValue = 2
+-------------------- Histogram --------------------
+[1.055 ns ; 1.078 ns) | @@@@@@@@@@@@@
+---------------------------------------------------
+
+SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 27.861 ns, StdErr = 0.073 ns (0.26%), N = 15, StdDev = 0.282 ns
+Min = 27.436 ns, Q1 = 27.633 ns, Median = 27.881 ns, Q3 = 28.020 ns, Max = 28.391 ns
+IQR = 0.387 ns, LowerFence = 27.053 ns, UpperFence = 28.600 ns
+ConfidenceInterval = [27.559 ns; 28.162 ns] (CI 99.9%), Margin = 0.302 ns (1.08% of Mean)
+Skewness = 0.11, Kurtosis = 1.88, MValue = 2
+-------------------- Histogram --------------------
+[27.286 ns ; 28.542 ns) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 31.048 ns, StdErr = 0.099 ns (0.32%), N = 14, StdDev = 0.369 ns
+Min = 30.574 ns, Q1 = 30.788 ns, Median = 30.993 ns, Q3 = 31.140 ns, Max = 31.686 ns
+IQR = 0.351 ns, LowerFence = 30.261 ns, UpperFence = 31.667 ns
+ConfidenceInterval = [30.632 ns; 31.465 ns] (CI 99.9%), Margin = 0.417 ns (1.34% of Mean)
+Skewness = 0.5, Kurtosis = 1.93, MValue = 2
+-------------------- Histogram --------------------
+[30.373 ns ; 31.887 ns) | @@@@@@@@@@@@@@
+---------------------------------------------------
+
+SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+Runtime = .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+Runtime = ; GC = 
+There are not any results runs
+
+SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+Runtime = ; GC = 
+There are not any results runs
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.4 LTS (Noble Numbat)
+AMD EPYC 7763 2.81GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.400
+  [Host]    : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+  .NET 10.0 : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+
+
+| Method                                | Job       | Runtime   | Mean       | Error     | StdDev    | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
+|-------------------------------------- |---------- |---------- |-----------:|----------:|----------:|------:|--------:|-------:|----------:|------------:|
+| EntityEquality_SameId                 | .NET 10.0 | .NET 10.0 |  0.4911 ns | 0.0086 ns | 0.0081 ns |     ? |       ? |      - |         - |           ? |
+| EntityEquality_SameId                 | .NET 8.0  | .NET 8.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+| EntityEquality_SameId                 | .NET 9.0  | .NET 9.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+|                                       |           |           |            |           |           |       |         |        |           |             |
+| EntityEquality_DifferentId            | .NET 10.0 | .NET 10.0 |  0.5074 ns | 0.0073 ns | 0.0064 ns |     ? |       ? |      - |         - |           ? |
+| EntityEquality_DifferentId            | .NET 8.0  | .NET 8.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+| EntityEquality_DifferentId            | .NET 9.0  | .NET 9.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+|                                       |           |           |            |           |           |       |         |        |           |             |
+| EntityGetHashCode                     | .NET 10.0 | .NET 10.0 |  7.5011 ns | 0.0334 ns | 0.0312 ns |     ? |       ? |      - |         - |           ? |
+| EntityGetHashCode                     | .NET 8.0  | .NET 8.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+| EntityGetHashCode                     | .NET 9.0  | .NET 9.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+|                                       |           |           |            |           |           |       |         |        |           |             |
+| AggregateDrainDomainEvents_NoEvents   | .NET 10.0 | .NET 10.0 |  1.0634 ns | 0.0055 ns | 0.0046 ns |     ? |       ? |      - |         - |           ? |
+| AggregateDrainDomainEvents_NoEvents   | .NET 8.0  | .NET 8.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+| AggregateDrainDomainEvents_NoEvents   | .NET 9.0  | .NET 9.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+|                                       |           |           |            |           |           |       |         |        |           |             |
+| AggregateDrainDomainEvents_WithEvents | .NET 10.0 | .NET 10.0 | 27.8608 ns | 0.3015 ns | 0.2821 ns |     ? |       ? | 0.0067 |     112 B |           ? |
+| AggregateDrainDomainEvents_WithEvents | .NET 8.0  | .NET 8.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+| AggregateDrainDomainEvents_WithEvents | .NET 9.0  | .NET 9.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+|                                       |           |           |            |           |           |       |         |        |           |             |
+| AggregateRaiseDomainEvent_FirstTime   | .NET 10.0 | .NET 10.0 | 31.0483 ns | 0.4167 ns | 0.3694 ns |     ? |       ? | 0.0076 |     128 B |           ? |
+| AggregateRaiseDomainEvent_FirstTime   | .NET 8.0  | .NET 8.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+| AggregateRaiseDomainEvent_FirstTime   | .NET 9.0  | .NET 9.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+|                                       |           |           |            |           |           |       |         |        |           |             |
+| AggregateRaiseDomainEvent_Subsequent  | .NET 10.0 | .NET 10.0 |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+| AggregateRaiseDomainEvent_Subsequent  | .NET 8.0  | .NET 8.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+| AggregateRaiseDomainEvent_Subsequent  | .NET 9.0  | .NET 9.0  |         NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
+
+Benchmarks with issues:
+  SharedKernelBenchmarks.EntityEquality_SameId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  SharedKernelBenchmarks.EntityEquality_SameId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  SharedKernelBenchmarks.EntityGetHashCode: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  SharedKernelBenchmarks.EntityGetHashCode: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  SharedKernelBenchmarks.AggregateDrainDomainEvents_WithEvents: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+  SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 10.0(Runtime=.NET 10.0, Toolchain=net10.0)
+  SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 8.0(Runtime=.NET 8.0, Toolchain=net8.0)
+  SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 9.0(Runtime=.NET 9.0, Toolchain=net9.0)
+
+// * Warnings *
+BaselineCustomAnalyzer
+  Summary -> A question mark '?' symbol indicates that it was not possible to compute the (Ratio, RatioSD, Alloc Ratio) column(s) because the baseline or benchmark could not be found, or the baseline value is too close to zero.
+
+// * Hints *
+Outliers
+  SharedKernelBenchmarks.EntityEquality_DifferentId: .NET 10.0           -> 1 outlier  was  removed (2.42 ns)
+  SharedKernelBenchmarks.AggregateDrainDomainEvents_NoEvents: .NET 10.0  -> 2 outliers were removed (2.77 ns, 2.81 ns)
+  SharedKernelBenchmarks.AggregateRaiseDomainEvent_FirstTime: .NET 10.0  -> 1 outlier  was  removed (35.61 ns)
+  SharedKernelBenchmarks.AggregateRaiseDomainEvent_Subsequent: .NET 10.0 -> 1 outlier  was  removed, 2 outliers were detected (8.74 ns, 8.76 ns)
+
+// * Legends *
+  Mean        : Arithmetic mean of all measurements
+  Error       : Half of 99.9% confidence interval
+  StdDev      : Standard deviation of all measurements
+  Ratio       : Mean of the ratio distribution ([Current]/[Baseline])
+  RatioSD     : Standard deviation of the ratio distribution ([Current]/[Baseline])
+  Gen0        : GC Generation 0 collects per 1000 operations
+  Allocated   : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  Alloc Ratio : Allocated memory ratio distribution ([Current]/[Baseline])
+  1 ns        : 1 Nanosecond (0.000000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:03:57 (237.81 sec), executed benchmarks: 7
+
+Global total time: 00:08:12 (492.21 sec), executed benchmarks: 15
+// * Artifacts cleanup *
+Artifacts cleanup is finished
