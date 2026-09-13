@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-20260906-064214</title>
+<title>EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-20260913-070103</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,21 +13,21 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.4 LTS (Noble Numbat)
-AMD EPYC 7763 2.81GHz, 1 CPU, 4 logical and 2 physical cores
-.NET SDK 10.0.400
-  [Host]    : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
-  .NET 10.0 : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.5 LTS (Noble Numbat)
+AMD EPYC 7763 2.45GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.401
+  [Host]    : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+  .NET 10.0 : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
 </code></pre>
 <pre><code></code></pre>
 
 <table>
 <thead><tr><th>Method                            </th><th>Job</th><th>Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Ratio</th><th>RatioSD</th><th>Rank</th><th>Allocated</th><th>Alloc Ratio</th>
 </tr>
-</thead><tbody><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.5150 ns</td><td>0.0051 ns</td><td>0.0048 ns</td><td>?</td><td>?</td><td>1</td><td>-</td><td>?</td>
-</tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.8105 ns</td><td>0.0235 ns</td><td>0.0220 ns</td><td>?</td><td>?</td><td>2</td><td>-</td><td>?</td>
-</tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.8478 ns</td><td>0.0051 ns</td><td>0.0048 ns</td><td>?</td><td>?</td><td>2</td><td>-</td><td>?</td>
-</tr><tr><td>EricksonLopez_EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.5048 ns</td><td>0.0083 ns</td><td>0.0073 ns</td><td>?</td><td>?</td><td>1</td><td>-</td><td>?</td>
+</thead><tbody><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.5128 ns</td><td>0.0070 ns</td><td>0.0066 ns</td><td>?</td><td>?</td><td>1</td><td>-</td><td>?</td>
+</tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.7918 ns</td><td>0.0052 ns</td><td>0.0046 ns</td><td>?</td><td>?</td><td>2</td><td>-</td><td>?</td>
+</tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.8587 ns</td><td>0.0116 ns</td><td>0.0109 ns</td><td>?</td><td>?</td><td>3</td><td>-</td><td>?</td>
+</tr><tr><td>EricksonLopez_EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.5188 ns</td><td>0.0076 ns</td><td>0.0067 ns</td><td>?</td><td>?</td><td>1</td><td>-</td><td>?</td>
 </tr><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
 </tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
 </tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
