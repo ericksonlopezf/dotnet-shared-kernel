@@ -7,6 +7,120 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] — 2026-09-20
+
+### ⚠ Breaking Changes
+
+- **BC-012: Deletion of `StrongIdGenerator` Roslyn Incremental Source Generator**
+  - **Previous State:** Package `EricksonLopez.SharedKernel.SourceGenerators` provided `[Generator] public sealed class StrongIdGenerator : IIncrementalGenerator` which generated strongly-typed identifier boilerplate (`Create`, `TryCreate`, `Value`, formatting, equality) for types implementing `IStrongId<TSelf, TValue>` or annotated with `[StrongId]`.
+  - **Current State:** `StrongIdGenerator.cs` has been completely deleted from `EricksonLopez.SharedKernel.SourceGenerators`. Source generation for strongly-typed domain primitives is delegated to dedicated primitive packages or runtime domain abstractions (per ADR-033 and ADR-034).
+  - **Impact:** Consuming projects relying on compile-time source generation of strongly-typed IDs via `EricksonLopez.SharedKernel.SourceGenerators` will experience compilation errors (`CS0246`, `CS1061`, `CS0103`) due to missing generated methods and operators.
+  - **Migration:** Adopt `EricksonLopez.DomainPrimitives` directly or implement strongly typed identifiers using C# 10+ `readonly record struct` with explicit `IStrongId<TSelf, TValue>` interface implementation.
+    ```csharp
+    // Migration: Implement strongly typed ID manually or with domain primitives
+    public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>
+    {
+        public static string PrimitiveName => "OrderId";
+        public bool IsDefault => Value == Guid.Empty;
+        public static OrderId Create(Guid value) => new(value);
+        public static OrderId New() => new(Guid.NewGuid());
+        public static bool TryCreate(Guid value, out OrderId result, out PrimitiveError validationError)
+        {
+            result = new(value);
+            validationError = default;
+            return true;
+        }
+    }
+    ```
+
+- **BC-013: Addition of Interface Property `IHasDomainEvents.DomainEvents`**
+  - **Previous State:** `IHasDomainEvents` exposed only `IReadOnlyList<IDomainEvent> DrainDomainEvents()`.
+  - **Current State:** Added `IReadOnlyList<IDomainEvent> DomainEvents { get; }` to `IHasDomainEvents` without a default interface implementation.
+  - **Impact:** Any consumer class implementing `IHasDomainEvents` directly without inheriting `AggregateRoot<TId>` will fail compilation with error `CS0535` ('does not implement interface member').
+  - **Migration:** Inherit from `AggregateRoot<TId>`, or implement `IReadOnlyList<IDomainEvent> DomainEvents { get; }` explicitly in custom classes implementing `IHasDomainEvents`.
+    ```csharp
+    // For custom IHasDomainEvents implementations:
+    public class CustomEntityWithEvents : IHasDomainEvents
+    {
+        public IReadOnlyList<IDomainEvent> DomainEvents => _events.AsReadOnly();
+        public IReadOnlyList<IDomainEvent> DrainDomainEvents() { ... }
+    }
+    ```
+
+- **BC-014: Removal of Transitive Dependency `EricksonLopez.DomainPrimitives.Abstractions` from Core Package**
+  - **Previous State:** `EricksonLopez.SharedKernel.csproj` declared `<PackageReference Include="EricksonLopez.DomainPrimitives.Abstractions" />` (introduced in v3.0.0 under BC-010).
+  - **Current State:** The package reference `EricksonLopez.DomainPrimitives.Abstractions` was removed from `EricksonLopez.SharedKernel.csproj` and localized strictly to integration packages (`Dapper`, `EntityFrameworkCore`, `Json`).
+  - **Impact:** Downstream consumers referencing only `EricksonLopez.SharedKernel` will no longer receive transitive access to domain primitive contracts (`IStrongId<,>`, `IValueObject`). Code referencing these types will fail to compile.
+  - **Migration:** Add an explicit package reference to `EricksonLopez.DomainPrimitives.Abstractions` in consuming projects:
+    ```xml
+    <PackageReference Include="EricksonLopez.DomainPrimitives.Abstractions" Version="2.0.0" />
+    ```
+
+- **BC-015: Binary Breaking Signature Change on `DomainEventsInterceptor` Constructor**
+  - **Previous State:** Declared `public DomainEventsInterceptor(IDomainEventDispatcher? dispatcher = null)`.
+  - **Current State:** Declared `public DomainEventsInterceptor(IDomainEventDispatcher? dispatcher = null, DomainEventDispatchTiming timing = DomainEventDispatchTiming.AfterCommit, Action<Exception, IReadOnlyList<IDomainEvent>>? onDispatchError = null)`.
+  - **Impact:** Assemblies compiled against v3.0.0 expecting the single-parameter constructor symbol will fail at runtime with `MissingMethodException`.
+  - **Migration:** Recompile consuming projects against the updated package assembly, or update constructor invocations and DI registrations to match the new constructor parameter signature.
+
+- **BC-016: Inversion of Default Event Dispatch Timing in `DomainEventsInterceptor` (`BeforeCommit` → `AfterCommit`)**
+  - **Previous State:** `DomainEventsInterceptor` drained and dispatched domain events during `SavingChanges` / `SavingChangesAsync` prior to transaction commit. Event handlers executed within or before the database transaction.
+  - **Current State:** The default dispatch timing is now `DomainEventDispatchTiming.AfterCommit`. Event dispatch is deferred to `SavedChanges` / `SavedChangesAsync` after the database transaction has committed.
+  - **Impact:** Event handlers that expect to execute before the transaction commits (e.g., performing validation, modifying other entities within the same transaction) will now execute after the database commit. If event handling fails, database changes remain committed.
+  - **Migration:** If pre-commit dispatching behavior is required, explicitly pass `DomainEventDispatchTiming.BeforeCommit` when configuring the interceptor:
+    ```csharp
+    new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+    ```
+
+- **BC-017: Synchronous Dispatch Failure via `NotSupportedException` in `DomainEventsInterceptor.SavingChanges`**
+  - **Previous State:** Calling `DbContext.SaveChanges()` synchronously executed domain event dispatching via `.DispatchAsync(events).AsTask().GetAwaiter().GetResult()`.
+  - **Current State:** In `BeforeCommit` mode, synchronous `SavingChanges` invokes `IDomainEventDispatcher.Dispatch(domainEvents)`. The default interface method implementation of `Dispatch` throws `NotSupportedException` to prevent sync-over-async deadlocks (per ADR-031).
+  - **Impact:** Custom `IDomainEventDispatcher` implementations that only implement `DispatchAsync` will throw `NotSupportedException` at runtime when executing synchronous `SaveChanges()`.
+  - **Migration:** Migrate to `SaveChangesAsync(CancellationToken)` (recommended), or explicitly implement the synchronous `void Dispatch(IReadOnlyList<IDomainEvent>)` method on custom dispatchers.
+
+- **BC-018: Strict UTC Offset Enforcement in `DomainEvent(EventId, DateTimeOffset)` Constructor**
+  - **Previous State:** Instantiating `DomainEvent` with non-UTC timezone offsets (e.g. `DateTimeOffset.Now` or `-04:00`) was permitted as long as `occurredAt != default`.
+  - **Current State:** The constructor now validates `if (occurredAt.Offset != TimeSpan.Zero)` and throws `ArgumentException("Domain event timestamp must be UTC (Offset must be zero)...")`.
+  - **Impact:** Consumers passing local timestamps or non-UTC offsets when instantiating custom domain events will experience an `ArgumentException` at runtime.
+  - **Migration:** Convert all timestamps to UTC before instantiating domain events:
+    ```csharp
+    // Before
+    var evt = new OrderCreatedEvent(orderId, DateTimeOffset.Now);
+
+    // After
+    var evt = new OrderCreatedEvent(orderId, DateTimeOffset.UtcNow);
+    // or
+    var evt = new OrderCreatedEvent(orderId, timestamp.ToUniversalTime());
+    ```
+
+- **BC-019: Entity Identity Validation Rejecting Whitespace and Null Characters for `Entity<string>`**
+  - **Previous State:** `Entity<string>` permitted whitespace strings (`" "`) and strings with null characters (`\0`) as valid identities.
+  - **Current State:** The constructor explicitly validates `if (string.IsNullOrWhiteSpace(strId)) throw new ArgumentException(...)` and `if (strId.Contains('\0')) throw new ArgumentException(...)`.
+  - **Impact:** Instantiating entities with empty, whitespace-only, or null-character strings throws `ArgumentException`.
+  - **Migration:** Validate and sanitize string identities before passing them to the `Entity<string>` constructor.
+
+- **BC-020: Behavioral Mutation of `DomainEventCollector.CollectedEvents` from Live View to Snapshot Array**
+  - **Previous State:** `CollectedEvents` returned a live `ReadOnlyCollection<IDomainEvent>` view (`_collectedEvents.AsReadOnly()`).
+  - **Current State:** `CollectedEvents` returns an independent array snapshot (`_collectedEvents.ToArray()`).
+  - **Impact:** Tests holding a reference to `CollectedEvents` prior to calling `CollectFrom(...)` will not observe subsequent events through the old reference.
+  - **Migration:** Re-read `collector.CollectedEvents` after calling `CollectFrom(...)` rather than caching the property value beforehand.
+
+### Added
+
+- `OperationTimeContext` and `OperationTimeScope` — Ambient deterministic per-operation UTC timestamping for domain logic, auditing, and events.
+- `DomainEventIdentityEqualityComparer` — Fast identity-based equality comparer for `IDomainEvent` and `DomainEvent`.
+- `IHasDomainEvents.RequeueDomainEvents(IEnumerable<IDomainEvent>)` and `AggregateRoot<TId>.RequeueDomainEvents(IEnumerable<IDomainEvent>)` — Event restoration support for transactional rollback.
+- `AggregateRoot<TId>.PendingDomainEventsCount` — Zero-allocation event counter.
+- `DapperBclTypeHandlerRegistry` — Centralized Dapper type handler registration for `DateOnly`, `DateTimeOffset`, and `TimeOnly` with strict UTC normalization.
+- `DapperStrongIdRegistry.RegisterByConvention` — Assembly convention scanning for strongly-typed ID Dapper handlers.
+- `DomainEventDispatchTiming` (`AfterCommit`, `BeforeCommit`) — Configurable execution timing for domain event dispatching in EF Core.
+- `EntityEqualityComparer<TId>` and static `EntityEqualityComparer` — Proxy-aware entity equality comparer for Entity Framework Core.
+- `SharedKernelJsonModifiers.IgnoreLegacyDomainEventAliases` — JSON contract modifier to strip deprecated `EventId` and `OccurredOn` properties from serialization payloads.
+- `SharedKernelInstrumentation` tenant tracking (`TenantId`, `RecordDomainEventDispatched`, `RecordDispatchDuration`).
+- `MetadataSourceGenerator` — Incremental source generator in `EricksonLopez.SharedKernel.SourceGenerators` producing zero-reflection entity persistence metadata.
+- `EricksonLopez.SharedKernel.Persistence` — New ecosystem package providing database mapping and auditing abstractions (`EntityMetadata`, `PropertyMetadata`, `TableAttribute`, `ColumnAttribute`, `AuditAttribute`, `TenantScopedAttribute`).
+
+---
+
 ## [3.0.0] — 2026-08-25
 
 ### ⚠ Breaking Changes
@@ -186,7 +300,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v3.0.0...HEAD
+[4.0.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/ericksonlopezf/dotnet-shared-kernel/compare/v1.0.1...v1.1.0

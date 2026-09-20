@@ -28,4 +28,19 @@ public static class AggregateRootTestExtensions
         collector.CollectFrom(aggregate);
         return collector;
     }
+
+    /// <summary>
+    /// Drains all pending domain events from the entity or aggregate into a newly created <see cref="DomainEventCollector"/>.
+    /// </summary>
+    /// <param name="entityWithEvents">The entity or aggregate instance from which to collect events.</param>
+    /// <returns>A new <see cref="DomainEventCollector"/> populated with the drained events.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="entityWithEvents"/> is <see langword="null"/></exception>
+    public static DomainEventCollector CollectEvents(this IHasDomainEvents entityWithEvents)
+    {
+        ArgumentNullException.ThrowIfNull(entityWithEvents);
+
+        var collector = new DomainEventCollector();
+        collector.CollectFrom(entityWithEvents);
+        return collector;
+    }
 }

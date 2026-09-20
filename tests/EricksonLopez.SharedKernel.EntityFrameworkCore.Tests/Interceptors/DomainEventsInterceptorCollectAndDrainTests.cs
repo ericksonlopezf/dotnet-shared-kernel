@@ -203,7 +203,7 @@ public class DomainEventsInterceptorCollectAndDrainTests
             .WithAggregateCount(aggregateCount)
             .WithEventsPerAggregate(eventsPerAggregate)
             .WithNamePrefix("User");
-            
+
         var aggregates = builder.Build();
 
         context.Customers.AddRange(aggregates);

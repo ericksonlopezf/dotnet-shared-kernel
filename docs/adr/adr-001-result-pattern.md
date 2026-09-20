@@ -1,3 +1,9 @@
+## Status
+Accepted
+
+## Date
+2026-07-15
+
 ﻿# ADR-001: Result Pattern — Explicit Failure over Exceptions
 
 **Status:** Superseded by [ADR-014](ADR-014-removal-of-result-dependency.md)

@@ -15,7 +15,7 @@
     <PackageId>EricksonLopez.SharedKernel.OpenTelemetry</PackageId>
     <Description>OpenTelemetry tracing and metrics instrumentation for EricksonLopez.SharedKernel domain events. NativeAOT and Trimming compatible.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>$(CommonPackageTags);opentelemetry;observability;tracing;metrics;telemetry;domain-events</PackageTags>
+    <PackageTags>$(CommonPackageTags);opentelemetry;observability;tracing;metrics;domain-events;native-aot</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -130,5 +130,78 @@ public static class DapperStrongIdRegistry
             }
         }
     }
+
+    /// <summary>
+    /// Scans an assembly and registers Dapper type handlers for all types matching convention or a specified filter.
+    /// </summary>
+    /// <param name="assembly">The assembly to scan for strongly-typed identifier types.</param>
+    /// <param name="filter">An optional predicate to filter eligible types.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is <see langword="null"/>.</exception>
+    /// <remarks>
+    /// <para>
+    /// <b>Native AOT / Trimming Incompatible:</b> This method relies on reflection and runtime dynamic invocation.
+    /// For Native AOT environments, use explicit registration via <see cref="Register{TSelf,TValue}"/> or source generation.
+    /// </para>
+    /// </remarks>
+    [RequiresUnreferencedCode("Convention scanning relies on dynamic reflection which is incompatible with trimming.")]
+    [RequiresDynamicCode("Constructing generic TypeHandlers at runtime requires dynamic code generation.")]
+    public static void RegisterByConvention(
+        Assembly assembly,
+        Func<Type, bool>? filter = null)
+    {
+        ArgumentNullException.ThrowIfNull(assembly);
+
+        IEnumerable<Type> types;
+
+        try
+        {
+            types = assembly.GetTypes();
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+            types = ex.Types.OfType<Type>();
+        }
+
+        foreach (var type in types)
+        {
+            if (type.IsAbstract || type.IsInterface)
+                continue;
+
+            if (filter is not null && !filter(type))
+                continue;
+
+            // Strategy 1: Check for IStrongId<TSelf, TValue>
+            var strongIdInterface = type
+                .GetInterfaces()
+                .FirstOrDefault(static iface =>
+                    iface.IsGenericType &&
+                    iface.GetGenericTypeDefinition() == typeof(IStrongId<,>));
+
+            if (strongIdInterface is not null)
+            {
+                var genericArguments = strongIdInterface.GetGenericArguments();
+                var handlerType = typeof(StrongIdTypeHandler<,>).MakeGenericType(genericArguments);
+                var handler = (SqlMapper.ITypeHandler)Activator.CreateInstance(handlerType)!;
+                SqlMapper.AddTypeHandler(type, handler);
+                continue;
+            }
+
+            // Strategy 2: If no custom filter or custom filter matched, check struct naming / Value property convention
+            if (type.IsValueType && !type.IsGenericTypeDefinition && (filter is not null || type.Name.EndsWith("Id", StringComparison.Ordinal)))
+            {
+                var valueProp = type.GetProperty("Value", BindingFlags.Public | BindingFlags.Instance);
+                if (valueProp is null)
+                    continue;
+
+                var ctor = type.GetConstructor([valueProp.PropertyType]);
+                if (ctor is null)
+                    continue;
+
+                var conventionHandlerType = typeof(ConventionStrongIdTypeHandler<>).MakeGenericType(type);
+                var handler = (SqlMapper.ITypeHandler)Activator.CreateInstance(conventionHandlerType, valueProp, ctor)!;
+                SqlMapper.AddTypeHandler(type, handler);
+            }
+        }
+    }
 }
 

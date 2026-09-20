@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 
 namespace EricksonLopez.SharedKernel.EntityFrameworkCore.Tests.Converters;
@@ -143,7 +143,7 @@ public class StrongIdValueConverterTests
     public void StrongIdValueConverter_WithNullProviderValue_ReturnsNull()
     {
         var converter = new StrongIdValueConverter<ProductCode, string>();
-        
+
         // EF Core ValueConverters automatically handle nulls bypassing the conversion logic, 
         // but we verify the base conversion method returns null safely.
         var fromProvider = converter.ConvertFromProvider(null);
@@ -159,9 +159,9 @@ public class StrongIdValueConverterTests
         // Tests what happens when EF Core reads a default value (e.g. 0, Guid.Empty) from the database.
         // It should simply delegate to the factory. If the factory throws (e.g. domain validation), that is correct.
         var converter = new StrongIdValueConverter<CustomerId, Guid>();
-        
+
         var act = () => converter.ConvertFromProvider(Guid.Empty);
-        
+
         act.Should().Throw<ArgumentException>()
             .WithMessage("*cannot be empty*");
     }

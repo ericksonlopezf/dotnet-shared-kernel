@@ -1,5 +1,11 @@
 # ADR-021: Rejection of Multi-Tenancy Abstractions (`ITenant`, `TenantId`)
 
+## Status
+Rejected
+
+## Date
+2026-08-15
+
 **Date:** 2026-08-15  
 **Status:** Rejected / Excluded  
 **Deciders:** Erickson Lopez  

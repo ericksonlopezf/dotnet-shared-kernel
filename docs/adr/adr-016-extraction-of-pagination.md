@@ -1,5 +1,11 @@
 # ADR-016: Extraction of Pagination to Dedicated Package
 
+## Status
+Accepted
+
+## Date
+2026-08-12
+
 **Date:** 2026-08-12
 **Status:** Accepted
 **Deciders:** Erickson Lopez

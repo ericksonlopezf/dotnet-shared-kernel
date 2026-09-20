@@ -1,10 +1,10 @@
 // Copyright © Erickson Lopez. MIT License.
-using EricksonLopez.SharedKernel.UnitTests.Common;
 using System;
 using System.Reflection;
 using AwesomeAssertions;
 using EricksonLopez.DomainPrimitives;
 using EricksonLopez.SharedKernel;
+using EricksonLopez.SharedKernel.UnitTests.Common;
 using Xunit;
 
 namespace EricksonLopez.SharedKernel.UnitTests.Domain;
@@ -13,10 +13,10 @@ public class ValueObjectTests
 {
     private sealed record Address(string Street, string City, string PostalCode) : ValueObject;
     private sealed record OtherValueObject(string Street, string City, string PostalCode) : ValueObject;
-    private sealed record Money(decimal Amount, string Currency) : ValueObject;
+    private sealed record TestMoneyVo(decimal Amount, string Currency) : ValueObject;
 
     [ValueObject]
-    private readonly record struct DecoratedMoney(decimal Amount, string Currency);
+    private readonly record struct DecoratedCustomVo(decimal Amount, string Currency);
 
     #region Equality & HashCode
 
@@ -91,12 +91,12 @@ public class ValueObjectTests
     }
 
     [Fact]
-    public void Money_MultiAttribute_EqualityWorksCorrectly()
+    public void ValueObject_MultiAttributeRecord_EqualityWorksCorrectly()
     {
-        var m1 = new Money(TestValues.Numbers.Hundred, TestValues.Strings.UsdCurrency);
-        var m2 = new Money(TestValues.Numbers.Hundred, TestValues.Strings.UsdCurrency);
-        var m3 = new Money(TestValues.Numbers.Hundred, TestValues.Strings.EurCurrency);
-        var m4 = new Money(TestValues.Numbers.TwoHundred, TestValues.Strings.UsdCurrency);
+        var m1 = new TestMoneyVo(TestValues.Numbers.Hundred, TestValues.Strings.UsdCurrency);
+        var m2 = new TestMoneyVo(TestValues.Numbers.Hundred, TestValues.Strings.UsdCurrency);
+        var m3 = new TestMoneyVo(TestValues.Numbers.Hundred, TestValues.Strings.EurCurrency);
+        var m4 = new TestMoneyVo(TestValues.Numbers.TwoHundred, TestValues.Strings.UsdCurrency);
 
         m1.Should().Be(m2);
         m1.Should().NotBe(m3);
@@ -174,7 +174,7 @@ public class ValueObjectTests
     [Fact]
     public void ValueObjectAttribute_CanDecorateStruct()
     {
-        var structAttr = typeof(DecoratedMoney).GetCustomAttribute<ValueObjectAttribute>();
+        var structAttr = typeof(DecoratedCustomVo).GetCustomAttribute<ValueObjectAttribute>();
 
         structAttr.Should().NotBeNull();
     }

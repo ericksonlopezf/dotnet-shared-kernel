@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,6 +22,7 @@ namespace EricksonLopez.SharedKernel.OpenTelemetry.Tests;
 
 public sealed record TestOrderPlacedEvent(Guid OrderId, decimal Amount) : DomainEvent;
 
+[Collection("OpenTelemetry")]
 public class OpenTelemetryDomainEventDispatcherTests
 {
     [Fact]

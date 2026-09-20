@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 
 namespace Microsoft.EntityFrameworkCore;
@@ -143,6 +143,7 @@ public static class SharedKernelModelConfigurationExtensions
         {
             if (typeof(IHasDomainEvents).IsAssignableFrom(entityType.ClrType))
             {
+                modelBuilder.Entity(entityType.ClrType).Ignore(nameof(IHasDomainEvents.DomainEvents));
                 modelBuilder.Entity(entityType.ClrType).Ignore(nameof(IHasDomainEvents.DrainDomainEvents));
             }
         }

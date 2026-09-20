@@ -3,6 +3,9 @@
 ## Status
 Accepted — August 2026
 
+## Date
+2026-09-04
+
 ## Context
 In Clean Architecture and Domain-Driven Design (DDD), `EricksonLopez.SharedKernel` provides core building blocks for rich domain models, specifically `AggregateRoot<TId>` and `DomainEvent`.
 

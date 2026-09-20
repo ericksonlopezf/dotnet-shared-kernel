@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 using System.Linq;
 using System.Reflection;
@@ -49,6 +49,8 @@ namespace EricksonLopez.SharedKernel.Dapper
 using System;
 using EricksonLopez.DomainPrimitives;
 using EricksonLopez.SharedKernel;
+
+[assembly: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
 
 namespace SampleApp;
 
@@ -102,6 +104,8 @@ namespace EricksonLopez.SharedKernel.Dapper
 using System;
 using EricksonLopez.SharedKernel;
 
+[assembly: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
+
 namespace SampleApp;
 
 [StrongId(typeof(decimal))]
@@ -124,6 +128,8 @@ public readonly record struct PriceId(decimal Value);
 using System;
 using EricksonLopez.DomainPrimitives;
 using EricksonLopez.SharedKernel;
+
+[assembly: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
 
 namespace SampleApp;
 
@@ -157,6 +163,8 @@ public readonly record struct MultiIfaceId(Guid Value) : IStrongId<MultiIfaceId,
     {
         const string source = @"
 using System;
+
+[assembly: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
 
 namespace CustomAttrs
 {
@@ -252,12 +260,31 @@ public class PlainClass
     }
 
     [Fact]
+    public void Generator_WhenNoTriggerAttributeDeclared_DoesNotGenerateRegistrationCode()
+    {
+        const string source = @"
+using System;
+using EricksonLopez.DomainPrimitives;
+
+namespace SampleApp;
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().BeNull();
+    }
+
+    [Fact]
     public void Generator_WithNestedStrongIdTypes_GeneratesFullyQualifiedRegistrations()
     {
         const string source = @"
 using System;
 using EricksonLopez.DomainPrimitives;
 using EricksonLopez.SharedKernel;
+
+[assembly: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
 
 namespace SampleApp
 {
@@ -323,6 +350,14 @@ namespace SampleApp
         item1.Should().NotBe(null);
         item1.Should().NotBe(new object());
         item1!.GetHashCode().Should().Be(item2!.GetHashCode());
+    }
+
+    [Fact]
+    public void Generator_Assembly_DoesNotContain_StrongIdGenerator()
+    {
+        var assembly = typeof(DapperRegistrationGenerator).Assembly;
+        var hasStrongIdGen = assembly.GetTypes().Any(t => t.Name == "StrongIdGenerator");
+        hasStrongIdGen.Should().BeFalse(because: "StrongIdGenerator was consolidated into EricksonLopez.DomainPrimitives.Generators.");
     }
 
     private static GeneratorDriverRunResult RunGeneratorDriver<TGenerator>(string source)

@@ -10,9 +10,9 @@
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <IsPackable>true</IsPackable>
     <PackageId>EricksonLopez.SharedKernel.SourceGenerators</PackageId>
-    <Description>Roslyn Incremental Source Generators for EricksonLopez.SharedKernel. Generates Strongly Typed ID boilerplate and zero-reflection, Native AOT-safe Dapper bulk registrations.</Description>
+    <Description>Roslyn Incremental Source Generators for EricksonLopez.SharedKernel. Generates zero-reflection, Native AOT-safe Dapper bulk registrations and domain metadata.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>$(CommonPackageTags);source-generator;source-generators;roslyn;code-generation;strongly-typed-id;dapper</PackageTags>
+    <PackageTags>$(CommonPackageTags);source-generator;incremental-generator;roslyn;code-generation;dapper;metadata;compile-time</PackageTags>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PublishAot>false</PublishAot>

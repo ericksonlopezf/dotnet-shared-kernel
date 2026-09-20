@@ -1,5 +1,11 @@
 # ADR-017: Extraction of ValueObject to Dedicated Package
 
+## Status
+Accepted
+
+## Date
+2026-08-12
+
 **Date:** 2026-08-12
 **Status:** Accepted
 **Deciders:** Erickson Lopez

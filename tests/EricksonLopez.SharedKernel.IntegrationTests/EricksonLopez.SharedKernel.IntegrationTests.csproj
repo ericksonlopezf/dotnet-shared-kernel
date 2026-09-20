@@ -12,13 +12,6 @@
       Orchestrates out-of-process compilation passes (`dotnet publish -p:PublishAot=true`),
       analyzes compiler/linker diagnostic logs (IL2026, IL3050), and executes native binary payloads.
     -->
-    <!--
-      CA1707: Identifiers should not contain underscores (Method_Scenario_Result naming convention in ADR-030).
-      CA1852: Seal internal types (test helper types do not require explicit sealing).
-      CS1718: Comparison made to same variable (testing reflexivity in equality operator overloads).
-      CS1591: Missing XML comment for publicly visible type or member (tests are not public library APIs).
-    -->
-    <NoWarn>$(NoWarn);CA1707;CA1852;CS1718;CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

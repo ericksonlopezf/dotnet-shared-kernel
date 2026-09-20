@@ -1,3 +1,9 @@
+## Status
+Rejected
+
+## Date
+2026-08-11
+
 ﻿# ADR-015: Rejection of GetUnproxiedType() — Proxy Awareness Belongs to Infrastructure
 
 **Date:** 2026-08-11

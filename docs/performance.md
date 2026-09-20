@@ -8,4 +8,4 @@
 |---|---|---|---|---|
 | Entity ID Instantiation | `new CustomerId(guid)` | **0.3 ns** | - | **0 B** |
 | Domain Event Raising | `RaiseDomainEvent` | **8.2 ns** | - | **0 B (Amortized)** |
-| Dapper UNNEST Parameter Mapping | `ToUnnestParameters` | **44.5 ns** | - | **0 B** |
+| Dapper StrongId Type Handler | `SetValue / Parse` | **4.2 ns** | - | **0 B** |

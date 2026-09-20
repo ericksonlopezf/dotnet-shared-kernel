@@ -33,8 +33,31 @@ public abstract class Entity<TId> : IEntity<TId>, IEquatable<Entity<TId>>
                 nameof(id));
         }
 
+        if (id is string strId)
+        {
+            if (string.IsNullOrWhiteSpace(strId))
+            {
+                throw new ArgumentException(
+                    "Entity identity cannot be empty or whitespace.",
+                    nameof(id));
+            }
+
+            if (strId.Contains('\0'))
+            {
+                throw new ArgumentException(
+                    "Entity identity cannot contain null characters.",
+                    nameof(id));
+            }
+        }
+
         Id = id;
     }
+
+    /// <summary>
+    /// Gets the type used for entity equality comparison, enabling support for derived types and dynamic proxies.
+    /// </summary>
+    /// <returns>The <see cref="Type"/> to compare for entity equality.</returns>
+    protected virtual Type GetEqualityType() => GetType();
 
     /// <inheritdoc />
     public virtual bool Equals(Entity<TId>? other)
@@ -45,7 +68,7 @@ public abstract class Entity<TId> : IEntity<TId>, IEquatable<Entity<TId>>
         if (ReferenceEquals(this, other))
             return true;
 
-        if (other.GetType() != GetType())
+        if (GetEqualityType() != other.GetEqualityType())
             return false;
 
         return EqualityComparer<TId>.Default.Equals(Id, other.Id);
@@ -57,7 +80,7 @@ public abstract class Entity<TId> : IEntity<TId>, IEquatable<Entity<TId>>
 
     /// <inheritdoc />
     public override int GetHashCode()
-        => HashCode.Combine(GetType(), Id);
+        => HashCode.Combine(GetEqualityType(), Id);
 
     /// <summary>
     /// Determines whether two entity instances are equal based on their runtime type and identity.

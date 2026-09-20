@@ -1,5 +1,15 @@
 [*.cs]
-# Disables IDE1006 (Naming Rule Violation) specifically for test projects
-# to permit the tripartite Method_Scenario_Result (Osherove) pattern,
-# enabling tests to act as human-readable living specifications in CI/CD.
+# Disables IDE1006 (Naming Rule Violation) and CA1707 (Identifiers should not contain underscores)
+# specifically for test projects to permit the tripartite Method_Scenario_Result (Osherove) pattern,
+# enabling tests to act as human-readable living specifications in CI/CD (per ADR-030).
 dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.CA1707.severity = none
+
+# Permit unsealed internal/public test helper types in test suites
+dotnet_diagnostic.CA1852.severity = none
+
+# Permit intentional self-comparison in equality assertion tests
+dotnet_diagnostic.CS1718.severity = none
+
+# Permit abstract/interface typing in test assertions
+dotnet_diagnostic.CA1859.severity = none

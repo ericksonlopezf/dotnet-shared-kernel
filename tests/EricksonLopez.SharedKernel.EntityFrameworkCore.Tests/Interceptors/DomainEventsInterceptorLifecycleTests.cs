@@ -83,9 +83,9 @@ public class DomainEventsInterceptorLifecycleTests
     }
 
     [Fact]
-    public async Task SavingChanges_Synchronous_PersistsAndDispatchesEvents()
+    public void SavingChanges_Synchronous_PersistsAndDispatchesEvents()
     {
-        // Note: DomainEventsInterceptor.SavingChanges runs synchronously, but invokes IDomainEventDispatcher.DispatchAsync.
+        // Note: DomainEventsInterceptor.SavedChanges runs synchronously and invokes IDomainEventDispatcher.Dispatch.
         // The DbContext scope is explicitly disposed before asserting dispatcher reception to verify that all events
         // were detached and dispatched prior to the persistence transaction completion.
         var (dispatcher, interceptor) = CreateInterceptorWithMockDispatcher();
@@ -100,11 +100,10 @@ public class DomainEventsInterceptorLifecycleTests
             context.SaveChanges();
         }
 
-        await dispatcher.Received(1).DispatchAsync(
+        dispatcher.Received(1).Dispatch(
             Arg.Is<IReadOnlyList<IDomainEvent>>(events =>
                 events.Count == 1 &&
-                events.OfType<CustomerRegisteredEvent>().Any(cre => cre.CustomerId == customerId)),
-            Arg.Any<CancellationToken>());
+                events.OfType<CustomerRegisteredEvent>().Any(cre => cre.CustomerId == customerId)));
     }
 
     [Fact]
@@ -234,9 +233,8 @@ public class DomainEventsInterceptorLifecycleTests
 
         context.SaveChanges();
 
-        dispatcher.DidNotReceive().DispatchAsync(
-            Arg.Any<IReadOnlyList<IDomainEvent>>(),
-            Arg.Any<CancellationToken>());
+        dispatcher.DidNotReceive().Dispatch(
+            Arg.Any<IReadOnlyList<IDomainEvent>>());
     }
 
     [Fact]
@@ -336,6 +334,77 @@ public class DomainEventsInterceptorLifecycleTests
         await act.Should().ThrowAsync<InvalidOperationException>()
             .WithMessage("Dispatched event handling failed intentionally.",
                 because: "Asynchronous SavingChangesAsync must propagate any exception thrown by the event dispatcher.");
+    }
+
+    #endregion
+
+    #region Forensic Audit Remediations (FND-SK-001 & FND-SK-002)
+
+    [Fact]
+    public void CollectEvents_ReadOnlyInspection_DoesNotDrainEventsFromTrackedEntities()
+    {
+        var options = CreateInMemoryOptions();
+        using var context = new TestSharedKernelDbContext(options);
+        var customer = new CustomerAggregate(CustomerId.New(), "Read Only Event User");
+        context.Customers.Add(customer);
+
+        customer.PendingDomainEventsCount.Should().Be(1);
+
+        // Act: CollectEvents inspection
+        var collected = DomainEventsInterceptor.CollectEvents(context);
+
+        // Assert: Events are read, but NOT drained
+        collected.Should().HaveCount(1);
+        customer.PendingDomainEventsCount.Should().Be(1, because: "CollectEvents must provide a non-destructive read-only view per FND-SK-001.");
+        customer.DomainEvents.Should().HaveCount(1);
+
+        // Subsequent call still returns the event
+        var collectedAgain = DomainEventsInterceptor.CollectEvents(context);
+        collectedAgain.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public void BeforeCommit_WhenDispatchFails_RestoresEventsToAggregates()
+    {
+        var dispatcher = new ThrowingDispatcher();
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+        var options = CreateInMemoryOptions();
+
+        using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "Rollback User");
+        context.Customers.Add(customer);
+
+        customer.PendingDomainEventsCount.Should().Be(1);
+
+        // Act: context.SaveChanges will fail because ThrowingDispatcher throws in BeforeCommit
+        Action act = () => context.SaveChanges();
+        act.Should().Throw<InvalidOperationException>();
+
+        // Assert: Events were restored to customer so retry logic or error recovery still has the events!
+        customer.PendingDomainEventsCount.Should().Be(1, because: "Failed BeforeCommit dispatch must restore drained events back to entities per FND-SK-002.");
+        customer.DomainEvents.Should().HaveCount(1);
+    }
+
+    [Fact]
+    public async Task BeforeCommitAsync_WhenDispatchFails_RestoresEventsToAggregates()
+    {
+        var dispatcher = new ThrowingDispatcher();
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+        var options = CreateInMemoryOptions();
+
+        await using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "Rollback Async User");
+        context.Customers.Add(customer);
+
+        customer.PendingDomainEventsCount.Should().Be(1);
+
+        // Act: context.SaveChangesAsync will fail because ThrowingDispatcher throws in BeforeCommit
+        Func<Task> act = async () => await context.SaveChangesAsync();
+        await act.Should().ThrowAsync<InvalidOperationException>();
+
+        // Assert: Events were restored to customer so retry logic or error recovery still has the events!
+        customer.PendingDomainEventsCount.Should().Be(1, because: "Failed BeforeCommit async dispatch must restore drained events back to entities per FND-SK-002.");
+        customer.DomainEvents.Should().HaveCount(1);
     }
 
     #endregion

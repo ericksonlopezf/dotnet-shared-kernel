@@ -1,21 +1,22 @@
 # Public API Surface — EricksonLopez.SharedKernel.*
 
-> **Source of truth**: This document is derived exclusively from source code analysis of `src/` at version `3.0.0` (2026-08-25).
-> Last analyzed: `EricksonLopez.SharedKernel.slnx` — 7 packable source projects.
+> **Source of truth**: This document is derived exclusively from source code analysis of `src/` at version `4.0.0` (2026-09-20).
+> Last analyzed: `EricksonLopez.SharedKernel.slnx` — 8 packable source projects.
 
 ---
 
 ## Table of Contents
 
 1. [Package Overview](#package-overview)
-2. [EricksonLopez.SharedKernel](#package-1-erickssonlopezsaredkernel)
-3. [EricksonLopez.SharedKernel.Dapper](#package-2-erickssonlopezsharedkerneldapper)
-4. [EricksonLopez.SharedKernel.EntityFrameworkCore](#package-3-erickssonlopezsharedkernelentityframeworkcore)
-5. [EricksonLopez.SharedKernel.Json](#package-4-erickssonlopezsharedkerneljson)
-6. [EricksonLopez.SharedKernel.OpenTelemetry](#package-5-erickssonlopezsharedkernelopentelemetry)
-7. [EricksonLopez.SharedKernel.SourceGenerators](#package-6-erickssonlopezsharedkernelsourcegenerators)
-8. [EricksonLopez.SharedKernel.Testing](#package-7-erickssonlopezsharedkerneltesting)
-9. [AOT and Trimming Compatibility Matrix](#aot-and-trimming-compatibility-matrix)
+2. [EricksonLopez.SharedKernel](#package-1-ericksonlopezsharedkernel)
+3. [EricksonLopez.SharedKernel.Dapper](#package-2-ericksonlopezsharedkerneldapper)
+4. [EricksonLopez.SharedKernel.EntityFrameworkCore](#package-3-ericksonlopezsharedkernelentityframeworkcore)
+5. [EricksonLopez.SharedKernel.Json](#package-4-ericksonlopezsharedkerneljson)
+6. [EricksonLopez.SharedKernel.OpenTelemetry](#package-5-ericksonlopezsharedkernelopentelemetry)
+7. [EricksonLopez.SharedKernel.Persistence](#package-6-ericksonlopezsharedkernelpersistence)
+8. [EricksonLopez.SharedKernel.SourceGenerators](#package-7-ericksonlopezsharedkernelsourcegenerators)
+9. [EricksonLopez.SharedKernel.Testing](#package-8-ericksonlopezsharedkerneltesting)
+10. [AOT and Trimming Compatibility Matrix](#aot-and-trimming-compatibility-matrix)
 
 ---
 
@@ -23,13 +24,14 @@
 
 | Package | Namespace | Version | Target Frameworks | AOT Safe |
 |---|---|---|---|---|
-| `EricksonLopez.SharedKernel` | `EricksonLopez.SharedKernel` | `3.0.0` | `net8.0`, `net9.0`, `net10.0` | Yes |
-| `EricksonLopez.SharedKernel.Dapper` | `EricksonLopez.SharedKernel.Dapper` | `3.0.0` | `net8.0`, `net9.0`, `net10.0` | Partial |
-| `EricksonLopez.SharedKernel.EntityFrameworkCore` | `EricksonLopez.SharedKernel.EntityFrameworkCore` | `3.0.0` | `net8.0`, `net9.0`, `net10.0` | Partial |
-| `EricksonLopez.SharedKernel.Json` | `EricksonLopez.SharedKernel.Json` | `3.0.0` | `net8.0`, `net9.0`, `net10.0` | No |
-| `EricksonLopez.SharedKernel.OpenTelemetry` | `EricksonLopez.SharedKernel.OpenTelemetry` | `3.0.0` | `net8.0`, `net9.0`, `net10.0` | Yes |
-| `EricksonLopez.SharedKernel.SourceGenerators` | `EricksonLopez.SharedKernel.SourceGenerators` | `3.0.0` | `netstandard2.0` | N/A (compile-time) |
-| `EricksonLopez.SharedKernel.Testing` | `EricksonLopez.SharedKernel.Testing` | `3.0.0` | `net8.0`, `net9.0`, `net10.0` | Yes |
+| `EricksonLopez.SharedKernel` | `EricksonLopez.SharedKernel` | `4.0.0` | `net8.0`, `net9.0`, `net10.0` | Yes |
+| `EricksonLopez.SharedKernel.Dapper` | `EricksonLopez.SharedKernel.Dapper` | `4.0.0` | `net8.0`, `net9.0`, `net10.0` | Partial |
+| `EricksonLopez.SharedKernel.EntityFrameworkCore` | `EricksonLopez.SharedKernel.EntityFrameworkCore` | `4.0.0` | `net8.0`, `net9.0`, `net10.0` | Partial |
+| `EricksonLopez.SharedKernel.Json` | `EricksonLopez.SharedKernel.Json` | `4.0.0` | `net8.0`, `net9.0`, `net10.0` | No |
+| `EricksonLopez.SharedKernel.OpenTelemetry` | `EricksonLopez.SharedKernel.OpenTelemetry` | `4.0.0` | `net8.0`, `net9.0`, `net10.0` | Yes |
+| `EricksonLopez.SharedKernel.Persistence` | `EricksonLopez.SharedKernel.Persistence` | `4.0.0` | `net8.0`, `net9.0`, `net10.0` | Yes |
+| `EricksonLopez.SharedKernel.SourceGenerators` | `EricksonLopez.SharedKernel.SourceGenerators` | `4.0.0` | `netstandard2.0` | N/A (compile-time) |
+| `EricksonLopez.SharedKernel.Testing` | `EricksonLopez.SharedKernel.Testing` | `4.0.0` | `net8.0`, `net9.0`, `net10.0` | Yes |
 
 ---
 
