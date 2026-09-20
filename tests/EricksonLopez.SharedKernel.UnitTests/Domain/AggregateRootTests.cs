@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using AwesomeAssertions;
 using EricksonLopez.Events.Contracts;
 using EricksonLopez.SharedKernel;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace EricksonLopez.SharedKernel.UnitTests.Domain;
@@ -227,7 +227,144 @@ public class AggregateRootTests
         // Subsequent drain is permanently empty
         aggregate.DrainDomainEvents().Should().BeEmpty();
     }
-}
 
+    [Fact]
+    public void DomainEvents_NonDestructiveInspection_DoesNotClearBuffer()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.DoSomething();
+
+        var events1 = aggregate.DomainEvents;
+        events1.Should().ContainSingle()
+            .Which.Should().BeOfType<TestEvent>();
+
+        // DomainEvents getter does NOT clear the buffer
+        var events2 = aggregate.DomainEvents;
+        events2.Should().HaveCount(1);
+
+        // ClearDomainEvents clears the buffer
+        aggregate.ClearDomainEvents();
+        aggregate.DomainEvents.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void PendingDomainEventsCount_ReturnsAccurateCount_WithoutSnapshotAllocation()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.PendingDomainEventsCount.Should().Be(0);
+
+        aggregate.DoSomething();
+        aggregate.PendingDomainEventsCount.Should().Be(1);
+
+        aggregate.DoSomethingElse();
+        aggregate.PendingDomainEventsCount.Should().Be(2);
+
+        aggregate.ClearDomainEvents();
+        aggregate.PendingDomainEventsCount.Should().Be(0);
+    }
+
+    [Fact]
+    public void RequeueDomainEvents_WhenNull_ShouldThrowArgumentNullException()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        Action act = () => aggregate.RequeueDomainEvents(null!);
+        act.Should().Throw<ArgumentNullException>().WithParameterName("events");
+    }
+
+    [Fact]
+    public void RequeueDomainEvents_WhenContainsNull_ShouldThrowArgumentException()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        var events = new List<IDomainEvent> { new TestEvent(), null! };
+        Action act = () => aggregate.RequeueDomainEvents(events);
+        act.Should().Throw<ArgumentException>().WithMessage("*null elements*");
+    }
+
+    [Fact]
+    public void RequeueDomainEvents_WithDuplicateEventId_ShouldThrowArgumentException()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        var evt = new TestEvent();
+        var events = new List<IDomainEvent> { evt, evt };
+        Action act = () => aggregate.RequeueDomainEvents(events);
+        act.Should().Throw<ArgumentException>().WithMessage("*duplicate events*");
+    }
+
+    [Fact]
+    public void RequeueDomainEvents_WithExistingEventId_ShouldThrowArgumentException()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        var evt = new TestEvent();
+        aggregate.RequeueDomainEvents(new[] { evt });
+
+        Action act = () => aggregate.RequeueDomainEvents(new[] { evt });
+        act.Should().Throw<ArgumentException>().WithMessage("*already exists*");
+    }
+
+    [Fact]
+    public void RequeueDomainEvents_EmptyEnumerable_ShouldDoNothing()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.RequeueDomainEvents(Array.Empty<IDomainEvent>());
+        aggregate.PendingDomainEventsCount.Should().Be(0);
+    }
+
+    [Fact]
+    public void RequeueDomainEvents_WithNonReadOnlyListEnumerable_ShouldHitSwitchFallback()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        // Using Select creates an iterator, not an IReadOnlyList
+        var events = new[] { new TestEvent() }.Select(e => (IDomainEvent)e);
+        aggregate.RequeueDomainEvents(events);
+        aggregate.PendingDomainEventsCount.Should().Be(1);
+    }
+
+    [Fact]
+    public void ReadOnlyDomainEventList_IndexerAndNonGenericEnumerator_WorkCorrectly()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.DoSomething();
+
+        var events = aggregate.DomainEvents;
+        events[0].Should().NotBeNull();
+
+        System.Collections.IEnumerable nonGenericEnumerable = events;
+        var enumerator = nonGenericEnumerable.GetEnumerator();
+        enumerator.MoveNext().Should().BeTrue();
+        enumerator.Current.Should().Be(events[0]);
+    }
+
+    private sealed class MinimalHasDomainEvents : IHasDomainEvents
+    {
+        private readonly List<IDomainEvent> _events = [];
+
+        public IReadOnlyList<IDomainEvent> DomainEvents => _events;
+
+        public void AddEvent(IDomainEvent evt) => _events.Add(evt);
+
+        public IReadOnlyList<IDomainEvent> DrainDomainEvents()
+        {
+            var drained = _events.ToArray();
+            _events.Clear();
+            return drained;
+        }
+    }
+
+    [Fact]
+    public void IHasDomainEvents_DefaultInterfaceMethods_ExecuteCorrectly()
+    {
+        var minimal = new MinimalHasDomainEvents();
+        minimal.AddEvent(new TestEvent());
+
+        IHasDomainEvents iface = minimal;
+
+        // Tests default RequeueDomainEvents no-op
+        iface.RequeueDomainEvents([new TestEvent()]);
+
+        // Tests default ClearDomainEvents calling DrainDomainEvents
+        iface.ClearDomainEvents();
+        minimal.DomainEvents.Should().BeEmpty();
+    }
+}
 
 

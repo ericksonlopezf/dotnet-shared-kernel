@@ -24,10 +24,10 @@ public class AotTrimmingIntegrationTests
     public void NativeAot_Publish_And_Execute_NativeAotTests_With_InvariantGlobalization_False_Succeeds()
     {
         var repoRoot = GetRepositoryRoot();
-        var projectPath = Path.Combine(repoRoot, "tests", "EricksonLopez.SharedKernel.NativeAotTests", "EricksonLopez.SharedKernel.NativeAotTests.csproj");
+        var projectPath = Path.Combine(repoRoot, "tests", "EricksonLopez.SharedKernel.AotSmokeTest", "EricksonLopez.SharedKernel.AotSmokeTest.csproj");
         File.Exists(projectPath).Should().BeTrue($"Project file must exist at {projectPath}");
 
-        var tempPublishDir = Path.Combine(repoRoot, ".temp", "SharedKernel_NativeAotTests_" + Guid.NewGuid().ToString("N"));
+        var tempPublishDir = Path.Combine(repoRoot, ".temp", "SharedKernel_AotSmokeTest_" + Guid.NewGuid().ToString("N"));
 
         try
         {
@@ -50,7 +50,7 @@ public class AotTrimmingIntegrationTests
 
             // 2. Locate native binary
             var exeExtension = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : string.Empty;
-            var binaryPath = Path.Combine(tempPublishDir, "EricksonLopez.SharedKernel.NativeAotTests" + exeExtension);
+            var binaryPath = Path.Combine(tempPublishDir, "EricksonLopez.SharedKernel.AotSmokeTest" + exeExtension);
 
             File.Exists(binaryPath).Should().BeTrue($"Published native AOT binary must exist at {binaryPath}");
 

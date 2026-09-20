@@ -1,5 +1,11 @@
 # ADR-014: Removal of EricksonLopez.Result Dependency from SharedKernel
 
+## Status
+Accepted
+
+## Date
+2026-08-11
+
 **Date:** 2026-08-11
 **Status:** Accepted
 **Deciders:** Erickson Lopez

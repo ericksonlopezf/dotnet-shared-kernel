@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 using System.Data;
 using System.Reflection;
@@ -65,6 +65,47 @@ public class StrongIdDapperTests
         handler.SetValue(parameter, default);
 
         parameter.Value.Should().Be(DBNull.Value);
+    }
+
+    [Fact]
+    public void SetValue_WithStructStrongId_HoldingReferenceType_ExecutesWithoutAllocating()
+    {
+        var handler = new StrongIdTypeHandler<ProductCode, string>();
+        var code = ProductCode.Create("PROD-100");
+        var parameter = new FakeDbDataParameter();
+
+        // Warmup
+        handler.SetValue(parameter, code);
+
+        long before = GC.GetAllocatedBytesForCurrentThread();
+        for (int i = 0; i < 1_000; i++)
+        {
+            handler.SetValue(parameter, code);
+        }
+        long after = GC.GetAllocatedBytesForCurrentThread();
+
+        (after - before).Should().Be(0, because: "StrongIdTypeHandler.SetValue for struct IDs must not box the strong ID wrapper itself per FND-SK-008.");
+    }
+
+    [Fact]
+    public void SetValue_WithStructStrongId_DoesNotDoubleBoxStrongIdEnvelope()
+    {
+        var handler = new StrongIdTypeHandler<OrderId, Guid>();
+        var id = OrderId.Create(Guid.NewGuid());
+        var parameter = new FakeDbDataParameter();
+
+        // Warmup
+        handler.SetValue(parameter, id);
+
+        long before = GC.GetAllocatedBytesForCurrentThread();
+        for (int i = 0; i < 1_000; i++)
+        {
+            handler.SetValue(parameter, id);
+        }
+        long after = GC.GetAllocatedBytesForCurrentThread();
+
+        // 1,000 * 32 bytes = 32,000 bytes (only the primitive Guid is boxed for ADO.NET object parameter; OrderId is not boxed)
+        (after - before).Should().Be(1_000 * 32, because: "Only the primitive Guid is boxed into IDbDataParameter.Value; the OrderId struct envelope is never boxed per FND-SK-008.");
     }
 
     [Fact]

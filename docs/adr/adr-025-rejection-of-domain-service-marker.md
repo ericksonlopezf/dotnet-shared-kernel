@@ -1,5 +1,11 @@
 # ADR-025: Rejection of `IDomainService` Marker Interface
 
+## Status
+Rejected
+
+## Date
+2026-08-15
+
 **Date:** 2026-08-15  
 **Status:** Rejected / Excluded  
 **Deciders:** Erickson Lopez  

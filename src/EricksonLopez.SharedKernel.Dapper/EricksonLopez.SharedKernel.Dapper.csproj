@@ -15,11 +15,16 @@
     <PackageId>EricksonLopez.SharedKernel.Dapper</PackageId>
     <Description>Dapper TypeHandler adapters and registration extensions for EricksonLopez.SharedKernel strong identifiers.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>$(CommonPackageTags);dapper;type-handler;strongly-typed-id;sql;micro-orm;data-access</PackageTags>
+    <PackageTags>$(CommonPackageTags);dapper;type-handler;strongly-typed-id;micro-orm;dateonly;timeonly;native-aot</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper" />
+    <PackageReference Include="EricksonLopez.DomainPrimitives.Abstractions" />
     <ProjectReference Include="..\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="EricksonLopez.SharedKernel.Dapper.Tests" />
   </ItemGroup>
 </Project>

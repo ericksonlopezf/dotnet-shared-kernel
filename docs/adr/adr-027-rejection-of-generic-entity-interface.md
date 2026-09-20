@@ -1,5 +1,11 @@
 # ADR-027: Rejection of Generic `IEntity<TId>` Interface
 
+## Status
+Rejected
+
+## Date
+2026-08-15
+
 **Date:** 2026-08-15  
 **Status:** Rejected / Deferred indefinitely until explicit consumer demand arises  
 **Deciders:** Erickson Lopez  

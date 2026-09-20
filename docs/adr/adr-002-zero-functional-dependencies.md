@@ -1,7 +1,10 @@
 # ADR-002: Zero Functional Dependencies Exception for netstandard2.0
 
 ## Status
-**Superseded** by ADR-009 (Target Framework Strategy).
+Superseded by ADR-009 (Target Framework Strategy).
+
+## Date
+2026-09-04
 
 ## Context
 Originally, the library targeted both `net10.0` and `netstandard2.0`, which required build-time polyfills like `PolySharp`. 

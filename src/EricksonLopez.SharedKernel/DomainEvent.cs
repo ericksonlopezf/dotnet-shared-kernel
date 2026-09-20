@@ -1,5 +1,6 @@
 // Copyright © Erickson Lopez. MIT License.
 using System;
+using System.Collections.Generic;
 using EricksonLopez.Events.Contracts;
 using EricksonLopez.Events.Identifiers;
 
@@ -29,7 +30,7 @@ public abstract record DomainEvent : IDomainEvent
     public Guid EventId => Id.Value;
 
     /// <summary>
-    /// Gets the UTC occurrence timestamp as a backward-compatibility alias for <see cref="OccurredAt"/>.
+    /// Gets the UTC occurrence timestamp as an alias for <see cref="OccurredAt"/>.
     /// </summary>
     public DateTimeOffset OccurredOn => OccurredAt;
 
@@ -39,7 +40,7 @@ public abstract record DomainEvent : IDomainEvent
     protected DomainEvent()
     {
         Id = EricksonLopez.Events.Identifiers.EventId.New();
-        OccurredAt = DateTimeOffset.UtcNow;
+        OccurredAt = OperationTimeContext.CurrentOrUtcNow();
     }
 
     /// <summary>
@@ -63,6 +64,15 @@ public abstract record DomainEvent : IDomainEvent
         {
             throw new ArgumentException(
                 "Domain event timestamp cannot be default.",
+                nameof(occurredAt));
+        }
+
+        // REM-008: Enforce UTC timestamps to prevent timezone ambiguity in event sourcing.
+        if (occurredAt.Offset != TimeSpan.Zero)
+        {
+            throw new ArgumentException(
+                "Domain event timestamp must be UTC (Offset must be zero). " +
+                $"Received offset: {occurredAt.Offset}.",
                 nameof(occurredAt));
         }
 

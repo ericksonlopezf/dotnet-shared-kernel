@@ -1,5 +1,11 @@
 # ADR-030: Adoption of Method_Scenario_Result (Osherove) Test Naming Convention
 
+## Status
+Accepted
+
+## Date
+2026-08-17
+
 **Date:** 2026-08-17  
 **Status:** Accepted  
 **Deciders:** Erickson Lopez  

@@ -3,6 +3,9 @@
 ## Status
 Accepted / Verified
 
+## Date
+2026-09-04
+
 ## Context
 As part of Phase 3.2 (AOT/Trimming Evaluation), we needed to formally verify that `EricksonLopez.SharedKernel` is completely trim-safe and Native AOT compatible without producing `IL3050` (RequiresDynamicCode) or `IL2026` (RequiresUnreferencedCode) warnings. 
 

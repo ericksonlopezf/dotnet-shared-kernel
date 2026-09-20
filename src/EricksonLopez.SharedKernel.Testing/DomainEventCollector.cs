@@ -14,9 +14,24 @@ public sealed class DomainEventCollector
     private readonly List<IDomainEvent> _collectedEvents = [];
 
     /// <summary>
-    /// Gets all domain events recorded by this collector in emission order.
+    /// Gets all domain events recorded by this collector in emission order as an immutable snapshot.
     /// </summary>
-    public IReadOnlyList<IDomainEvent> CollectedEvents => _collectedEvents.AsReadOnly();
+    public IReadOnlyList<IDomainEvent> CollectedEvents => _collectedEvents.ToArray();
+
+    /// <summary>
+    /// Drains and records all pending domain events from the specified entity or aggregate.
+    /// </summary>
+    /// <param name="entityWithEvents">The entity or aggregate from which to collect events.</param>
+    /// <returns>The current <see cref="DomainEventCollector"/> instance for method chaining.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="entityWithEvents"/> is <see langword="null"/></exception>
+    public DomainEventCollector CollectFrom(IHasDomainEvents entityWithEvents)
+    {
+        ArgumentNullException.ThrowIfNull(entityWithEvents);
+
+        var events = entityWithEvents.DrainDomainEvents();
+        _collectedEvents.AddRange(events);
+        return this;
+    }
 
     /// <summary>
     /// Drains and records all pending domain events from the specified aggregate root.

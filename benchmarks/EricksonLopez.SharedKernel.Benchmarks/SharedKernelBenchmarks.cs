@@ -68,9 +68,12 @@ public class SharedKernelBenchmarks
     }
 
     [Benchmark]
-    public void AggregateRaiseDomainEvent_Subsequent()
+    public BenchmarkAggregate AggregateRaiseDomainEvent_Subsequent()
     {
-        _aggregateWithEvents.RecordEvent(_sampleEvent);
+        var aggregate = new BenchmarkAggregate(_guid1);
+        aggregate.RecordEvent(_sampleEvent);
+        aggregate.RecordEvent(_sampleEvent);
+        return aggregate;
     }
 }
 

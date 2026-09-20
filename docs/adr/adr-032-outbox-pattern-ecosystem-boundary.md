@@ -1,3 +1,9 @@
+## Status
+Rejected
+
+## Date
+2026-08-19
+
 ﻿# ADR-032: Outbox Pattern Architectural Boundary & Rejection of SharedKernel Outbox Package
 
 **Status:** Accepted  

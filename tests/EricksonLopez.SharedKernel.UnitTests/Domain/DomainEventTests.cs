@@ -12,6 +12,8 @@ using FsCheck;
 using FsCheck.Xunit;
 using Xunit;
 
+#pragma warning disable CS0618 // Tested for backward compatibility
+
 namespace EricksonLopez.SharedKernel.UnitTests.Domain;
 
 public class DomainEventTests
@@ -124,7 +126,7 @@ public class DomainEventTests
     {
         var eventId = EventId.New();
         var boundaryTime = DateTimeOffset.MinValue.AddTicks(1);
-        
+
         var @event = new RehydratedUserEvent(eventId, boundaryTime, TestValues.Strings.UserName);
 
         @event.OccurredAt.Should().Be(boundaryTime);

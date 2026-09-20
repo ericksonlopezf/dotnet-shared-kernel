@@ -1,4 +1,4 @@
-﻿// Copyright © Erickson Lopez. MIT License.
+// Copyright © Erickson Lopez. MIT License.
 using System;
 using EricksonLopez.DomainPrimitives;
 using EricksonLopez.DomainPrimitives.Validation;
@@ -32,6 +32,18 @@ public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>
         validationError = default;
         return true;
     }
+
+    public static bool TryFrom(Guid value, out OrderId result)
+    {
+        if (value == Guid.Empty)
+        {
+            result = default;
+            return false;
+        }
+
+        result = new OrderId(value);
+        return true;
+    }
 }
 
 public readonly record struct LongOrderId(long Value) : IStrongId<LongOrderId, long>
@@ -39,8 +51,15 @@ public readonly record struct LongOrderId(long Value) : IStrongId<LongOrderId, l
     public static string PrimitiveName => nameof(LongOrderId);
     public bool IsDefault => Value == 0;
     public static LongOrderId Empty => new(0);
-    public static LongOrderId Create() => throw new NotSupportedException();
     public static LongOrderId Create(long value) => new(value);
+
+    static LongOrderId IStrongId<LongOrderId, long>.Create() => throw new NotSupportedException();
+
+    public static bool TryFrom(long value, out LongOrderId result)
+    {
+        result = new LongOrderId(value);
+        return true;
+    }
 
     public static bool TryCreate(long value, out LongOrderId result, out PrimitiveError validationError)
     {
@@ -75,6 +94,18 @@ public readonly record struct CustomerId(Guid Value) : IStrongId<CustomerId, Gui
 
         result = new CustomerId(value);
         validationError = default;
+        return true;
+    }
+
+    public static bool TryFrom(Guid value, out CustomerId result)
+    {
+        if (value == Guid.Empty)
+        {
+            result = default;
+            return false;
+        }
+
+        result = new CustomerId(value);
         return true;
     }
 
