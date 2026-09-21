@@ -97,6 +97,38 @@ public class DomainEventsInterceptorCollectAndDrainTests
             .WithParameterName("context");
     }
 
+    [Fact]
+    public void CollectEvents_WithNullContext_ThrowsArgumentNullException()
+    {
+        var act = () => DomainEventsInterceptor.CollectEvents(null!);
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("context");
+    }
+
+    [Fact]
+    public void ClearEvents_WithNullContext_ThrowsArgumentNullException()
+    {
+        var act = () => DomainEventsInterceptor.ClearEvents(null!);
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("context");
+    }
+
+    [Fact]
+    public async Task ClearEvents_WithValidContext_ClearsPendingEvents()
+    {
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options);
+
+        var customer = new CustomerAggregate(CustomerId.New(), "ClearEvents User");
+        context.Customers.Add(customer);
+        customer.PendingDomainEventsCount.Should().Be(1);
+
+        DomainEventsInterceptor.ClearEvents(context);
+        customer.PendingDomainEventsCount.Should().Be(0);
+    }
+
     #endregion
 
     #region CollectAndDrainEvents Core Behavior

@@ -88,4 +88,58 @@ public sealed class BclTypeHandlerTests
         var exception = Record.Exception(() => DapperBclTypeHandlerRegistry.RegisterAll());
         Assert.Null(exception);
     }
+
+    [Fact]
+    public void DateTimeOffsetTypeHandler_GuardsAndBranches()
+    {
+        var handler = new DateTimeOffsetTypeHandler();
+        Assert.Throws<ArgumentNullException>(() => handler.SetValue(null!, DateTimeOffset.UtcNow));
+        Assert.Throws<DataException>(() => handler.Parse(null!));
+        Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+
+        var utcDt = new DateTime(2026, 9, 1, 12, 0, 0, DateTimeKind.Utc);
+        var localDt = new DateTime(2026, 9, 1, 12, 0, 0, DateTimeKind.Local);
+        Assert.Equal(TimeSpan.Zero, handler.Parse(utcDt).Offset);
+        Assert.Equal(TimeSpan.Zero, handler.Parse(localDt).Offset);
+
+        var dto = new DateTimeOffset(2026, 9, 1, 12, 0, 0, TimeSpan.FromHours(2));
+        Assert.Equal(dto, handler.Parse(dto));
+
+        var stringDate = "2026-09-01T12:00:00+00:00";
+        Assert.Equal(DateTimeOffset.Parse(stringDate, System.Globalization.CultureInfo.InvariantCulture), handler.Parse(stringDate));
+    }
+
+    [Fact]
+    public void DateOnlyTypeHandler_GuardsAndBranches()
+    {
+        var handler = new DateOnlyTypeHandler();
+        Assert.Throws<ArgumentNullException>(() => handler.SetValue(null!, new DateOnly(2026, 9, 1)));
+        Assert.Throws<DataException>(() => handler.Parse(null!));
+        Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+
+        // Object converting to DateTime
+        object dtObj = "2026/09/01";
+        Assert.Equal(new DateOnly(2026, 9, 1), handler.Parse(dtObj));
+    }
+
+    [Fact]
+    public void TimeOnlyTypeHandler_GuardsAndBranches()
+    {
+        var handler = new TimeOnlyTypeHandler();
+        Assert.Throws<ArgumentNullException>(() => handler.SetValue(null!, new TimeOnly(12, 0)));
+        Assert.Throws<DataException>(() => handler.Parse(null!));
+        Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+
+        var dt = new DateTime(2026, 9, 1, 14, 30, 45);
+        Assert.Equal(new TimeOnly(14, 30, 45), handler.Parse(dt));
+    }
+
+    [Fact]
+    public void DapperStrongIdRegistry_RegisterFromAssemblies_Guards()
+    {
+        Assert.Throws<ArgumentNullException>(() => DapperStrongIdRegistry.RegisterFromAssemblies(null!));
+        // Array with null assembly entry should be skipped safely
+        var exception = Record.Exception(() => DapperStrongIdRegistry.RegisterFromAssemblies(new System.Reflection.Assembly[] { null! }));
+        Assert.Null(exception);
+    }
 }

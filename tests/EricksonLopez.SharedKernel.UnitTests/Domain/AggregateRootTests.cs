@@ -318,6 +318,53 @@ public class AggregateRootTests
         aggregate.RequeueDomainEvents(events);
         aggregate.PendingDomainEventsCount.Should().Be(1);
     }
+
+    [Fact]
+    public void ReadOnlyDomainEventList_IndexerAndNonGenericEnumerator_WorkCorrectly()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.DoSomething();
+
+        var events = aggregate.DomainEvents;
+        events[0].Should().NotBeNull();
+
+        System.Collections.IEnumerable nonGenericEnumerable = events;
+        var enumerator = nonGenericEnumerable.GetEnumerator();
+        enumerator.MoveNext().Should().BeTrue();
+        enumerator.Current.Should().Be(events[0]);
+    }
+
+    private sealed class MinimalHasDomainEvents : IHasDomainEvents
+    {
+        private readonly List<IDomainEvent> _events = [];
+
+        public IReadOnlyList<IDomainEvent> DomainEvents => _events;
+
+        public void AddEvent(IDomainEvent evt) => _events.Add(evt);
+
+        public IReadOnlyList<IDomainEvent> DrainDomainEvents()
+        {
+            var drained = _events.ToArray();
+            _events.Clear();
+            return drained;
+        }
+    }
+
+    [Fact]
+    public void IHasDomainEvents_DefaultInterfaceMethods_ExecuteCorrectly()
+    {
+        var minimal = new MinimalHasDomainEvents();
+        minimal.AddEvent(new TestEvent());
+
+        IHasDomainEvents iface = minimal;
+
+        // Tests default RequeueDomainEvents no-op
+        iface.RequeueDomainEvents([new TestEvent()]);
+
+        // Tests default ClearDomainEvents calling DrainDomainEvents
+        iface.ClearDomainEvents();
+        minimal.DomainEvents.Should().BeEmpty();
+    }
 }
 
 
