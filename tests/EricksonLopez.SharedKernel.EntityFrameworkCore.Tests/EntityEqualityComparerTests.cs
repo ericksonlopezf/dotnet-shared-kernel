@@ -135,4 +135,20 @@ public sealed class EntityEqualityComparerTests
         EntityEqualityComparer.GetUnproxiedType(typeof(BaseOrderProxy))
             .Should().Be<BaseOrder>();
     }
+
+    [Fact]
+    public void GetUnproxiedType_WithCastleProxiesNamespace_ReturnsBaseType()
+    {
+        EntityEqualityComparer.GetUnproxiedType(typeof(global::Castle.Proxies.CastleOrderEntity))
+            .Should().Be<Entity<Guid>>();
+    }
+
+    [Fact]
+    public void GetUnproxiedType_WithProxyEndingName_WhoseBaseTypeIsObject_ReturnsSameType()
+    {
+        EntityEqualityComparer.GetUnproxiedType(typeof(SimpleObjectProxy))
+            .Should().Be<SimpleObjectProxy>();
+    }
 }
+
+public class SimpleObjectProxy { }

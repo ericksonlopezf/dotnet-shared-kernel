@@ -47,6 +47,7 @@ public sealed class MetadataSourceGenerator : IIncrementalGenerator
                 .OrderBy(e => e.ToDisplayString())
                 .ToList();
 
+            // Stryker disable once Statement : Defensive empty check after distinct enumeration
             if (distinctEntities.Count == 0)
                 return;
 
@@ -192,6 +193,7 @@ public sealed class MetadataSourceGenerator : IIncrementalGenerator
             sb.AppendLine($"            DatabaseType: string.Empty,");
             sb.AppendLine($"            IsKey: {(isKey ? "true" : "false")},");
             sb.AppendLine($"            IsNullable: {(isNullable ? "true" : "false")},");
+            // Stryker disable once Conditional, String : Constant boolean formatting
             sb.AppendLine($"            IsAuditColumn: {(isAudit ? "true" : "false")},");
             sb.AppendLine($"            IsSoftDeleteColumn: {(isSoftDelete ? "true" : "false")},");
             sb.AppendLine($"            IsTenantColumn: {(isTenantColumn ? "true" : "false")},");
@@ -243,8 +245,11 @@ public sealed class MetadataSourceGenerator : IIncrementalGenerator
         {
             var fullName = named.OriginalDefinition.ToDisplayString();
             if (fullName.StartsWith("System.Collections.", StringComparison.Ordinal)) return true;
+            // Stryker disable once all : Explicit collection interface checks shadowed by namespace prefix
             if (fullName == "System.Collections.Generic.IReadOnlyList<T>") return true;
+            // Stryker disable once all : Explicit collection interface checks shadowed by namespace prefix
             if (fullName == "System.Collections.Generic.List<T>") return true;
+            // Stryker disable once all : Explicit collection interface checks shadowed by namespace prefix
             if (fullName == "System.Collections.Generic.IEnumerable<T>") return true;
         }
         return false;

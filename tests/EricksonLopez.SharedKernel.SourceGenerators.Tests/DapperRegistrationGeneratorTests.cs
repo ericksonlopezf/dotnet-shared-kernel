@@ -360,6 +360,217 @@ namespace SampleApp
         hasStrongIdGen.Should().BeFalse(because: "StrongIdGenerator was consolidated into EricksonLopez.DomainPrimitives.Generators.");
     }
 
+    [Fact]
+    public void Generator_WhenTriggeredViaAssemblyAttributeWithAttributeSuffix_GeneratesRegistrationCode()
+    {
+        const string source = @"
+using System;
+using EricksonLopez.DomainPrimitives;
+
+[assembly: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrationsAttribute]
+
+namespace SampleApp;
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().NotBeNull();
+        regTree!.ToString().Should().Contain("Register<global::SampleApp.OrderId, global::System.Guid>();");
+    }
+
+    [Fact]
+    public void Generator_WhenTriggeredViaTypeAttribute_GeneratesRegistrationCode()
+    {
+        const string source = @"
+using System;
+using EricksonLopez.DomainPrimitives;
+
+namespace SampleApp;
+
+[EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
+public class MarkerClass { }
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().NotBeNull();
+        regTree!.ToString().Should().Contain("Register<global::SampleApp.OrderId, global::System.Guid>();");
+    }
+
+    [Fact]
+    public void Generator_WhenTriggeredViaTypeAttributeWithAttributeSuffix_GeneratesRegistrationCode()
+    {
+        const string source = @"
+using System;
+using EricksonLopez.DomainPrimitives;
+
+namespace SampleApp;
+
+[EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrationsAttribute]
+public class MarkerClass { }
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().NotBeNull();
+        regTree!.ToString().Should().Contain("Register<global::SampleApp.OrderId, global::System.Guid>();");
+    }
+
+    [Fact]
+    public void Generator_WhenTriggeredViaNonMatchingAssemblyOrModuleAttribute_DoesNotGenerateRegistrationCode()
+    {
+        const string source = @"
+using System;
+using System.Reflection;
+using EricksonLopez.DomainPrimitives;
+
+[assembly: AssemblyTitle(""Unrelated"")]
+[module: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
+
+namespace SampleApp;
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().BeNull();
+    }
+
+    [Fact]
+    public void Generator_WhenTypeHasUnrelatedAttribute_DoesNotGenerateRegistrationCode()
+    {
+        const string source = @"
+using System;
+using EricksonLopez.DomainPrimitives;
+
+namespace SampleApp;
+
+[Obsolete(""Unrelated"")]
+public class MarkerClass { }
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().BeNull();
+    }
+
+    [Fact]
+    public void Generator_WhenTypeHasGenericAttributeWithTwoTypeArgs_DoesNotGenerateRegistrationCode()
+    {
+        const string source = @"
+using System;
+
+[assembly: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
+
+namespace SampleApp;
+
+[AttributeUsage(AttributeTargets.Struct)]
+public class StrongIdAttribute<T1, T2> : Attribute { }
+
+[StrongId<int, string>]
+public readonly record struct TwoArgId(int Value);
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().BeNull();
+    }
+
+    [Fact]
+    public void Generator_WhenTypeImplementsTwoArgInterfaceWithDifferentName_DoesNotGenerateRegistrationCode()
+    {
+        const string source = @"
+using System;
+
+[assembly: EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
+
+namespace SampleApp;
+
+public interface INotStrongId<TSelf, TValue> { }
+
+public readonly record struct FakeStrongId(Guid Value) : INotStrongId<FakeStrongId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().BeNull();
+    }
+
+    [Fact]
+    public void Generator_WhenTriggeredViaAssemblyAttributeAlias_GeneratesRegistrationCode()
+    {
+        const string source = @"
+using System;
+using EricksonLopez.DomainPrimitives;
+using DapperRegAlias = EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrationsAttribute;
+
+[assembly: DapperRegAlias]
+
+namespace SampleApp;
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().NotBeNull();
+        regTree!.ToString().Should().Contain("Register<global::SampleApp.OrderId, global::System.Guid>();");
+    }
+
+    [Fact]
+    public void Generator_WhenTriggeredViaAssemblyAttributeWithoutAttributeSuffixName_GeneratesRegistrationCode()
+    {
+        const string source = @"
+using System;
+using EricksonLopez.DomainPrimitives;
+using SuffixlessAssemblyAlias = EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations;
+
+[assembly: SuffixlessAssemblyAlias]
+
+namespace EricksonLopez.SharedKernel.Dapper
+{
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class GenerateDapperStrongIdRegistrations : Attribute { }
+}
+
+namespace SampleApp;
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().NotBeNull();
+        regTree!.ToString().Should().Contain("Register<global::SampleApp.OrderId, global::System.Guid>();");
+    }
+
+    [Fact]
+    public void Generator_WhenTriggeredViaTypeAttributeWithoutAttributeSuffixName_GeneratesRegistrationCode()
+    {
+        const string source = @"
+using System;
+using EricksonLopez.DomainPrimitives;
+
+namespace EricksonLopez.SharedKernel.Dapper
+{
+    [AttributeUsage(AttributeTargets.Class)]
+    public class GenerateDapperStrongIdRegistrations : Attribute { }
+}
+
+namespace SampleApp;
+
+[EricksonLopez.SharedKernel.Dapper.GenerateDapperStrongIdRegistrations]
+public class MarkerClass { }
+
+public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
+";
+        var runResult = RunGeneratorDriver<DapperRegistrationGenerator>(source);
+        var regTree = runResult.GeneratedTrees.FirstOrDefault(t => t.FilePath.EndsWith("GeneratedDapperStrongIdRegistryExtensions.g.cs", StringComparison.Ordinal));
+        regTree.Should().NotBeNull();
+        regTree!.ToString().Should().Contain("Register<global::SampleApp.OrderId, global::System.Guid>();");
+    }
+
+
     private static GeneratorDriverRunResult RunGeneratorDriver<TGenerator>(string source)
         where TGenerator : IIncrementalGenerator, new()
     {

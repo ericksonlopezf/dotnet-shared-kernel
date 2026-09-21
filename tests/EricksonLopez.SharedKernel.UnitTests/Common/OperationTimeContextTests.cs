@@ -77,7 +77,51 @@ public sealed class OperationTimeContextTests
     {
         var act = () => OperationTimeContext.BeginScope(default);
         act.Should().Throw<ArgumentException>()
-            .WithParameterName("timestamp");
+            .WithParameterName("timestamp")
+            .WithMessage("Timestamp cannot be default(DateTimeOffset). (Parameter 'timestamp')");
+    }
+
+    [Fact]
+    public void Dispose_LastScope_SetsInternalStackToNull()
+    {
+        OperationTimeContext.Reset();
+        var scope = OperationTimeContext.BeginScope(DateTimeOffset.UtcNow);
+        GetRawAmbientStack().Should().NotBeNull();
+
+        scope.Dispose();
+
+        GetRawAmbientStack().Should().BeNull();
+    }
+
+    [Fact]
+    public void Dispose_OutOfOrderScope_DisposingTwice_DoesNotMutateOrRecreateAmbientStack()
+    {
+        OperationTimeContext.Reset();
+        var outer = OperationTimeContext.BeginScope(new DateTimeOffset(2026, 8, 31, 10, 0, 0, TimeSpan.Zero));
+        var inner = OperationTimeContext.BeginScope(new DateTimeOffset(2026, 8, 31, 11, 0, 0, TimeSpan.Zero));
+
+        // Outer is removed out of order; stack now contains only inner
+        outer.Dispose();
+        var stackSnapshot = GetRawAmbientStack();
+
+        // Disposing outer a second time: outer's ID is no longer anywhere in the stack.
+        // If found is false (correct), if (found) is skipped and stack reference remains intact.
+        // If found is mutated to true, a new ImmutableStack instance is constructed and assigned.
+        outer.Dispose();
+        var stackAfterSecondDispose = GetRawAmbientStack();
+
+        stackAfterSecondDispose.Should().BeSameAs(stackSnapshot);
+
+        inner.Dispose();
+        GetRawAmbientStack().Should().BeNull();
+    }
+
+    private static object? GetRawAmbientStack()
+    {
+        var field = typeof(OperationTimeContext).GetField("_currentStack", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        var asyncLocal = field?.GetValue(null);
+        var valueProp = asyncLocal?.GetType().GetProperty("Value");
+        return valueProp?.GetValue(asyncLocal);
     }
 
     [Fact]

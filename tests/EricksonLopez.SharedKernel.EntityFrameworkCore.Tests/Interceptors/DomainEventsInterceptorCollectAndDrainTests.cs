@@ -146,6 +146,44 @@ public class DomainEventsInterceptorCollectAndDrainTests
     }
 
     [Fact]
+    public async Task CollectEvents_WithNoTrackedEntities_ReturnsEmptyArraySingleton()
+    {
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options);
+
+        var events = DomainEventsInterceptor.CollectEvents(context);
+        events.Should().BeSameAs(Array.Empty<IDomainEvent>());
+    }
+
+    [Fact]
+    public async Task CollectEvents_WithTrackedEntitiesHavingNoEvents_ReturnsEmptyArraySingleton()
+    {
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options);
+
+        var customer = new CustomerAggregate(CustomerId.New(), "No Events User");
+        customer.DrainDomainEvents();
+        context.Customers.Add(customer);
+
+        var events = DomainEventsInterceptor.CollectEvents(context);
+        events.Should().BeSameAs(Array.Empty<IDomainEvent>());
+    }
+
+    [Fact]
+    public async Task CollectAndDrainEvents_WithTrackedEntitiesHavingNoEvents_ReturnsEmptyArraySingleton()
+    {
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options);
+
+        var customer = new CustomerAggregate(CustomerId.New(), "No Events User");
+        customer.DrainDomainEvents();
+        context.Customers.Add(customer);
+
+        var events = DomainEventsInterceptor.CollectAndDrainEvents(context);
+        events.Should().BeSameAs(Array.Empty<IDomainEvent>());
+    }
+
+    [Fact]
     public async Task CollectAndDrainEvents_WithMultipleEntitiesWithEvents_DrainsAllEvents()
     {
         var options = CreateInMemoryOptions();

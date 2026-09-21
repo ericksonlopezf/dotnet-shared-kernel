@@ -154,10 +154,12 @@ public class ConventionStrongIdDapperTests
     {
         var handler = CreateHandler<TestGuidId>();
         var act1 = () => handler.Parse(null!);
-        act1.Should().Throw<System.Data.DataException>();
+        act1.Should().Throw<System.Data.DataException>()
+            .WithMessage($"Cannot map null database value to strong identifier '{typeof(TestGuidId).FullName}'.");
 
         var act2 = () => handler.Parse(DBNull.Value);
-        act2.Should().Throw<System.Data.DataException>();
+        act2.Should().Throw<System.Data.DataException>()
+            .WithMessage($"Cannot map null database value to strong identifier '{typeof(TestGuidId).FullName}'.");
     }
 
     [Fact]
@@ -170,7 +172,8 @@ public class ConventionStrongIdDapperTests
         handler.Parse(guid.ToString()).Value.Should().Be(guid);
 
         var act = () => handler.Parse("not-a-valid-guid");
-        act.Should().Throw<System.Data.DataException>();
+        act.Should().Throw<System.Data.DataException>()
+            .WithMessage($"Cannot convert value 'not-a-valid-guid' of type '{typeof(string).FullName}' to '{typeof(TestGuidId).FullName}'.");
     }
 
     [Fact]
@@ -183,6 +186,51 @@ public class ConventionStrongIdDapperTests
         handler.Parse(42L).Value.Should().Be(42);
 
         var act = () => handler.Parse("not-a-number");
-        act.Should().Throw<System.Data.DataException>();
+        act.Should().Throw<System.Data.DataException>()
+            .WithMessage($"Cannot convert value 'not-a-number' of type '{typeof(string).FullName}' to '{typeof(TestIntId).FullName}'.");
+    }
+
+    [Fact]
+    public void Parse_WithNonConvertibleValueMatchingTarget_BypassesConvertChangeType()
+    {
+        // DateOnly does not implement IConvertible; Convert.ChangeType throws InvalidCastException.
+        // The value.GetType() == _valueProp.PropertyType branch directly returns _factory(value).
+        var handler = CreateHandler<TestDateOnlyId>();
+        var expected = new DateOnly(2026, 9, 21);
+
+        var result = handler.Parse(expected);
+        result.Value.Should().Be(expected);
+    }
+
+    [Fact]
+    public void Parse_WithClassBasedStrongId_InstantiatesReferenceTypeCorrectly()
+    {
+        var handler = CreateHandler<TestClassStringId>();
+        var result = handler.Parse("class-strong-id-test");
+        result.Should().NotBeNull();
+        result.Value.Should().Be("class-strong-id-test");
+    }
+
+    public abstract class AbstractTestId { public Guid Value { get; set; } }
+    public interface ITestInterfaceId { Guid Value { get; } }
+    public struct GenericStructId<T> { public T Value { get; set; } }
+    public readonly record struct NonMatchingStructKey(int Value);
+
+    [Fact]
+    public void RegisterFromAssembly_CorrectlyFiltersAbstractInterfacesAndNamingConventions()
+    {
+        var assembly = typeof(ConventionStrongIdDapperTests).Assembly;
+
+        // Register with filter selecting NonMatchingStructKey
+        DapperStrongIdRegistry.RegisterByConvention(assembly, t => t == typeof(NonMatchingStructKey));
+        SqlMapper.LookupDbType(typeof(NonMatchingStructKey), "col", false, out var customHandler);
+        customHandler.Should().NotBeNull();
+
+        // Abstract and interface should NEVER be registered even if filter allows them
+        DapperStrongIdRegistry.RegisterByConvention(assembly, t => t == typeof(AbstractTestId) || t == typeof(ITestInterfaceId));
+        SqlMapper.LookupDbType(typeof(AbstractTestId), "col", false, out var absHandler);
+        absHandler.Should().BeNull();
+        SqlMapper.LookupDbType(typeof(ITestInterfaceId), "col", false, out var ifaceHandler);
+        ifaceHandler.Should().BeNull();
     }
 }

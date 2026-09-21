@@ -56,4 +56,16 @@ public class SharedKernelJsonModifiersTests
         json.Should().Contain("\"OccurredOn\":");
         json.Should().Contain("\"Name\":\"Test\"");
     }
+
+    [Fact]
+    public void IgnoreLegacyDomainEventAliases_WhenAliasIsAtIndexZero_RemovesCorrectly()
+    {
+        var typeInfo = JsonTypeInfo.CreateJsonTypeInfo<SampleOrderCreatedEvent>(new JsonSerializerOptions());
+        var prop = typeInfo.CreateJsonPropertyInfo(typeof(Guid), "EventId");
+        typeInfo.Properties.Add(prop);
+
+        SharedKernelJsonModifiers.IgnoreLegacyDomainEventAliases(typeInfo);
+
+        typeInfo.Properties.Should().BeEmpty();
+    }
 }

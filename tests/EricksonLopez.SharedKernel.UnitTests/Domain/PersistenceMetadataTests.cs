@@ -42,14 +42,18 @@ public sealed class PersistenceMetadataTests
         attr.IsDatabaseGenerated.Should().BeTrue();
     }
 
-    [Fact]
-    public void AuditAttribute_ShouldStoreFieldType()
+    [Theory]
+    [InlineData(AuditFieldType.CreatedAt)]
+    [InlineData(AuditFieldType.CreatedBy)]
+    [InlineData(AuditFieldType.UpdatedAt)]
+    [InlineData(AuditFieldType.UpdatedBy)]
+    public void AuditAttribute_ShouldStoreFieldType(AuditFieldType fieldType)
     {
         // Act
-        var attr = new AuditAttribute(AuditFieldType.CreatedAt);
+        var attr = new AuditAttribute(fieldType);
 
         // Assert
-        attr.FieldType.Should().Be(AuditFieldType.CreatedAt);
+        attr.FieldType.Should().Be(fieldType);
     }
 
     [Fact]
@@ -243,6 +247,40 @@ public sealed class PersistenceMetadataTests
         nullGetterProp.GetValue<TestEntity, string>(testObj).Should().BeNull();
         nullGetterProp.SetValue(testObj, "new_val");
         testObj.Total.Should().Be(0m);
+
+        var nullValueTypeProp = new PropertyMetadata(
+            ClrName: "NullInt",
+            ClrType: typeof(int),
+            ColumnName: "null_int",
+            DatabaseType: "integer",
+            IsKey: false,
+            IsNullable: true,
+            IsAuditColumn: false,
+            IsSoftDeleteColumn: false,
+            IsTenantColumn: false,
+            IsConcurrencyToken: false,
+            Getter: _ => null,
+            Setter: null);
+
+        // When val is null, it must return default(int) without throwing cast exception
+        nullValueTypeProp.GetValue<TestEntity, int>(testObj).Should().Be(0);
+        nullValueTypeProp.GetValue<TestEntity, Guid>(testObj).Should().Be(Guid.Empty);
+    }
+
+    [Fact]
+    public void EntityMetadata_DefaultsAndExceptionMessage_ShouldBeVerified()
+    {
+        var meta = new EntityMetadata
+        {
+            ClrType = typeof(TestEntity)
+        };
+
+        meta.TableName.Should().Be(string.Empty);
+        meta.Schema.Should().Be("public");
+
+        var act = () => meta.GetColumn("MissingProp");
+        act.Should().Throw<KeyNotFoundException>()
+            .WithMessage("Column 'MissingProp' not found on entity 'TestEntity'.");
     }
 
     private sealed class TestEntity

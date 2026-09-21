@@ -13,6 +13,7 @@ using EricksonLopez.SharedKernel.EntityFrameworkCore.Tests.Fakes;
 using EricksonLopez.SharedKernel.EntityFrameworkCore.Tests.Fixtures;
 using EricksonLopez.SharedKernel.TestingUtilities.Fakes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using NSubstitute;
 using Xunit;
 
@@ -506,6 +507,112 @@ public class DomainEventsInterceptorLifecycleTests
 
         capturedException.Should().NotBeNull();
         capturedEvents.Should().NotBeNull().And.HaveCount(1);
+    }
+
+    [Fact]
+    public async Task Interceptor_NullEventDataGuards_ThrowArgumentNullException()
+    {
+        var interceptor = new DomainEventsInterceptor();
+
+        var act1 = () => interceptor.SavedChanges(null!, 1);
+        act1.Should().Throw<ArgumentNullException>().WithParameterName("eventData");
+
+        var act2 = async () => await interceptor.SavedChangesAsync(null!, 1);
+        await act2.Should().ThrowAsync<ArgumentNullException>().WithParameterName("eventData");
+
+        var act3 = () => interceptor.SaveChangesFailed(null!);
+        act3.Should().Throw<ArgumentNullException>().WithParameterName("eventData");
+
+        var act4 = async () => await interceptor.SaveChangesFailedAsync(null!);
+        await act4.Should().ThrowAsync<ArgumentNullException>().WithParameterName("eventData");
+    }
+
+    [Fact]
+    public void AfterCommit_WhenEntityHasNoEvents_DoesNotInvokeDispatcher()
+    {
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.AfterCommit);
+        var options = CreateInMemoryOptions();
+
+        using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "No Events AfterCommit User");
+        customer.DrainDomainEvents();
+        context.Customers.Add(customer);
+
+        context.SaveChanges();
+
+        dispatcher.DidNotReceive().Dispatch(Arg.Any<IReadOnlyList<IDomainEvent>>());
+    }
+
+    [Fact]
+    public async Task AfterCommitAsync_WhenEntityHasNoEvents_DoesNotInvokeDispatcher()
+    {
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.AfterCommit);
+        var options = CreateInMemoryOptions();
+
+        await using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "No Events AfterCommit Async User");
+        customer.DrainDomainEvents();
+        context.Customers.Add(customer);
+
+        await context.SaveChangesAsync();
+
+        await dispatcher.DidNotReceive().DispatchAsync(Arg.Any<IReadOnlyList<IDomainEvent>>(), Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public void SaveChangesFailed_WithBeforeCommitDrainedEvents_RestoresEventsToAggregates()
+    {
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+        var options = CreateInMemoryOptions();
+
+        using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "Failed DB User");
+        context.Customers.Add(customer);
+
+        var savingEventData = (DbContextEventData)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(DbContextEventData));
+        var contextField = typeof(DbContextEventData).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).First(f => typeof(DbContext).IsAssignableFrom(f.FieldType));
+        contextField.SetValue(savingEventData, context);
+
+        interceptor.SavingChanges(savingEventData, new Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult<int>());
+        customer.PendingDomainEventsCount.Should().Be(0);
+
+        var errorData = (DbContextErrorEventData)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(DbContextErrorEventData));
+        contextField.SetValue(errorData, context);
+
+        interceptor.SaveChangesFailed(errorData);
+
+        customer.PendingDomainEventsCount.Should().Be(1);
+    }
+
+    [Fact]
+    public async Task SaveChangesFailedAsync_WithBeforeCommitDrainedEvents_RestoresEventsToAggregates()
+    {
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        dispatcher.DispatchAsync(Arg.Any<IReadOnlyList<IDomainEvent>>(), Arg.Any<CancellationToken>())
+            .Returns(ValueTask.CompletedTask);
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+        var options = CreateInMemoryOptions();
+
+        await using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "Failed Async DB User");
+        context.Customers.Add(customer);
+
+        var savingEventData = (DbContextEventData)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(DbContextEventData));
+        var contextField = typeof(DbContextEventData).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).First(f => typeof(DbContext).IsAssignableFrom(f.FieldType));
+        contextField.SetValue(savingEventData, context);
+
+        await interceptor.SavingChangesAsync(savingEventData, new Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult<int>());
+        customer.PendingDomainEventsCount.Should().Be(0);
+
+        var errorData = (DbContextErrorEventData)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(DbContextErrorEventData));
+        contextField.SetValue(errorData, context);
+
+        await interceptor.SaveChangesFailedAsync(errorData);
+
+        customer.PendingDomainEventsCount.Should().Be(1);
     }
 
     #endregion

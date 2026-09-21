@@ -52,6 +52,17 @@ public sealed class DomainEventCollectorTests
     }
 
     [Fact]
+    public void CollectEvents_WithNullEntityWithEvents_ThrowsArgumentNullException()
+    {
+        IHasDomainEvents nullEntity = null!;
+
+        var act = () => nullEntity.CollectEvents();
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("entityWithEvents");
+    }
+
+    [Fact]
     public void CollectEvents_ExtensionMethod_PopulatesCollectorAndDrainsEvents()
     {
         var orderId = Guid.NewGuid();
@@ -80,6 +91,17 @@ public sealed class DomainEventCollectorTests
 
         act.Should().Throw<ArgumentNullException>()
             .WithParameterName("aggregate");
+    }
+
+    [Fact]
+    public void CollectFrom_WithNullEntityWithEvents_ThrowsArgumentNullException()
+    {
+        var collector = new DomainEventCollector();
+
+        var act = () => collector.CollectFrom((IHasDomainEvents)null!);
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("entityWithEvents");
     }
 
     [Fact]

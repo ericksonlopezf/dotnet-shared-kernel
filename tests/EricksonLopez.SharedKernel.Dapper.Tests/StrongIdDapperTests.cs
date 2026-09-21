@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AwesomeAssertions;
 using Dapper;
 using EricksonLopez.DomainPrimitives;
+using EricksonLopez.DomainPrimitives.Validation;
 using EricksonLopez.SharedKernel;
 using EricksonLopez.SharedKernel.Dapper;
 using EricksonLopez.SharedKernel.Dapper.Tests.Fakes;
@@ -372,6 +373,149 @@ public class StrongIdDapperTests
 
         bool isValid = parsed.Equals(expectedParsed) && param.Value!.Equals(rawValue);
         return isValid.When(condition(rawValue));
+    }
+
+    public readonly record struct ConcreteShortId(short Value) : IStrongId<ConcreteShortId, short>
+    {
+        public static string PrimitiveName => nameof(ConcreteShortId);
+        public bool IsDefault => Value == 0;
+        public static ConcreteShortId Empty => new(0);
+        public static ConcreteShortId Create() => new(0);
+        public static ConcreteShortId Create(short value) => new(value);
+        public static bool TryCreate(short value, out ConcreteShortId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public readonly record struct ConcreteByteId(byte Value) : IStrongId<ConcreteByteId, byte>
+    {
+        public static string PrimitiveName => nameof(ConcreteByteId);
+        public bool IsDefault => Value == 0;
+        public static ConcreteByteId Empty => new(0);
+        public static ConcreteByteId Create() => new(0);
+        public static ConcreteByteId Create(byte value) => new(value);
+        public static bool TryCreate(byte value, out ConcreteByteId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public readonly record struct ConcreteBoolId(bool Value) : IStrongId<ConcreteBoolId, bool>
+    {
+        public static string PrimitiveName => nameof(ConcreteBoolId);
+        public bool IsDefault => !Value;
+        public static ConcreteBoolId Empty => new(false);
+        public static ConcreteBoolId Create() => new(false);
+        public static ConcreteBoolId Create(bool value) => new(value);
+        public static bool TryCreate(bool value, out ConcreteBoolId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public readonly record struct ConcreteDateTimeId(DateTime Value) : IStrongId<ConcreteDateTimeId, DateTime>
+    {
+        public static string PrimitiveName => nameof(ConcreteDateTimeId);
+        public bool IsDefault => Value == default;
+        public static ConcreteDateTimeId Empty => new(default);
+        public static ConcreteDateTimeId Create() => new(default);
+        public static ConcreteDateTimeId Create(DateTime value) => new(value);
+        public static bool TryCreate(DateTime value, out ConcreteDateTimeId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public readonly record struct ConcreteDateTimeOffsetId(DateTimeOffset Value) : IStrongId<ConcreteDateTimeOffsetId, DateTimeOffset>
+    {
+        public static string PrimitiveName => nameof(ConcreteDateTimeOffsetId);
+        public bool IsDefault => Value == default;
+        public static ConcreteDateTimeOffsetId Empty => new(default);
+        public static ConcreteDateTimeOffsetId Create() => new(default);
+        public static ConcreteDateTimeOffsetId Create(DateTimeOffset value) => new(value);
+        public static bool TryCreate(DateTimeOffset value, out ConcreteDateTimeOffsetId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public readonly record struct ConcreteTimeOnlyId(TimeOnly Value) : IStrongId<ConcreteTimeOnlyId, TimeOnly>
+    {
+        public static string PrimitiveName => nameof(ConcreteTimeOnlyId);
+        public bool IsDefault => Value == default;
+        public static ConcreteTimeOnlyId Empty => new(default);
+        public static ConcreteTimeOnlyId Create() => new(default);
+        public static ConcreteTimeOnlyId Create(TimeOnly value) => new(value);
+        public static bool TryCreate(TimeOnly value, out ConcreteTimeOnlyId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public readonly record struct ConcreteDecimalId(decimal Value) : IStrongId<ConcreteDecimalId, decimal>
+    {
+        public static string PrimitiveName => nameof(ConcreteDecimalId);
+        public bool IsDefault => Value == 0;
+        public static ConcreteDecimalId Empty => new(0);
+        public static ConcreteDecimalId Create() => new(0);
+        public static ConcreteDecimalId Create(decimal value) => new(value);
+        public static bool TryCreate(decimal value, out ConcreteDecimalId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public readonly record struct ConcreteDoubleId(double Value) : IStrongId<ConcreteDoubleId, double>
+    {
+        public static string PrimitiveName => nameof(ConcreteDoubleId);
+        public bool IsDefault => Value == 0;
+        public static ConcreteDoubleId Empty => new(0);
+        public static ConcreteDoubleId Create() => new(0);
+        public static ConcreteDoubleId Create(double value) => new(value);
+        public static bool TryCreate(double value, out ConcreteDoubleId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public readonly record struct ConcreteFloatId(float Value) : IStrongId<ConcreteFloatId, float>
+    {
+        public static string PrimitiveName => nameof(ConcreteFloatId);
+        public bool IsDefault => Value == 0;
+        public static ConcreteFloatId Empty => new(0);
+        public static ConcreteFloatId Create() => new(0);
+        public static ConcreteFloatId Create(float value) => new(value);
+        public static bool TryCreate(float value, out ConcreteFloatId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public sealed class ConcreteClassId : IStrongId<ConcreteClassId, string>
+    {
+        public string Value { get; }
+        public ConcreteClassId(string value) { Value = value; }
+        public static string PrimitiveName => nameof(ConcreteClassId);
+        public bool IsDefault => string.IsNullOrEmpty(Value);
+        public static ConcreteClassId Empty => new(string.Empty);
+        public static ConcreteClassId Create() => new(string.Empty);
+        public static ConcreteClassId Create(string value) => new(value);
+        public static bool TryCreate(string value, out ConcreteClassId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+        public bool Equals(ConcreteClassId? other) => other is not null && Value == other.Value;
+        public override bool Equals(object? obj) => obj is ConcreteClassId other && Equals(other);
+        public override int GetHashCode() => Value?.GetHashCode() ?? 0;
+    }
+
+    [Fact]
+    public void SetValue_InfersAllSupportedPrimitiveDbTypes()
+    {
+        void Check<TSelf, TValue>(TSelf id, DbType expected)
+            where TSelf : notnull, IStrongId<TSelf, TValue>
+            where TValue : notnull, IEquatable<TValue>
+        {
+            var handler = new StrongIdTypeHandler<TSelf, TValue>();
+            var param = new FakeDbDataParameter();
+            handler.SetValue(param, id);
+            param.DbType.Should().Be(expected);
+        }
+
+        Check<OrderId, Guid>(OrderId.Create(), DbType.Guid);
+        Check<ProductCode, string>(ProductCode.Create("CODE-1"), DbType.String);
+        Check<DepartmentId, int>(DepartmentId.Create(1), DbType.Int32);
+        Check<SequenceId, long>(SequenceId.Create(100L), DbType.Int64);
+        Check<DateOnlyId, DateOnly>(DateOnlyId.Create(new DateOnly(2026, 9, 21)), DbType.Date);
+        Check<ConcreteShortId, short>(new((short)10), DbType.Int16);
+        Check<ConcreteByteId, byte>(new((byte)5), DbType.Byte);
+        Check<ConcreteBoolId, bool>(new(true), DbType.Boolean);
+        Check<ConcreteDateTimeId, DateTime>(new(DateTime.UtcNow), DbType.DateTime2);
+        Check<ConcreteDateTimeOffsetId, DateTimeOffset>(new(DateTimeOffset.UtcNow), DbType.DateTimeOffset);
+        Check<ConcreteTimeOnlyId, TimeOnly>(new(new TimeOnly(12, 0)), DbType.Time);
+        Check<ConcreteDecimalId, decimal>(new(100.5m), DbType.Decimal);
+        Check<ConcreteDoubleId, double>(new(100.5), DbType.Double);
+        Check<ConcreteFloatId, float>(new(100.5f), DbType.Single);
+    }
+
+    [Fact]
+    public void SetValue_WithClassStrongIdNull_SetsDBNull()
+    {
+        var handler = new StrongIdTypeHandler<ConcreteClassId, string>();
+        var param = new FakeDbDataParameter();
+        handler.SetValue(param, null);
+        param.Value.Should().Be(DBNull.Value);
     }
 
     #endregion

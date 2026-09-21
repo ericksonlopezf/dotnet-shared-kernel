@@ -365,6 +365,74 @@ public class AggregateRootTests
         iface.ClearDomainEvents();
         minimal.DomainEvents.Should().BeEmpty();
     }
+
+    [Fact]
+    public void DomainEvents_ReturnsCachedSnapshotInstance_OnMultipleCalls()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.DoSomething();
+
+        var snapshot1 = aggregate.DomainEvents;
+        var snapshot2 = aggregate.DomainEvents;
+
+        ReferenceEquals(snapshot1, snapshot2).Should().BeTrue();
+    }
+
+    [Fact]
+    public void DrainDomainEvents_ReturnsCachedSnapshot_WhenAlreadyCreated()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.DoSomething();
+
+        var snapshot = aggregate.DomainEvents;
+        var drained = aggregate.DrainDomainEvents();
+
+        ReferenceEquals(drained, snapshot).Should().BeTrue();
+    }
+
+    [Fact]
+    public void RequeueDomainEvents_WhenAggregateAlreadyHasEvents_CombinesCorrectly()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.DoSomething(); // event A
+        var eventA = aggregate.DrainDomainEvents()[0];
+
+        aggregate.DoSomethingElse(); // event B
+        var eventB = aggregate.DomainEvents[0];
+
+        // Requeue event A in front of existing event B
+        aggregate.RequeueDomainEvents([eventA]);
+
+        aggregate.DomainEvents.Should().HaveCount(2);
+        aggregate.DomainEvents[0].Should().Be(eventA);
+        aggregate.DomainEvents[1].Should().Be(eventB);
+    }
+
+    [Fact]
+    public void RequeueDomainEvents_WhenEmptyList_ReturnsImmediatelyWithoutModifyingBuffer()
+    {
+        var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.RequeueDomainEvents(Array.Empty<IDomainEvent>());
+        aggregate.PendingDomainEventsCount.Should().Be(0);
+    }
+
+    private sealed class TestDefaultDispatcher : IDomainEventDispatcher
+    {
+        public ValueTask DispatchAsync(IReadOnlyList<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
+        {
+            return ValueTask.CompletedTask;
+        }
+    }
+
+    [Fact]
+    public void IDomainEventDispatcher_DefaultDispatch_ThrowsNotSupportedException_WithExactMessage()
+    {
+        IDomainEventDispatcher dispatcher = new TestDefaultDispatcher();
+        var act = () => dispatcher.Dispatch([new TestEvent()]);
+
+        act.Should().Throw<NotSupportedException>()
+            .WithMessage("Synchronous dispatch is not supported by default to prevent sync-over-async threadpool starvation and deadlocks. Implement Dispatch explicitly or use DispatchAsync.");
+    }
 }
 
 

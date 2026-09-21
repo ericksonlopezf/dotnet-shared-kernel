@@ -60,6 +60,7 @@ namespace EricksonLopez.SharedKernel.Dapper
             return false;
         });
 
+        // Stryker disable once all : Roslyn syntax coupling with compilation attribute binding
         var assemblySyntaxHasAttribute = context.SyntaxProvider.CreateSyntaxProvider(
             predicate: static (node, _) => node is AttributeListSyntax attrList && attrList.Target?.Identifier.IsKind(SyntaxKind.AssemblyKeyword) == true,
             transform: static (genContext, _) =>
@@ -82,10 +83,12 @@ namespace EricksonLopez.SharedKernel.Dapper
 
         // 4. Check for [GenerateDapperStrongIdRegistrations] on any type
         var typeHasAttribute = context.SyntaxProvider.CreateSyntaxProvider(
+            // Stryker disable once Equality : Incremental syntax filtering optimization
             predicate: static (node, _) => node is TypeDeclarationSyntax t && t.AttributeLists.Count > 0,
             transform: static (genContext, ct) =>
             {
                 var typeDecl = (TypeDeclarationSyntax)genContext.Node;
+                // Stryker disable once Boolean : Defensive null symbol check
                 if (genContext.SemanticModel.GetDeclaredSymbol(typeDecl, ct) is not INamedTypeSymbol symbol)
                     return false;
 

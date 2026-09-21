@@ -1,10 +1,13 @@
 // Copyright © Erickson Lopez. MIT License.
 using System;
 using System.Data;
+using Dapper;
 using EricksonLopez.SharedKernel.Dapper.Tests.Fakes;
 using Xunit;
 
 namespace EricksonLopez.SharedKernel.Dapper.Tests;
+
+#pragma warning disable CS0618
 
 public sealed class BclTypeHandlerTests
 {
@@ -85,8 +88,21 @@ public sealed class BclTypeHandlerTests
     [Fact]
     public void DapperBclTypeHandlerRegistry_RegisterAll_ExecutesWithoutException()
     {
-        var exception = Record.Exception(() => DapperBclTypeHandlerRegistry.RegisterAll());
-        Assert.Null(exception);
+        DapperBclTypeHandlerRegistry.RegisterAll();
+
+        Assert.True(IsTypeHandlerRegistered(typeof(DateOnly)));
+        Assert.True(IsTypeHandlerRegistered(typeof(DateTimeOffset)));
+        Assert.True(IsTypeHandlerRegistered(typeof(TimeOnly)));
+    }
+
+    private static bool IsTypeHandlerRegistered(Type type)
+    {
+        var field = typeof(SqlMapper).GetField("typeHandlers", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        if (field?.GetValue(null) is System.Collections.IDictionary dict)
+        {
+            return dict.Contains(type);
+        }
+        return false;
     }
 
     [Fact]
@@ -94,8 +110,10 @@ public sealed class BclTypeHandlerTests
     {
         var handler = new DateTimeOffsetTypeHandler();
         Assert.Throws<ArgumentNullException>(() => handler.SetValue(null!, DateTimeOffset.UtcNow));
-        Assert.Throws<DataException>(() => handler.Parse(null!));
-        Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+        var exNull = Assert.Throws<DataException>(() => handler.Parse(null!));
+        Assert.Equal("Cannot map null database value to non-nullable DateTimeOffset.", exNull.Message);
+        var exDbNull = Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+        Assert.Equal("Cannot map null database value to non-nullable DateTimeOffset.", exDbNull.Message);
 
         var utcDt = new DateTime(2026, 9, 1, 12, 0, 0, DateTimeKind.Utc);
         var localDt = new DateTime(2026, 9, 1, 12, 0, 0, DateTimeKind.Local);
@@ -114,8 +132,10 @@ public sealed class BclTypeHandlerTests
     {
         var handler = new DateOnlyTypeHandler();
         Assert.Throws<ArgumentNullException>(() => handler.SetValue(null!, new DateOnly(2026, 9, 1)));
-        Assert.Throws<DataException>(() => handler.Parse(null!));
-        Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+        var exNull = Assert.Throws<DataException>(() => handler.Parse(null!));
+        Assert.Equal("Cannot map null database value to non-nullable DateOnly.", exNull.Message);
+        var exDbNull = Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+        Assert.Equal("Cannot map null database value to non-nullable DateOnly.", exDbNull.Message);
 
         // Object converting to DateTime
         object dtObj = "2026/09/01";
@@ -127,8 +147,10 @@ public sealed class BclTypeHandlerTests
     {
         var handler = new TimeOnlyTypeHandler();
         Assert.Throws<ArgumentNullException>(() => handler.SetValue(null!, new TimeOnly(12, 0)));
-        Assert.Throws<DataException>(() => handler.Parse(null!));
-        Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+        var exNull = Assert.Throws<DataException>(() => handler.Parse(null!));
+        Assert.Equal("Cannot convert value of type 'null' to TimeOnly.", exNull.Message);
+        var exDbNull = Assert.Throws<DataException>(() => handler.Parse(DBNull.Value));
+        Assert.Equal($"Cannot convert value of type '{typeof(DBNull).FullName}' to TimeOnly.", exDbNull.Message);
 
         var dt = new DateTime(2026, 9, 1, 14, 30, 45);
         Assert.Equal(new TimeOnly(14, 30, 45), handler.Parse(dt));
