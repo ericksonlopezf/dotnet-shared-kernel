@@ -407,5 +407,107 @@ public class DomainEventsInterceptorLifecycleTests
         customer.DomainEvents.Should().HaveCount(1);
     }
 
+    [Fact]
+    public void Constructor_Parameterless_InitializesWithDefaults()
+    {
+        var interceptor = new DomainEventsInterceptor();
+        interceptor.Should().NotBeNull();
+    }
+
+    [Fact]
+    public void BeforeCommit_WhenSuccessful_DispatchesSynchronouslyAndDrainsBuffer()
+    {
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+        var options = CreateInMemoryOptions();
+
+        using (var context = new TestSharedKernelDbContext(options, interceptor))
+        {
+            var customer = new CustomerAggregate(CustomerId.New(), "BeforeCommit Sync User");
+            context.Customers.Add(customer);
+            context.SaveChanges();
+            customer.PendingDomainEventsCount.Should().Be(0);
+        }
+
+        dispatcher.Received(1).Dispatch(Arg.Any<IReadOnlyList<IDomainEvent>>());
+    }
+
+    [Fact]
+    public async Task BeforeCommitAsync_WhenSuccessful_DispatchesAsynchronouslyAndDrainsBuffer()
+    {
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        dispatcher.DispatchAsync(Arg.Any<IReadOnlyList<IDomainEvent>>(), Arg.Any<CancellationToken>())
+            .Returns(ValueTask.CompletedTask);
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+        var options = CreateInMemoryOptions();
+
+        await using (var context = new TestSharedKernelDbContext(options, interceptor))
+        {
+            var customer = new CustomerAggregate(CustomerId.New(), "BeforeCommit Async User");
+            context.Customers.Add(customer);
+            await context.SaveChangesAsync();
+            customer.PendingDomainEventsCount.Should().Be(0);
+        }
+
+        await dispatcher.Received(1).DispatchAsync(Arg.Any<IReadOnlyList<IDomainEvent>>(), Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public void AfterCommit_WithOnDispatchError_Sync_InvokesCallbackInsteadOfThrowing()
+    {
+        Exception? capturedException = null;
+        IReadOnlyList<IDomainEvent>? capturedEvents = null;
+
+        var dispatcher = new ThrowingDispatcher();
+        var interceptor = new DomainEventsInterceptor(
+            dispatcher,
+            DomainEventDispatchTiming.AfterCommit,
+            (ex, events) =>
+            {
+                capturedException = ex;
+                capturedEvents = events;
+            });
+
+        var options = CreateInMemoryOptions();
+        using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "Error Callback User");
+        context.Customers.Add(customer);
+
+        var act = () => context.SaveChanges();
+        act.Should().NotThrow();
+
+        capturedException.Should().NotBeNull();
+        capturedEvents.Should().NotBeNull().And.HaveCount(1);
+    }
+
+    [Fact]
+    public async Task AfterCommitAsync_WithOnDispatchError_Async_InvokesCallbackInsteadOfThrowing()
+    {
+        Exception? capturedException = null;
+        IReadOnlyList<IDomainEvent>? capturedEvents = null;
+
+        var dispatcher = new ThrowingDispatcher();
+        var interceptor = new DomainEventsInterceptor(
+            dispatcher,
+            DomainEventDispatchTiming.AfterCommit,
+            (ex, events) =>
+            {
+                capturedException = ex;
+                capturedEvents = events;
+            });
+
+        var options = CreateInMemoryOptions();
+        await using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "Error Callback Async User");
+        context.Customers.Add(customer);
+
+        Func<Task> act = async () => await context.SaveChangesAsync();
+        await act.Should().NotThrowAsync();
+
+        capturedException.Should().NotBeNull();
+        capturedEvents.Should().NotBeNull().And.HaveCount(1);
+    }
+
     #endregion
 }
+

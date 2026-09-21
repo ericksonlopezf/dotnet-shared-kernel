@@ -253,5 +253,103 @@ public class OpenTelemetryDomainEventDispatcherTests
         act.Should().Throw<ArgumentNullException>()
             .WithParameterName("builder");
     }
+
+    [Fact]
+    public void Dispatch_Synchronous_WhenEventsAreDispatched_CreatesActivitiesWithExpectedTags()
+    {
+        var exportedActivities = new List<Activity>();
+        using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+            .AddSharedKernelInstrumentation()
+            .AddInMemoryExporter(exportedActivities)
+            .Build();
+
+        var innerDispatcher = Substitute.For<IDomainEventDispatcher>();
+        var sut = new OpenTelemetryDomainEventDispatcher(innerDispatcher);
+
+        var domainEvent = new TestOrderPlacedEvent(Guid.NewGuid(), 199.99m);
+        var events = new IDomainEvent[] { domainEvent };
+
+        sut.Dispatch(events);
+
+        tracerProvider.ForceFlush();
+
+        exportedActivities.Should().NotBeEmpty();
+        var batchActivity = exportedActivities.FirstOrDefault(a => a.OperationName == "DomainEvents.DispatchBatch");
+        batchActivity.Should().NotBeNull();
+        batchActivity!.GetTagItem("domain_events.batch_size").Should().Be(1);
+        batchActivity.Status.Should().Be(ActivityStatusCode.Ok);
+
+        innerDispatcher.Received(1).Dispatch(events);
+    }
+
+    [Fact]
+    public void Dispatch_Synchronous_WhenNullEvents_ThrowsArgumentNullException()
+    {
+        var inner = Substitute.For<IDomainEventDispatcher>();
+        var sut = new OpenTelemetryDomainEventDispatcher(inner);
+
+        var act = () => sut.Dispatch(null!);
+        act.Should().Throw<ArgumentNullException>().WithParameterName("domainEvents");
+    }
+
+    [Fact]
+    public void Dispatch_WhenContainsNullElement_ThrowsArgumentException()
+    {
+        var inner = Substitute.For<IDomainEventDispatcher>();
+        var sut = new OpenTelemetryDomainEventDispatcher(inner);
+
+        var actSync = () => sut.Dispatch(new IDomainEvent[] { null! });
+        actSync.Should().Throw<ArgumentException>().WithMessage("*cannot be null*");
+
+        var actAsync = async () => await sut.DispatchAsync(new IDomainEvent[] { null! });
+        actAsync.Should().ThrowAsync<ArgumentException>().WithMessage("*cannot be null*");
+    }
+
+    [Fact]
+    public void Dispatch_Synchronous_WhenEmptyEvents_CompletesWithoutCallingInner()
+    {
+        var inner = Substitute.For<IDomainEventDispatcher>();
+        var sut = new OpenTelemetryDomainEventDispatcher(inner);
+
+        sut.Dispatch(Array.Empty<IDomainEvent>());
+        inner.DidNotReceive().Dispatch(Arg.Any<IReadOnlyList<IDomainEvent>>());
+    }
+
+    [Fact]
+    public void Dispatch_Synchronous_WhenInnerThrows_SetsErrorStatusAndRethrows()
+    {
+        var exportedActivities = new List<Activity>();
+        using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+            .AddSharedKernelInstrumentation()
+            .AddInMemoryExporter(exportedActivities)
+            .Build();
+
+        var inner = Substitute.For<IDomainEventDispatcher>();
+        inner.When(d => d.Dispatch(Arg.Any<IReadOnlyList<IDomainEvent>>()))
+            .Do(_ => throw new InvalidOperationException("Sync broker failure"));
+
+        var sut = new OpenTelemetryDomainEventDispatcher(inner);
+        var domainEvent = new TestOrderPlacedEvent(Guid.NewGuid(), 50.0m);
+
+        var act = () => sut.Dispatch(new[] { domainEvent });
+        act.Should().Throw<InvalidOperationException>().WithMessage("Sync broker failure");
+
+        tracerProvider.ForceFlush();
+
+        var batchActivity = exportedActivities.FirstOrDefault(a => a.OperationName == "DomainEvents.DispatchBatch");
+        batchActivity.Should().NotBeNull();
+        batchActivity!.Status.Should().Be(ActivityStatusCode.Error);
+    }
+
+    [Fact]
+    public void Constructor_WithCustomActivitySourceAndMeter_InstantiatesCorrectly()
+    {
+        using var customMeter = new System.Diagnostics.Metrics.Meter("Custom.SharedKernel");
+        using var customActivitySource = new ActivitySource("Custom.SharedKernel");
+        var inner = Substitute.For<IDomainEventDispatcher>();
+
+        var sut = new OpenTelemetryDomainEventDispatcher(inner, customActivitySource, customMeter);
+        sut.Should().NotBeNull();
+    }
 }
 

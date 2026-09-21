@@ -155,6 +155,96 @@ public sealed class PersistenceMetadataTests
         act.Should().Throw<KeyNotFoundException>();
     }
 
+    [Fact]
+    public void EntityMetadata_ShouldStoreSpecializedColumns()
+    {
+        var tenantProp = new PropertyMetadata(
+            "TenantId", typeof(Guid), "tenant_id", "uuid", false, false, false, false, true, false,
+            o => Guid.Empty, (o, v) => { });
+
+        var softDeleteProp = new PropertyMetadata(
+            "IsDeleted", typeof(bool), "is_deleted", "boolean", false, false, false, true, false, false,
+            o => false, (o, v) => { });
+
+        var concurrencyProp = new PropertyMetadata(
+            "RowVersion", typeof(byte[]), "row_version", "bytea", false, false, false, false, false, true,
+            o => Array.Empty<byte>(), (o, v) => { });
+
+        var metadata = new EntityMetadata
+        {
+            ClrType = typeof(TestEntity),
+            TableName = "test_entities",
+            TenantColumn = tenantProp,
+            SoftDeleteColumn = softDeleteProp,
+            ConcurrencyToken = concurrencyProp
+        };
+
+        metadata.TenantColumn.Should().BeSameAs(tenantProp);
+        metadata.SoftDeleteColumn.Should().BeSameAs(softDeleteProp);
+        metadata.ConcurrencyToken.Should().BeSameAs(concurrencyProp);
+    }
+
+    [Fact]
+    public void EntityMetadata_ColumnIndex_IsThreadSafeUnderConcurrency()
+    {
+        var idProp = new PropertyMetadata(
+            "Id", typeof(Guid), "id", "uuid", true, false, false, false, false, false,
+            o => ((TestEntity)o).Id, (o, v) => ((TestEntity)o).Id = (Guid)v!);
+
+        var metadata = new EntityMetadata
+        {
+            ClrType = typeof(TestEntity),
+            Columns = [idProp]
+        };
+
+        System.Threading.Tasks.Parallel.For(0, 50, _ =>
+        {
+            metadata.GetColumn("Id").Should().BeSameAs(idProp);
+        });
+    }
+
+    [Fact]
+    public void PropertyMetadata_FallbackAccessors_ShouldUseUntypedDelegates()
+    {
+        var testObj = new TestEntity { Id = Guid.NewGuid(), Total = 100m };
+        var readOnlyProp = new PropertyMetadata(
+            ClrName: nameof(TestEntity.Total),
+            ClrType: typeof(decimal),
+            ColumnName: "total",
+            DatabaseType: "numeric(18,2)",
+            IsKey: false,
+            IsNullable: false,
+            IsAuditColumn: false,
+            IsSoftDeleteColumn: false,
+            IsTenantColumn: false,
+            IsConcurrencyToken: false,
+            Getter: o => ((TestEntity)o).Total,
+            Setter: null);
+
+        readOnlyProp.GetValue<TestEntity, decimal>(testObj).Should().Be(100m);
+        // Setter is null, SetValue should be a safe no-op
+        readOnlyProp.SetValue(testObj, 200m);
+        testObj.Total.Should().Be(100m);
+
+        var nullGetterProp = new PropertyMetadata(
+            ClrName: "NullProp",
+            ClrType: typeof(string),
+            ColumnName: "null_prop",
+            DatabaseType: "text",
+            IsKey: false,
+            IsNullable: true,
+            IsAuditColumn: false,
+            IsSoftDeleteColumn: false,
+            IsTenantColumn: false,
+            IsConcurrencyToken: false,
+            Getter: _ => null,
+            Setter: (o, v) => ((TestEntity)o).Total = 0m);
+
+        nullGetterProp.GetValue<TestEntity, string>(testObj).Should().BeNull();
+        nullGetterProp.SetValue(testObj, "new_val");
+        testObj.Total.Should().Be(0m);
+    }
+
     private sealed class TestEntity
     {
         public Guid Id { get; set; }
