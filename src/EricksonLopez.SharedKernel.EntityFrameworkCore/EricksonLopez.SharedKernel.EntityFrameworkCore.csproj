@@ -25,6 +25,7 @@
   <ItemGroup>
     <PackageReference Include="EricksonLopez.DomainPrimitives.Abstractions" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="10.0.12" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>
 
