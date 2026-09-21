@@ -3,6 +3,8 @@ using System;
 using System.Reflection;
 using AwesomeAssertions;
 using Dapper;
+using EricksonLopez.DomainPrimitives;
+using EricksonLopez.DomainPrimitives.Validation;
 using EricksonLopez.SharedKernel.Dapper;
 using EricksonLopez.SharedKernel.Dapper.Tests.Fakes;
 using Xunit;
@@ -211,26 +213,77 @@ public class ConventionStrongIdDapperTests
         result.Value.Should().Be("class-strong-id-test");
     }
 
-    public abstract class AbstractTestId { public Guid Value { get; set; } }
-    public interface ITestInterfaceId { Guid Value { get; } }
-    public struct GenericStructId<T> { public T Value { get; set; } }
+    public readonly record struct LocalConventionId(Guid Value) : IStrongId<LocalConventionId, Guid>
+    {
+        public static string PrimitiveName => nameof(LocalConventionId);
+        public bool IsDefault => Value == Guid.Empty;
+        public static LocalConventionId Empty => new(Guid.Empty);
+        public static LocalConventionId Create() => new(Guid.NewGuid());
+        public static LocalConventionId Create(Guid value) => new(value);
+        public static bool TryCreate(Guid value, out LocalConventionId result, out PrimitiveError validationError) { result = new(value); validationError = default; return true; }
+    }
+
+    public abstract class AbstractConventionId : IStrongId<AbstractConventionId, Guid>
+    {
+        public static string PrimitiveName => nameof(AbstractConventionId);
+        public bool IsDefault => false;
+        public static AbstractConventionId Empty => throw new NotImplementedException();
+        public static AbstractConventionId Create() => throw new NotImplementedException();
+        public Guid Value => Guid.Empty;
+        public static AbstractConventionId Create(Guid value) => throw new NotImplementedException();
+        public static bool TryCreate(Guid value, out AbstractConventionId result, out PrimitiveError validationError) => throw new NotImplementedException();
+    }
+
+    public interface IInterfaceConventionId : IStrongId<LocalConventionId, Guid> { }
+
+    public readonly record struct ConventionTestLocalId(Guid Value);
+    public readonly record struct ConventionFilteredOutId(Guid Value);
     public readonly record struct NonMatchingStructKey(int Value);
+    public struct StructEndingWithIdNoValue { public int NotValue { get; set; } }
+    public struct StructEndingWithIdNoCtor
+    {
+        public int Value { get; set; }
+        private StructEndingWithIdNoCtor(int v) { Value = v; }
+    }
 
     [Fact]
     public void RegisterFromAssembly_CorrectlyFiltersAbstractInterfacesAndNamingConventions()
     {
         var assembly = typeof(ConventionStrongIdDapperTests).Assembly;
 
+        // Abstract and interface types implementing IStrongId must be filtered out
+        DapperStrongIdRegistry.RegisterByConvention(assembly, t => t == typeof(AbstractConventionId) || t == typeof(IInterfaceConventionId));
+        SqlMapper.LookupDbType(typeof(AbstractConventionId), "col", false, out var absHandler);
+        absHandler.Should().BeNull();
+        SqlMapper.LookupDbType(typeof(IInterfaceConventionId), "col", false, out var ifaceHandler);
+        ifaceHandler.Should().BeNull();
+
+        // LocalConventionId implements IStrongId<LocalConventionId, Guid> -> Strategy 1 registers StrongIdTypeHandler
+        DapperStrongIdRegistry.RegisterByConvention(assembly, t => t == typeof(LocalConventionId));
+        SqlMapper.LookupDbType(typeof(LocalConventionId), "col", false, out var localHandler);
+        localHandler.Should().NotBeNull();
+        localHandler.Should().BeOfType<StrongIdTypeHandler<LocalConventionId, Guid>>();
+
+        // Filter must exclude non-matching types
+        SqlMapper.LookupDbType(typeof(ConventionFilteredOutId), "col", false, out var filteredOut);
+        filteredOut.Should().BeNull();
+
+        // When filter is null, struct without "Id" suffix must NOT be registered
+        DapperStrongIdRegistry.RegisterByConvention(assembly);
+        SqlMapper.LookupDbType(typeof(NonMatchingStructKey), "col", false, out var noIdHandler);
+        noIdHandler.Should().BeNull();
+
+        // Struct ending with "Id" but without Value property must NOT be registered
+        SqlMapper.LookupDbType(typeof(StructEndingWithIdNoValue), "col", false, out var noValHandler);
+        noValHandler.Should().BeNull();
+
+        // Struct ending with "Id" but without matching constructor must NOT be registered
+        SqlMapper.LookupDbType(typeof(StructEndingWithIdNoCtor), "col", false, out var noCtorHandler);
+        noCtorHandler.Should().BeNull();
+
         // Register with filter selecting NonMatchingStructKey
         DapperStrongIdRegistry.RegisterByConvention(assembly, t => t == typeof(NonMatchingStructKey));
         SqlMapper.LookupDbType(typeof(NonMatchingStructKey), "col", false, out var customHandler);
         customHandler.Should().NotBeNull();
-
-        // Abstract and interface should NEVER be registered even if filter allows them
-        DapperStrongIdRegistry.RegisterByConvention(assembly, t => t == typeof(AbstractTestId) || t == typeof(ITestInterfaceId));
-        SqlMapper.LookupDbType(typeof(AbstractTestId), "col", false, out var absHandler);
-        absHandler.Should().BeNull();
-        SqlMapper.LookupDbType(typeof(ITestInterfaceId), "col", false, out var ifaceHandler);
-        ifaceHandler.Should().BeNull();
     }
 }

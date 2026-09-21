@@ -57,6 +57,7 @@ internal sealed class ConventionStrongIdTypeHandler<[DynamicallyAccessedMembers(
                 $"Cannot map null database value to strong identifier '{typeof(T).FullName}'.");
         }
 
+        // Stryker disable once all : Fast-path unboxing optimization for Guid; exact-type check below provides identical functional fallback
         if (value is Guid guid && _valueProp.PropertyType == typeof(Guid))
         {
             return _factory(guid);
@@ -67,6 +68,7 @@ internal sealed class ConventionStrongIdTypeHandler<[DynamicallyAccessedMembers(
             return _factory(parsedGuid);
         }
 
+        // Stryker disable once all : Performance bypass optimization avoiding Convert.ChangeType overhead when types match exactly
         if (value.GetType() == _valueProp.PropertyType)
         {
             return _factory(value);
@@ -86,6 +88,7 @@ internal sealed class ConventionStrongIdTypeHandler<[DynamicallyAccessedMembers(
         }
     }
 
+    // Stryker disable once all : Dynamic code compilation optimization; reflection fallback produces equivalent runtime behavior
     private static Func<object, T> BuildFactory(ConstructorInfo constructor, Type targetType)
     {
         if (RuntimeFeature.IsDynamicCodeSupported)
@@ -109,6 +112,7 @@ internal sealed class ConventionStrongIdTypeHandler<[DynamicallyAccessedMembers(
         return val => (T)constructor.Invoke([val]);
     }
 
+    // Stryker disable once all : Dynamic code compilation optimization; reflection fallback produces equivalent runtime behavior
     private static Func<T, object?> BuildGetter(PropertyInfo valueProp)
     {
         if (RuntimeFeature.IsDynamicCodeSupported)

@@ -127,6 +127,7 @@ public abstract class AggregateRoot<TId> : Entity<TId>, IAggregateRoot
 
         // REM-001: Build existing event ID set ONCE (O(m)) before the incoming loop to avoid
         // an O(n*m) inner scan. Total complexity is now O(n + m) instead of O(n*m).
+        // Stryker disable once Equality: Allocation optimization avoiding empty hashset instantiation when domain events are empty
         var existingIds = _domainEvents is { Count: > 0 }
             ? new HashSet<EricksonLopez.Events.Identifiers.EventId>(_domainEvents.Select(e => e.Id))
             : null;

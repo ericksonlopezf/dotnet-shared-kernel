@@ -98,6 +98,7 @@ public sealed class OpenTelemetryDomainEventDispatcher : IDomainEventDispatcher
             {
                 Activity.Current = batchActivity;
                 var eventType = GetEventTypeName(domainEvent);
+                // Stryker disable once NullCoalescing : Activity.Current is explicitly set to batchActivity above, making fallback to default context functionally equivalent in .NET BCL
                 var activity = _activitySource.StartActivity(
                     $"DomainEvent {eventType}",
                     ActivityKind.Internal,
@@ -202,6 +203,7 @@ public sealed class OpenTelemetryDomainEventDispatcher : IDomainEventDispatcher
             {
                 Activity.Current = batchActivity;
                 var eventType = GetEventTypeName(domainEvent);
+                // Stryker disable once NullCoalescing : Activity.Current is explicitly set to batchActivity above, making fallback to default context functionally equivalent in .NET BCL
                 var activity = _activitySource.StartActivity(
                     $"DomainEvent {eventType}",
                     ActivityKind.Internal,

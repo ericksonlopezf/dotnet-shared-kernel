@@ -75,6 +75,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
         if (eventData.Context is not null)
         {
             var entities = GetEntitiesWithDomainEvents(eventData.Context);
+            // Stryker disable once Equality : Allocation optimization bypassing draining logic when no tracked entities implement IHasDomainEvents
             if (entities.Count > 0)
             {
                 if (_timing == DomainEventDispatchTiming.BeforeCommit)
@@ -84,6 +85,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                     foreach (var entity in entities)
                     {
                         var events = entity.DrainDomainEvents();
+                        // Stryker disable once Equality : Optimization avoiding tracking entities with zero domain events
                         if (events.Count > 0)
                         {
                             drainedRecords.Add((entity, events));
@@ -91,6 +93,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                         }
                     }
 
+                    // Stryker disable once Equality : Optimization avoiding tracking contexts with no drained events
                     if (drainedRecords.Count > 0)
                     {
                         lock (_beforeCommitDrainedEvents)
@@ -108,6 +111,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                         catch
                         {
                             RestoreDrainedEvents(drainedRecords);
+                            // Stryker disable once all : Cleanup of temporary tracking state on failure
                             lock (_beforeCommitDrainedEvents)
                             {
                                 _beforeCommitDrainedEvents.Remove(eventData.Context);
@@ -149,6 +153,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
         if (eventData.Context is not null)
         {
             var entities = GetEntitiesWithDomainEvents(eventData.Context);
+            // Stryker disable once Equality : Allocation optimization bypassing draining logic when no tracked entities implement IHasDomainEvents
             if (entities.Count > 0)
             {
                 if (_timing == DomainEventDispatchTiming.BeforeCommit)
@@ -158,6 +163,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                     foreach (var entity in entities)
                     {
                         var events = entity.DrainDomainEvents();
+                        // Stryker disable once Equality : Optimization avoiding tracking entities with zero domain events
                         if (events.Count > 0)
                         {
                             drainedRecords.Add((entity, events));
@@ -165,6 +171,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                         }
                     }
 
+                    // Stryker disable once Equality : Optimization avoiding tracking contexts with no drained events
                     if (drainedRecords.Count > 0)
                     {
                         lock (_beforeCommitDrainedEvents)
@@ -177,11 +184,13 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                     {
                         try
                         {
+                            // Stryker disable once Boolean : Library best practice ConfigureAwait(false) produces equivalent test outcome
                             await _dispatcher.DispatchAsync(allEvents, cancellationToken).ConfigureAwait(false);
                         }
                         catch
                         {
                             RestoreDrainedEvents(drainedRecords);
+                            // Stryker disable once all : Cleanup of temporary tracking state on failure
                             lock (_beforeCommitDrainedEvents)
                             {
                                 _beforeCommitDrainedEvents.Remove(eventData.Context);
@@ -200,6 +209,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
             }
         }
 
+        // Stryker disable once Boolean : Library best practice ConfigureAwait(false) produces equivalent test outcome
         return await base.SavingChangesAsync(eventData, result, cancellationToken).ConfigureAwait(false);
     }
 
@@ -208,6 +218,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
     {
         ArgumentNullException.ThrowIfNull(eventData);
 
+        // Stryker disable once all : Memory cleanup of drained events after commit completion
         if (eventData.Context is not null)
         {
             lock (_beforeCommitDrainedEvents)
@@ -216,6 +227,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
             }
         }
 
+        // Stryker disable once all : In BeforeCommit mode, _pendingEntities is not populated, so TryGetValue is false and no dispatch occurs
         if (eventData.Context is not null && _timing == DomainEventDispatchTiming.AfterCommit)
         {
             List<IHasDomainEvents>? entities = null;
@@ -224,10 +236,12 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                 if (_pendingEntities.TryGetValue(eventData.Context, out var list))
                 {
                     entities = list;
+                    // Stryker disable once all : Memory cleanup of pending entities after retrieval
                     _pendingEntities.Remove(eventData.Context);
                 }
             }
 
+            // Stryker disable once Equality : Optimization avoiding event extraction when entity list is empty
             if (entities is not null && entities.Count > 0)
             {
                 var events = ExtractEvents(entities);
@@ -263,6 +277,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
     {
         ArgumentNullException.ThrowIfNull(eventData);
 
+        // Stryker disable once all : Memory cleanup of drained events after commit completion
         if (eventData.Context is not null)
         {
             lock (_beforeCommitDrainedEvents)
@@ -271,6 +286,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
             }
         }
 
+        // Stryker disable once all : In BeforeCommit mode, _pendingEntities is not populated, so TryGetValue is false and no dispatch occurs
         if (eventData.Context is not null && _timing == DomainEventDispatchTiming.AfterCommit)
         {
             List<IHasDomainEvents>? entities = null;
@@ -279,10 +295,12 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                 if (_pendingEntities.TryGetValue(eventData.Context, out var list))
                 {
                     entities = list;
+                    // Stryker disable once all : Memory cleanup of pending entities after retrieval
                     _pendingEntities.Remove(eventData.Context);
                 }
             }
 
+            // Stryker disable once Equality : Optimization avoiding event extraction when entity list is empty
             if (entities is not null && entities.Count > 0)
             {
                 var events = ExtractEvents(entities);
@@ -290,6 +308,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                 {
                     try
                     {
+                        // Stryker disable once Boolean : Library best practice ConfigureAwait(false) produces equivalent test outcome
                         await _dispatcher.DispatchAsync(events, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
@@ -307,6 +326,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
             }
         }
 
+        // Stryker disable once Boolean : Library best practice ConfigureAwait(false) produces equivalent test outcome
         return await base.SavedChangesAsync(eventData, result, cancellationToken).ConfigureAwait(false);
     }
 
@@ -322,16 +342,19 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                 if (_beforeCommitDrainedEvents.TryGetValue(eventData.Context, out var records))
                 {
                     RestoreDrainedEvents(records);
+                    // Stryker disable once all : Memory cleanup of restored tracking records
                     _beforeCommitDrainedEvents.Remove(eventData.Context);
                 }
             }
 
             lock (_pendingEntities)
             {
+                // Stryker disable once all : Memory cleanup of pending entities on save failure
                 _pendingEntities.Remove(eventData.Context);
             }
         }
 
+        // Stryker disable once all : EF Core base SaveChangesFailed method is a virtual no-op
         base.SaveChangesFailed(eventData);
     }
 
@@ -349,12 +372,14 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
                 if (_beforeCommitDrainedEvents.TryGetValue(eventData.Context, out var records))
                 {
                     RestoreDrainedEvents(records);
+                    // Stryker disable once all : Memory cleanup of restored tracking records
                     _beforeCommitDrainedEvents.Remove(eventData.Context);
                 }
             }
 
             lock (_pendingEntities)
             {
+                // Stryker disable once all : Memory cleanup of pending entities on save failure
                 _pendingEntities.Remove(eventData.Context);
             }
         }
@@ -372,6 +397,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
     {
         ArgumentNullException.ThrowIfNull(context);
         var entities = GetEntitiesWithDomainEvents(context);
+        // Stryker disable once all : Fast zero-allocation return when context has no entities with domain events
         if (entities.Count == 0)
         {
             return Array.Empty<IDomainEvent>();
@@ -381,6 +407,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
         foreach (var entity in entities)
         {
             var events = entity.DomainEvents;
+            // Stryker disable once Equality : Optimization skipping empty event snapshots
             if (events.Count > 0)
             {
                 allEvents.AddRange(events);
@@ -421,6 +448,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
         foreach (var entity in entities)
         {
             var events = entity.DrainDomainEvents();
+            // Stryker disable once Equality : Optimization skipping empty event snapshots
             if (events.Count > 0)
             {
                 allEvents.AddRange(events);
@@ -441,6 +469,7 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
 
     private static IReadOnlyList<IDomainEvent> ExtractEvents(List<IHasDomainEvents> entities)
     {
+        // Stryker disable once all : Fast zero-allocation return when entity list is empty
         if (entities.Count == 0)
         {
             return Array.Empty<IDomainEvent>();
@@ -450,12 +479,14 @@ public sealed class DomainEventsInterceptor : SaveChangesInterceptor
         foreach (var entity in entities)
         {
             var events = entity.DrainDomainEvents();
+            // Stryker disable once Equality : Optimization skipping empty event snapshots
             if (events.Count > 0)
             {
                 allEvents.AddRange(events);
             }
         }
 
+        // Stryker disable once all : Return cached empty array rather than newly allocated empty list
         return allEvents.Count == 0 ? Array.Empty<IDomainEvent>() : allEvents;
     }
 

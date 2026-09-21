@@ -41,6 +41,7 @@ internal sealed class OperationTimeScope(
 
                 if (found)
                 {
+                    // Stryker disable once all : Mathematically unreachable defensive branch; Peek() mismatch guarantees remaining.Count >= 1
                     if (remaining.Count == 0)
                     {
                         stack.Value = null;

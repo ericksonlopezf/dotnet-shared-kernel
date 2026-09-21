@@ -383,6 +383,61 @@ public class StrongIdJsonConverterTests
     }
 
     [Fact]
+    public void Factory_CreateConverter_WhenCacheNotFull_AddsToCache()
+    {
+        var factory = new StrongIdJsonConverterFactory();
+        var cacheField = typeof(StrongIdJsonConverterFactory).GetField("_converterCache", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!;
+        var cache = (System.Collections.Concurrent.ConcurrentDictionary<Type, JsonConverter>)cacheField.GetValue(null)!;
+        cache.Clear();
+
+        cache.ContainsKey(typeof(OrderId)).Should().BeFalse();
+        var converter = factory.CreateConverter(typeof(OrderId), _options);
+        converter.Should().NotBeNull();
+        cache.ContainsKey(typeof(OrderId)).Should().BeTrue();
+        cache[typeof(OrderId)].Should().BeSameAs(converter);
+
+        cache.Clear();
+    }
+
+    [Fact]
+    public void Factory_CreateConverter_WhenCacheAtCapacity_AndTypeAlreadyInCache_ReturnsCachedInstance()
+    {
+        var factory = new StrongIdJsonConverterFactory();
+        var cacheField = typeof(StrongIdJsonConverterFactory).GetField("_converterCache", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!;
+        var cache = (System.Collections.Concurrent.ConcurrentDictionary<Type, JsonConverter>)cacheField.GetValue(null)!;
+        cache.Clear();
+
+        var cachedConverter = factory.CreateConverter(typeof(OrderId), _options);
+        cache.ContainsKey(typeof(OrderId)).Should().BeTrue();
+
+        var dummyConverter = new StrongIdJsonConverter<OrderId, Guid>();
+        Type[] seedTypes =
+        [
+            typeof(int), typeof(long), typeof(short), typeof(byte), typeof(sbyte), typeof(uint), typeof(ulong), typeof(ushort),
+            typeof(float), typeof(double), typeof(decimal), typeof(bool), typeof(char), typeof(string), typeof(DateTime), typeof(DateTimeOffset),
+            typeof(TimeSpan), typeof(Guid), typeof(DayOfWeek), typeof(TypeCode), typeof(Uri), typeof(Version), typeof(System.Threading.CancellationToken), typeof(MemoryStream),
+            typeof(Exception), typeof(Attribute), typeof(EventArgs), typeof(StringBuilder), typeof(ConsoleColor), typeof(PlatformID), typeof(MidpointRounding), typeof(GCCollectionMode)
+        ];
+
+        for (var i = 0; i < 32; i++)
+        {
+            for (var j = 0; j < 32; j++)
+            {
+                if (cache.Count >= 1024) break;
+                var uniqueType = typeof(Tuple<,>).MakeGenericType(seedTypes[i], seedTypes[j]);
+                cache.TryAdd(uniqueType, dummyConverter);
+            }
+        }
+
+        cache.Count.Should().Be(1024);
+
+        var second = factory.CreateConverter(typeof(OrderId), _options);
+        second.Should().BeSameAs(cachedConverter);
+
+        cache.Clear();
+    }
+
+    [Fact]
     public void Factory_CreateConverter_NullArguments_ThrowsArgumentNullException()
     {
         var factory = new StrongIdJsonConverterFactory();

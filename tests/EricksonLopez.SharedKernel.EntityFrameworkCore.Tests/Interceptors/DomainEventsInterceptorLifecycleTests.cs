@@ -615,6 +615,48 @@ public class DomainEventsInterceptorLifecycleTests
         customer.PendingDomainEventsCount.Should().Be(1);
     }
 
+    [Fact]
+    public void SavingChanges_WhenTrackedEntitiesHaveNoEvents_DoesNotDispatch()
+    {
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+        var options = CreateInMemoryOptions();
+
+        using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "No Events User");
+        customer.ClearDomainEvents();
+        context.Customers.Add(customer);
+
+        var savingEventData = (DbContextEventData)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(DbContextEventData));
+        var contextField = typeof(DbContextEventData).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).First(f => typeof(DbContext).IsAssignableFrom(f.FieldType));
+        contextField.SetValue(savingEventData, context);
+
+        interceptor.SavingChanges(savingEventData, new Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult<int>());
+
+        dispatcher.DidNotReceiveWithAnyArgs().Dispatch(Arg.Any<IReadOnlyList<IDomainEvent>>());
+    }
+
+    [Fact]
+    public async Task SavingChangesAsync_WhenTrackedEntitiesHaveNoEvents_DoesNotDispatchAsync()
+    {
+        var dispatcher = Substitute.For<IDomainEventDispatcher>();
+        var interceptor = new DomainEventsInterceptor(dispatcher, DomainEventDispatchTiming.BeforeCommit);
+        var options = CreateInMemoryOptions();
+
+        await using var context = new TestSharedKernelDbContext(options, interceptor);
+        var customer = new CustomerAggregate(CustomerId.New(), "No Events Async User");
+        customer.ClearDomainEvents();
+        context.Customers.Add(customer);
+
+        var savingEventData = (DbContextEventData)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(DbContextEventData));
+        var contextField = typeof(DbContextEventData).GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).First(f => typeof(DbContext).IsAssignableFrom(f.FieldType));
+        contextField.SetValue(savingEventData, context);
+
+        await interceptor.SavingChangesAsync(savingEventData, new Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult<int>());
+
+        await dispatcher.DidNotReceiveWithAnyArgs().DispatchAsync(Arg.Any<IReadOnlyList<IDomainEvent>>(), Arg.Any<CancellationToken>());
+    }
+
     #endregion
 }
 

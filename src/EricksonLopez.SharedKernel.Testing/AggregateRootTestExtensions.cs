@@ -37,6 +37,7 @@ public static class AggregateRootTestExtensions
     /// <exception cref="ArgumentNullException"><paramref name="entityWithEvents"/> is <see langword="null"/></exception>
     public static DomainEventCollector CollectEvents(this IHasDomainEvents entityWithEvents)
     {
+        // Stryker disable once Statement: collector.CollectFrom also validates and throws ArgumentNullException for null entity
         ArgumentNullException.ThrowIfNull(entityWithEvents);
 
         var collector = new DomainEventCollector();

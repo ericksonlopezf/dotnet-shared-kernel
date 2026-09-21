@@ -412,8 +412,14 @@ public class AggregateRootTests
     public void RequeueDomainEvents_WhenEmptyList_ReturnsImmediatelyWithoutModifyingBuffer()
     {
         var aggregate = new TestAggregateRoot(Guid.NewGuid());
+        aggregate.DoSomething();
+        var snapshot1 = aggregate.DomainEvents;
+
         aggregate.RequeueDomainEvents(Array.Empty<IDomainEvent>());
-        aggregate.PendingDomainEventsCount.Should().Be(0);
+
+        aggregate.PendingDomainEventsCount.Should().Be(1);
+        var snapshot2 = aggregate.DomainEvents;
+        snapshot2.Should().BeSameAs(snapshot1);
     }
 
     private sealed class TestDefaultDispatcher : IDomainEventDispatcher

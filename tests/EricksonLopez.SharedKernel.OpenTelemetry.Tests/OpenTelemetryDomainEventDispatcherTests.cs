@@ -430,6 +430,10 @@ public class OpenTelemetryDomainEventDispatcherTests
         var sut = new OpenTelemetryDomainEventDispatcher(inner, customActivitySource, customMeter);
         sut.Should().NotBeNull();
 
+        var actSourceField = typeof(OpenTelemetryDomainEventDispatcher).GetField("_activitySource", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        var source = (ActivitySource?)actSourceField?.GetValue(sut);
+        source.Should().BeSameAs(customActivitySource);
+
         var counterField = typeof(OpenTelemetryDomainEventDispatcher).GetField("_dispatchedEventsCounter", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         var counter = (System.Diagnostics.Metrics.Counter<long>?)counterField?.GetValue(sut);
         counter.Should().NotBeNull();
