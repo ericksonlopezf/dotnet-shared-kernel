@@ -15,7 +15,7 @@
     <PackageId>EricksonLopez.SharedKernel.EntityFrameworkCore</PackageId>
     <Description>Entity Framework Core integration for EricksonLopez.SharedKernel. Provides NativeAOT-ready StrongId value converters, DomainEventsInterceptor for automatic event draining on SaveChanges, and ModelBuilder conventions.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>$(CommonPackageTags);efcore;entity-framework-core;domain-events;interceptor;value-converter;strongly-typed-id;orm</PackageTags>
+    <PackageTags>$(CommonPackageTags);efcore;entity-framework-core;domain-events;interceptor;value-converter;strongly-typed-id;native-aot</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EricksonLopez.DomainPrimitives.Abstractions" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>

@@ -3,6 +3,9 @@
 ## Status
 Superseded — Implementation changed; see Consequences below.
 
+## Date
+2026-09-04
+
 ## Context
 In `Entity<TId>`, the `Id` property is defined as:
 ```csharp

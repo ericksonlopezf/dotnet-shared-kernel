@@ -97,7 +97,7 @@ public sealed class AggregateTestBuilder
         {
             var aggregate = aggregates[i];
             var aggregateEvents = eventsByAggregate[aggregate.Id];
-            
+
             aggregateEvents.Should().HaveCount(_eventsPerAggregate);
             aggregateEvents[0].Should().BeOfType<CustomerRegisteredEvent>();
 

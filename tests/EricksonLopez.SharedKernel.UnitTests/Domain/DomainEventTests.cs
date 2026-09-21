@@ -12,6 +12,8 @@ using FsCheck;
 using FsCheck.Xunit;
 using Xunit;
 
+#pragma warning disable CS0618 // Tested for backward compatibility
+
 namespace EricksonLopez.SharedKernel.UnitTests.Domain;
 
 public class DomainEventTests
@@ -124,7 +126,7 @@ public class DomainEventTests
     {
         var eventId = EventId.New();
         var boundaryTime = DateTimeOffset.MinValue.AddTicks(1);
-        
+
         var @event = new RehydratedUserEvent(eventId, boundaryTime, TestValues.Strings.UserName);
 
         @event.OccurredAt.Should().Be(boundaryTime);
@@ -289,6 +291,60 @@ public class DomainEventTests
                 @event.OccurredOn == date &&
                 @event.OccurredAt == date &&
                 @event.UserName == name.Get).ToProperty();
+    }
+
+    #endregion
+
+    #region Equality Comparer & Validation Tests
+
+    [Fact]
+    public void Constructor_WithNonUtcTimestamp_ThrowsArgumentException_WithExactMessage()
+    {
+        var nonUtc = new DateTimeOffset(2026, 1, 1, 12, 0, 0, TimeSpan.FromHours(5));
+        var act = () => new RehydratedUserEvent(EventId.New(), nonUtc, "Alice");
+
+        act.Should().Throw<ArgumentException>()
+            .WithParameterName("occurredAt")
+            .WithMessage("Domain event timestamp must be UTC (Offset must be zero). Received offset: 05:00:00. (Parameter 'occurredAt')");
+    }
+
+    [Fact]
+    public void DomainEventIdentityEqualityComparer_InstanceAndEqualityCases_ExecuteCorrectly()
+    {
+        var comparer = DomainEventIdentityEqualityComparer.Instance;
+        var id = EventId.New();
+        var evt1 = new RehydratedUserEvent(id, DateTimeOffset.UtcNow, "Alice");
+        var evt2 = new RehydratedUserEvent(id, DateTimeOffset.UtcNow, "Bob");
+        var evt3 = new RehydratedUserEvent(EventId.New(), DateTimeOffset.UtcNow, "Charlie");
+
+        // Reference equals
+        comparer.Equals(evt1, evt1).Should().BeTrue();
+        comparer.Equals((DomainEvent)evt1, (DomainEvent)evt1).Should().BeTrue();
+        comparer.Equals((IDomainEvent?)null, (IDomainEvent?)null).Should().BeTrue();
+        comparer.Equals((DomainEvent?)null, (DomainEvent?)null).Should().BeTrue();
+
+#pragma warning disable CS8600, CS8604, CS8625
+        // Null comparisons
+        comparer.Equals(evt1, (IDomainEvent?)null).Should().BeFalse();
+        comparer.Equals((IDomainEvent?)null, evt1).Should().BeFalse();
+        comparer.Equals((DomainEvent)evt1, (DomainEvent?)null).Should().BeFalse();
+        comparer.Equals((DomainEvent?)null, (DomainEvent)evt1).Should().BeFalse();
+
+        // Same ID vs different ID
+        comparer.Equals(evt1, evt2).Should().BeTrue();
+        comparer.Equals(evt1, evt3).Should().BeFalse();
+
+        // Hash code
+        comparer.GetHashCode(evt1).Should().Be(id.GetHashCode());
+        comparer.GetHashCode((DomainEvent)evt1).Should().Be(id.GetHashCode());
+
+        // Null GetHashCode throws ArgumentNullException
+        var actNull = () => comparer.GetHashCode((IDomainEvent)null!);
+        actNull.Should().Throw<ArgumentNullException>().WithParameterName("obj");
+
+        var actNullDomain = () => comparer.GetHashCode((DomainEvent)null!);
+        actNullDomain.Should().Throw<ArgumentNullException>().WithParameterName("obj");
+#pragma warning restore CS8600, CS8604, CS8625
     }
 
     #endregion

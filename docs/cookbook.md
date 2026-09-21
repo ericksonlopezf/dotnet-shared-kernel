@@ -33,16 +33,12 @@ public sealed class Order : AggregateRoot<OrderId>
 
 **Problem:** Model conceptual wholes defined by attributes rather than an identity, supporting structural equality and immutability.
 
-**Solution:** Inherit from `ValueObject` and optionally decorate with `[ValueObject]`.
+**Solution:** In accordance with ADR-003 and ADR-017, use standard C# `record` or `readonly record struct` types:
 
 ```csharp
-using EricksonLopez.SharedKernel;
+public sealed record Address(string Street, string City, string PostalCode);
 
-[ValueObject]
-public sealed record Address(string Street, string City, string PostalCode) : ValueObject;
-
-[ValueObject]
-public sealed record Money(decimal Amount, string Currency) : ValueObject;
+public readonly record struct Money(decimal Amount, string Currency);
 
 // Usage:
 var price = new Money(100m, "USD");

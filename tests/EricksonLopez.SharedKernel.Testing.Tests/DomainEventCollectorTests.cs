@@ -52,6 +52,17 @@ public sealed class DomainEventCollectorTests
     }
 
     [Fact]
+    public void CollectEvents_WithNullEntityWithEvents_ThrowsArgumentNullException()
+    {
+        IHasDomainEvents nullEntity = null!;
+
+        var act = () => nullEntity.CollectEvents();
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("entityWithEvents");
+    }
+
+    [Fact]
     public void CollectEvents_ExtensionMethod_PopulatesCollectorAndDrainsEvents()
     {
         var orderId = Guid.NewGuid();
@@ -80,6 +91,17 @@ public sealed class DomainEventCollectorTests
 
         act.Should().Throw<ArgumentNullException>()
             .WithParameterName("aggregate");
+    }
+
+    [Fact]
+    public void CollectFrom_WithNullEntityWithEvents_ThrowsArgumentNullException()
+    {
+        var collector = new DomainEventCollector();
+
+        var act = () => collector.CollectFrom((IHasDomainEvents)null!);
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("entityWithEvents");
     }
 
     [Fact]
@@ -209,6 +231,80 @@ public sealed class DomainEventCollectorTests
             .All(x => x);
 
         return (countMatches && orderMatches).ToProperty();
+    }
+
+    #endregion
+
+    #region Forensic Audit Remediations (FND-SK-006 & FND-SK-009)
+
+    private sealed class CustomHasDomainEvents : IHasDomainEvents
+    {
+        private readonly List<IDomainEvent> _events = [];
+
+        public IReadOnlyList<IDomainEvent> DomainEvents => _events;
+
+        public void Add(IDomainEvent evt) => _events.Add(evt);
+
+        public IReadOnlyList<IDomainEvent> DrainDomainEvents()
+        {
+            var copy = _events.ToArray();
+            _events.Clear();
+            return copy;
+        }
+
+        public void RequeueDomainEvents(IEnumerable<IDomainEvent> events)
+        {
+            _events.InsertRange(0, events);
+        }
+    }
+
+    [Fact]
+    public void CollectedEvents_ReturnsImmutableSnapshot_UnaffectedBySubsequentOperations()
+    {
+        var order = new OrderAggregate(Guid.NewGuid());
+        order.Create(100m);
+
+        var collector = new DomainEventCollector();
+        collector.CollectFrom(order);
+
+        // Act: capture snapshot
+        var snapshot = collector.CollectedEvents;
+        snapshot.Should().HaveCount(1);
+
+        // Reset collector and drain new events
+        collector.Reset();
+        order.Create(200m);
+        collector.CollectFrom(order);
+
+        // Assert: snapshot did not change
+        snapshot.Should().HaveCount(1, because: "CollectedEvents must return an independent immutable snapshot array per FND-SK-006.");
+        collector.CollectedEvents.Should().HaveCount(1);
+        collector.CollectedEvents[0].Should().NotBeSameAs(snapshot[0]);
+    }
+
+    [Fact]
+    public void CollectFrom_SupportsAnyIHasDomainEvents()
+    {
+        var custom = new CustomHasDomainEvents();
+        custom.Add(new OrderCreatedEvent(Guid.NewGuid(), 500m));
+
+        var collector = new DomainEventCollector();
+        collector.CollectFrom((IHasDomainEvents)custom);
+
+        collector.CollectedEvents.Should().HaveCount(1);
+        custom.DomainEvents.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void CollectEvents_ExtensionMethod_SupportsAnyIHasDomainEvents()
+    {
+        var custom = new CustomHasDomainEvents();
+        custom.Add(new OrderCreatedEvent(Guid.NewGuid(), 750m));
+
+        var collector = ((IHasDomainEvents)custom).CollectEvents();
+
+        collector.CollectedEvents.Should().HaveCount(1);
+        custom.DomainEvents.Should().BeEmpty();
     }
 
     #endregion

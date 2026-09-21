@@ -1,22 +1,34 @@
-# Level 06 — Dapper High-Throughput Batch Persistence
+# Level 06 — Dapper Strongly-Typed ID Persistence
 
-In Level 06, we execute zero-allocation bulk queries and PostgreSQL `UNNEST` batch persistence using `EricksonLopez.SharedKernel.Dapper`.
+In Level 06, we integrate zero-allocation strongly-typed identifiers and BCL date/time types with Dapper using `EricksonLopez.SharedKernel.Dapper`.
 
 ---
 
-## 1. Batch Inserts with PostgreSQL `UNNEST`
+## 1. Registering Dapper Type Handlers
 
 ```csharp
 using Dapper;
 using System.Data;
 using EricksonLopez.SharedKernel.Dapper;
 
-public async Task BatchInsertOrdersAsync(IDbConnection db, IEnumerable<Order> orders)
+// Register all StrongId and BCL date/time handlers
+DapperStrongIdRegistry.RegisterStrongIdsFromAssembly(typeof(OrderId).Assembly);
+DapperBclTypeHandlerRegistry.RegisterBclTypeHandlers();
+```
+
+---
+
+## 2. Type-Safe Parameterization and Querying
+
+```csharp
+public async Task<Order?> GetOrderByIdAsync(IDbConnection db, OrderId orderId)
 {
     const string sql = @"
-        INSERT INTO orders (id, customer_id, total_amount)
-        SELECT * FROM UNNEST(@Ids, @CustomerIds, @Totals);";
+        SELECT id, customer_id, total_amount, created_at
+        FROM orders
+        WHERE id = @OrderId;";
 
-    await db.ExecuteAsync(sql, orders.ToUnnestParameters());
+    // Strongly-typed IDs are mapped seamlessly by Dapper without boxing or reflection overhead
+    return await db.QuerySingleOrDefaultAsync<Order>(sql, new { OrderId = orderId });
 }
 ```

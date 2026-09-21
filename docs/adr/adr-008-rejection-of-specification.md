@@ -3,6 +3,9 @@
 ## Status
 Accepted
 
+## Date
+2026-09-04
+
 ## Context
 The `Specification<T>` pattern typically utilizes `Expression<Func<T, bool>>` to allow compiling expressions for in-memory evaluation and translation to SQL by ORMs.
 

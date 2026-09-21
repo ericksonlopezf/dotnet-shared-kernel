@@ -16,6 +16,28 @@ public sealed class StrongIdTypeHandler<TSelf, TValue>
     where TSelf : notnull, IStrongId<TSelf, TValue>
     where TValue : notnull, IEquatable<TValue>
 {
+    private static readonly DbType? _inferredDbType = InferDbType();
+
+    private static DbType? InferDbType()
+    {
+        var type = typeof(TValue);
+        if (type == typeof(Guid)) return DbType.Guid;
+        if (type == typeof(string)) return DbType.String;
+        if (type == typeof(int)) return DbType.Int32;
+        if (type == typeof(long)) return DbType.Int64;
+        if (type == typeof(short)) return DbType.Int16;
+        if (type == typeof(byte)) return DbType.Byte;
+        if (type == typeof(bool)) return DbType.Boolean;
+        if (type == typeof(DateTime)) return DbType.DateTime2;
+        if (type == typeof(DateTimeOffset)) return DbType.DateTimeOffset;
+        if (type == typeof(DateOnly)) return DbType.Date;
+        if (type == typeof(TimeOnly)) return DbType.Time;
+        if (type == typeof(decimal)) return DbType.Decimal;
+        if (type == typeof(double)) return DbType.Double;
+        if (type == typeof(float)) return DbType.Single;
+        return null;
+    }
+
     /// <summary>
     /// Sets the database parameter value from the specified strongly-typed identifier.
     /// </summary>
@@ -32,9 +54,19 @@ public sealed class StrongIdTypeHandler<TSelf, TValue>
     {
         ArgumentNullException.ThrowIfNull(parameter);
 
-        parameter.Value = value is null || value.Value is null
-            ? DBNull.Value
-            : value.Value;
+        if (_inferredDbType.HasValue)
+        {
+            parameter.DbType = _inferredDbType.Value;
+        }
+
+        if (!typeof(TSelf).IsValueType && value is null)
+        {
+            parameter.Value = DBNull.Value;
+            return;
+        }
+
+        var primitive = value!.Value;
+        parameter.Value = primitive is null ? DBNull.Value : primitive;
     }
 
     /// <summary>
@@ -58,6 +90,19 @@ public sealed class StrongIdTypeHandler<TSelf, TValue>
 
         if (value is not TValue primitive)
         {
+            if (typeof(TValue) == typeof(Guid))
+            {
+                if (value is string s && Guid.TryParse(s, out var parsedGuid))
+                {
+                    return TSelf.Create(System.Runtime.CompilerServices.Unsafe.As<Guid, TValue>(ref parsedGuid));
+                }
+                if (value is byte[] bytes && bytes.Length == 16)
+                {
+                    var byteGuid = new Guid(bytes);
+                    return TSelf.Create(System.Runtime.CompilerServices.Unsafe.As<Guid, TValue>(ref byteGuid));
+                }
+            }
+
             throw new DataException(
                 $"Database type '{value.GetType().FullName}' is incompatible " +
                 $"with strong identifier '{typeof(TSelf).FullName}', " +

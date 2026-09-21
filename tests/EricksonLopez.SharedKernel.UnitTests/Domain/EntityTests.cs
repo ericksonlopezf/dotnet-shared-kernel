@@ -126,16 +126,21 @@ public class EntityTests
     }
 
     [Fact]
-    public void Constructor_WithEmptyString_AllowsInstanceCreation()
+    public void Constructor_WithEmptyString_ThrowsArgumentException()
     {
-        // Architectural Invariant:
-        // Entity<TId> guard verifies that identity != default(TId). For raw primitive `string`, default is `null`.
-        // Therefore, non-null empty strings are permitted at the base generic Entity level.
-        // Domain-specific business constraints (e.g. non-empty, non-whitespace, format rules) must be encapsulated
-        // in strongly-typed identifiers (IStrongId<TSelf, string>), not in the raw generic Entity base class.
-        var emptyStringEntity = new StringEntity(string.Empty);
+        Action act = () => { _ = new StringEntity(string.Empty); };
 
-        emptyStringEntity.Id.Should().Be(string.Empty);
+        act.Should().Throw<ArgumentException>()
+            .WithMessage("*Entity identity cannot be empty or whitespace.*");
+    }
+
+    [Fact]
+    public void Constructor_WithWhitespaceString_ThrowsArgumentException()
+    {
+        Action act = () => { _ = new StringEntity("   "); };
+
+        act.Should().Throw<ArgumentException>()
+            .WithMessage("*Entity identity cannot be empty or whitespace.*");
     }
 
     #endregion
@@ -356,4 +361,42 @@ public class EntityTests
     }
 
     #endregion
+
+    [Fact]
+    public void Constructor_WithStringContainingNullChar_ThrowsArgumentException()
+    {
+        Action act = () => { _ = new StringEntity("usr_\0_123"); };
+        act.Should().Throw<ArgumentException>()
+            .WithMessage("*Entity identity cannot contain null characters.*");
+    }
+
+    private class ProxyTestEntity : TestEntity
+    {
+        public ProxyTestEntity(Guid id) : base(id) { }
+        protected override Type GetEqualityType() => typeof(TestEntity);
+    }
+
+    [Fact]
+    public void Equals_WithProxyTypeOverridingEqualityType_ReturnsTrue()
+    {
+        var id = Guid.NewGuid();
+        var entity = new TestEntity(id);
+        var proxy = new ProxyTestEntity(id);
+
+        entity.Equals(proxy).Should().BeTrue();
+        proxy.Equals(entity).Should().BeTrue();
+        (entity == proxy).Should().BeTrue();
+        (proxy == entity).Should().BeTrue();
+        entity.GetHashCode().Should().Be(proxy.GetHashCode());
+    }
+
+    [Fact]
+    public void OperatorEquality_WhenRightIsNullAndLeftIsNotNull_ReturnsFalse()
+    {
+        TestEntity left = new TestEntity(Guid.NewGuid());
+        TestEntity? right = null;
+
+        (left == right).Should().BeFalse();
+        (right == left).Should().BeFalse();
+    }
 }

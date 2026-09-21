@@ -1,3 +1,9 @@
+## Status
+Accepted
+
+## Date
+2026-08-19
+
 ﻿# ADR-031: Synchronous Dispatcher Policy in DomainEventsInterceptor
 
 **Status:** Accepted

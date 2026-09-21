@@ -3,6 +3,9 @@
 ## Status
 Accepted
 
+## Date
+2026-09-04
+
 ## Context
 The `AggregateRoot<TId>` base class handles domain event recording and subsequent draining by infrastructure. When fetching thousands of read-only aggregates from a database using Dapper or EF Core, allocating an empty collection for domain events per aggregate creates significant GC pressure (heap allocation).
 

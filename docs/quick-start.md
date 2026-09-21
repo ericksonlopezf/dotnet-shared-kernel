@@ -32,9 +32,8 @@ using EricksonLopez.SharedKernel;
 // 1. Strongly-Typed ID
 public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>;
 
-// 2. Value Object
-[ValueObject]
-public sealed record Money(decimal Amount, string Currency) : ValueObject;
+// 2. Value Object (pure C# record per ADR-003 / ADR-017)
+public sealed record Money(decimal Amount, string Currency);
 ```
 
 ### Step B: Define a Domain Event

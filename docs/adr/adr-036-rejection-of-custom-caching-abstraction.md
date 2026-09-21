@@ -3,6 +3,9 @@
 ## Status
 Accepted — August 2026
 
+## Date
+2026-09-04
+
 ## Context
 During the ecosystem-wide capability ownership audit, the potential introduction of a custom caching abstraction package (`EricksonLopez.Caching.Abstractions` / `EricksonLopez.Caching`) was evaluated.
 

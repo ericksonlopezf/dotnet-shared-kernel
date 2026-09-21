@@ -1,5 +1,11 @@
 # ADR-018: Rejection of Generic Repository (`IRepository<T>`)
 
+## Status
+Rejected
+
+## Date
+2026-08-15
+
 **Date:** 2026-08-15  
 **Status:** Rejected / Excluded  
 **Deciders:** Erickson Lopez  
@@ -43,4 +49,4 @@ Repository interfaces belong in each specific **Bounded Context's Domain/Applica
 
 - **Positive:** Zero coupling between Bounded Contexts regarding database access paradigms.
 - **Positive:** Preserves the Tier 0 purity of `EricksonLopez.SharedKernel`.
-- **Negative:** Consumidores must define their own specific repository contracts per aggregate (which aligns with DDD best practices).
+- **Negative:** Consumers must define their own specific repository contracts per aggregate (which aligns with DDD best practices).

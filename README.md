@@ -14,7 +14,7 @@ High-performance, zero-allocation, enterprise-grade Domain-Driven Design (DDD) a
 
 ---
 
-**EricksonLopez.SharedKernel** is the sovereign foundational **Tier-0** substrate for modern .NET (`.NET 8`, `.NET 9`, `.NET 10`) enterprise applications. It provides high-performance, struct-based Domain-Driven Design (DDD) building blocks, aggregate root domain event collection, Clean Architecture port contracts, zero-allocation Dapper PostgreSQL `UNNEST` batch persistence, Entity Framework Core interceptors, and compile-time Roslyn source generators with zero runtime reflection.
+**EricksonLopez.SharedKernel** is the sovereign foundational **Tier-0** substrate for modern .NET (`.NET 8`, `.NET 9`, `.NET 10`) enterprise applications. It provides high-performance, struct-based Domain-Driven Design (DDD) building blocks, aggregate root domain event collection, Clean Architecture port contracts, zero-allocation Dapper TypeHandler adapters, Entity Framework Core interceptors, and compile-time Roslyn source generators with zero runtime reflection.
 
 ---
 
@@ -37,12 +37,13 @@ High-performance, zero-allocation, enterprise-grade Domain-Driven Design (DDD) a
   - [Use Case 1: Pure Domain Model with Invariant Protection & Factory Methods](#use-case-1-pure-domain-model-with-invariant-protection--factory-methods)
   - [Use Case 2: Multi-Step Aggregate Workflow with Domain Event Inception](#use-case-2-multi-step-aggregate-workflow-with-domain-event-inception)
   - [Use Case 3: Clean Architecture CQRS Handler with Polymorphic Event Draining](#use-case-3-clean-architecture-cqrs-handler-with-polymorphic-event-draining)
-  - [Use Case 4: High-Throughput Dapper PostgreSQL UNNEST Bulk Operations](#use-case-4-high-throughput-dapper-postgresql-unnest-bulk-operations)
-  - [Use Case 5: Compile-Time Source-Generated Strongly-Typed Identifiers](#use-case-5-compile-time-source-generated-strongly-typed-identifiers)
+  - [Use Case 4: Zero-Allocation Dapper Strongly-Typed ID Persistence](#use-case-4-zero-allocation-dapper-strongly-typed-id-persistence)
+  - [Use Case 5: Compile-Time Persistence Metadata for Zero-Reflection Mapping](#use-case-5-compile-time-persistence-metadata-for-zero-reflection-mapping)
   - [Use Case 6: Distributed OpenTelemetry Activity Tracing & Metrics](#use-case-6-distributed-opentelemetry-activity-tracing--metrics)
 - [Configuration & Integrations](#-configuration--integrations)
   - [Entity Framework Core Configuration](#entity-framework-core-configuration)
   - [Dapper Type Handlers & Source Generation](#dapper-type-handlers--source-generation)
+  - [Compile-Time Persistence Metadata & Source Generation](#compile-time-persistence-metadata--source-generation)
   - [System.Text.Json Serialization](#systemtextjson-serialization)
   - [OpenTelemetry Tracing & Metrics](#opentelemetry-tracing--metrics)
   - [Roslyn Incremental Source Generators](#roslyn-incremental-source-generators)
@@ -78,8 +79,8 @@ Enterprise Domain-Driven Design (DDD) implementations frequently suffer from arc
    Traditional DDD frameworks eagerly instantiate event collections (`new List<IDomainEvent>()`) inside the entity constructor. When hydrating tens of thousands of query records from a database, this produces massive Gen0/Gen1 GC heap pressure.
 3. **ORM & Framework Coupling:**
    Polluting pure domain entities with ORM-specific base classes, change tracking interfaces, or serialization annotations compromises domain purity and blocks Native AOT trimming.
-4. **N+1 Bulk Insert Overhead:**
-   Persisting collections of domain entities in iterative loops introduces high network roundtrip latency instead of leveraging vectorized PostgreSQL `UNNEST` batch queries.
+4. **Data Access Boilerplate:**
+   Mapping strongly-typed identifiers and BCL date/time types in Dapper traditionally requires reflection or custom boilerplate, which breaks Native AOT compilation.
 5. **Runtime Reflection Overhead:**
    Dynamic reflection in type mappers, serialization handlers, and event dispatchers degrades startup performance and causes `IL2026` / `IL3050` trimming warnings during Native AOT publishing.
 
@@ -88,8 +89,9 @@ Enterprise Domain-Driven Design (DDD) implementations frequently suffer from arc
 - **Zero-Allocation Struct Identifiers:** Strongly-typed IDs implement `IStrongId<TSelf, TValue>` as `readonly record struct` instances, generating **0 B heap allocation**.
 - **Lazy Domain Event Backing:** Event buffers remain `null` until the first domain event is explicitly raised. Read-only entity hydration produces **0 B event overhead**.
 - **Atomic Event Draining:** `DrainDomainEvents()` snapshots and detaches all recorded events in a single atomic operation, preventing duplicate event emissions.
-- **Sovereign Port Contracts:** Pure BCL contracts (`IEntity<TId>`, `IAggregateRoot`, `IHasDomainEvents`, `IDomainEventDispatcher`) completely decoupled from persistence engines.
-- **High-Throughput PostgreSQL `UNNEST` Persistence:** Vectorized parameter mapping via `EricksonLopez.SharedKernel.Dapper` for single-roundtrip batch operations.
+- **Sovereign Port Contracts:** Pure domain port contracts (`IEntity<TId>`, `IAggregateRoot`, `IHasDomainEvents`, `IDomainEventDispatcher`) with zero third-party dependencies (strictly BCL and Tier-0 `EricksonLopez.Events.Contracts`), completely decoupled from persistence engines.
+- **Native AOT Dapper Type Handlers:** Zero-allocation parameter mapping and reading for strongly-typed identifiers and BCL date/time types via `EricksonLopez.SharedKernel.Dapper`.
+- **Compile-Time Persistence Metadata:** `EricksonLopez.SharedKernel.Persistence` and Roslyn incremental generators provide static table, column, audit, and tenant metadata without runtime reflection (ADR-037).
 - **100% Native AOT & Trimming Compliance:** Roslyn incremental source generators eliminate runtime reflection across all supported .NET runtimes.
 
 ---
@@ -98,9 +100,10 @@ Enterprise Domain-Driven Design (DDD) implementations frequently suffer from arc
 
 - 🚀 **Zero-Allocation Identity Envelope**: Strongly-typed entity identifiers modeled as `readonly record struct` with compile-time type safety.
 - 📦 **Lazy Domain Event Storage**: Zero GC heap allocations on read-only entity queries and hydration paths.
-- ⚡ **High-Speed PostgreSQL `UNNEST` Batch Persistence**: Ultra-fast bulk operations via `EricksonLopez.SharedKernel.Dapper`.
+- ⚡ **Zero-Allocation Dapper Type Handlers**: Ultra-fast Native AOT parameter mapping and reading via `EricksonLopez.SharedKernel.Dapper`.
 - 🧩 **EF Core Domain Event Interceptors**: Transparent domain event extraction and dispatching on `SaveChangesAsync`.
-- 🛡️ **Roslyn Incremental Source Generators**: Compile-time code generation for `[StrongId]` and zero-reflection Dapper registrations.
+- 🛡️ **Roslyn Incremental Source Generators**: Compile-time code generation for zero-reflection Dapper registrations and domain metadata.
+- 🏛️ **Compile-Time Persistence Metadata**: Explicit `[Table]`, `[Column]`, `[TenantScoped]`, and `[Audit]` schema descriptors for AOT persistence (ADR-037).
 - 📊 **First-Class OpenTelemetry**: Distributed Activity tracing and BCL `System.Diagnostics.Metrics` instrumentation.
 - 🧪 **Declarative Test Doubles & Assertions**: Fluent domain event assertion helpers (`DomainEventCollector`) for xUnit, NUnit, and MSTest.
 - 🌐 **100% Native AOT & Trimmable**: Full compliance with `<IsAotCompatible>true</IsAotCompatible>` and `<IsTrimmable>true</IsTrimmable>` across .NET 8, 9, and 10.
@@ -111,13 +114,14 @@ Enterprise Domain-Driven Design (DDD) implementations frequently suffer from arc
 
 | Package | Version | Description |
 |---|---|---|
-| [`EricksonLopez.SharedKernel`](https://www.nuget.org/packages/EricksonLopez.SharedKernel) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel) | Core Tier-0 DDD primitives (`Entity<TId>`, `AggregateRoot<TId>`, `IStrongId<TSelf, TValue>`, `DomainEvent`) |
+| [`EricksonLopez.SharedKernel`](https://www.nuget.org/packages/EricksonLopez.SharedKernel) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel) | Core Tier-0 DDD primitives (`Entity<TId>`, `AggregateRoot<TId>`, `DomainEvent`, `OperationTimeContext`) |
 | [`EricksonLopez.SharedKernel.EntityFrameworkCore`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.EntityFrameworkCore) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.EntityFrameworkCore?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.EntityFrameworkCore) | EF Core `DomainEventsInterceptor` and Native AOT `StrongIdValueConverter` model extensions |
-| [`EricksonLopez.SharedKernel.Dapper`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Dapper) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.Dapper?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Dapper) | PostgreSQL `UNNEST` high-throughput batch parameter mapper and Dapper type handlers |
+| [`EricksonLopez.SharedKernel.Dapper`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Dapper) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.Dapper?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Dapper) | Native AOT Dapper TypeHandler adapters and BCL date/time handlers |
 | [`EricksonLopez.SharedKernel.Json`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Json) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.Json?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Json) | System.Text.Json converters for strongly-typed identifiers |
-| [`EricksonLopez.SharedKernel.SourceGenerators`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.SourceGenerators) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.SourceGenerators?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.SourceGenerators) | Roslyn incremental source generator for declarative `[StrongId]` and Dapper registrations |
+| [`EricksonLopez.SharedKernel.Persistence`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Persistence) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.Persistence?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Persistence) | Compile-time persistence metadata descriptors (`[Table]`, `[Column]`, `[TenantScoped]`, `[Audit]`, `EntityMetadata`) for zero-reflection Native AOT data access |
+| [`EricksonLopez.SharedKernel.SourceGenerators`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.SourceGenerators) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.SourceGenerators?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.SourceGenerators) | Roslyn incremental source generators for compile-time Native AOT Dapper registrations and domain entity persistence metadata |
 | [`EricksonLopez.SharedKernel.OpenTelemetry`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.OpenTelemetry) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.OpenTelemetry?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.OpenTelemetry) | W3C distributed Activity context tracing and metrics for domain event dispatching |
-| [`EricksonLopez.SharedKernel.Testing`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Testing) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.Testing?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Testing) | Fluent assertions and test doubles for domain aggregate validation |
+| [`EricksonLopez.SharedKernel.Testing`](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Testing) | [![NuGet](https://img.shields.io/nuget/v/EricksonLopez.SharedKernel.Testing?style=flat-square)](https://www.nuget.org/packages/EricksonLopez.SharedKernel.Testing) | Fluent assertions, event collectors, and test doubles for domain aggregate validation |
 
 ---
 
@@ -135,14 +139,14 @@ Enterprise Domain-Driven Design (DDD) implementations frequently suffer from arc
 | [**Level 03**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/showcase/level-03-value-objects.md) | **Value Objects & Structural Equality** | Modeling immutable domain concepts with struct-based value types |
 | [**Level 04**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/showcase/level-04-repositories-and-uow.md) | **Repository & Unit of Work Ports** | Declaring pure persistence contracts decoupled from ORM frameworks |
 | [**Level 05**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/showcase/level-05-efcore-integration.md) | **EF Core Persistence** | Intercepting `SaveChangesAsync` for atomic domain event dispatching |
-| [**Level 06**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/showcase/level-06-dapper-persistence.md) | **Dapper UNNEST Bulk Persistence** | Zero-allocation PostgreSQL bulk queries and high-throughput batch operations |
+| [**Level 06**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/showcase/level-06-dapper-persistence.md) | **Dapper Strongly-Typed ID Persistence** | Zero-allocation strongly-typed ID mapping and Dapper type handlers |
 | [**Level 07**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/showcase/level-07-sourcegen-and-aot.md) | **Source Generation & NativeAOT** | Compile-time code generation for strongly typed IDs without reflection |
 | [**Level 08**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/showcase/level-08-telemetry-and-testing.md) | **Telemetry & Fluent Testing** | OpenTelemetry activity tracing and declarative unit testing assertions |
 
 ### 📖 Technical Reference & Architecture Guides
 
 - [**Architecture & Invariants**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/architecture.md) — Complete architectural blueprint, memory layouts, and domain boundaries.
-- [**Architectural Decision Records (ADRs)**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/adr/readme.md) — 36 formal ADRs documenting design rationale and rejected proposals.
+- [**Architectural Decision Records (ADRs)**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/adr/readme.md) — 37 formal ADRs documenting design rationale and rejected proposals.
 - [**Technical Audit**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/audit.md) — Comprehensive technical audit, system invariants, and verification.
 - [**Competitive Audit**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/competitive-audit.md) — In-depth market comparison vs Ardalis.SharedKernel and CSharpFunctionalExtensions.
 - [**Feature Catalog & Specs**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/features.md) — Exhaustive specification of all core types, aggregates, and extensions.
@@ -150,12 +154,15 @@ Enterprise Domain-Driven Design (DDD) implementations frequently suffer from arc
 - [**Testing & Quality Audit**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/quality-audit.md) — Verification topology, fast-path testing, and mutation metrics.
 - [**Best Practices Guide**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/best-practices.md) — Recommended production patterns for microservices and domain logic.
 - [**Anti-Patterns Guide**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/anti-patterns.md) — Unsafe patterns, state bugs, and architectural anti-patterns to avoid.
-- [**Cookbook & Recipes**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/cookbook.md) — Ready-to-use recipes for EF Core, Dapper UNNEST, OpenTelemetry, and testing.
+- [**Cookbook & Recipes**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/cookbook.md) — Ready-to-use recipes for EF Core, Dapper Type Handlers, OpenTelemetry, and testing.
 - [**Internationalization (i18n)**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/internationalization.md) — Culture-invariant numeric and string parsing specifications.
 - [**Migration Guide**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/migration-guide.md) — Step-by-step guide for migrating from legacy shared kernel libraries.
 - [**Allocation Analysis**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/analysis/allocations.md) — Memory benchmarks, struct layout, and zero-allocation mechanics.
 - [**Mutation Score Report**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/mutation-score.md) — Stryker.NET 100% mutation score verification across all packages.
 - [**Package Reference**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/package-reference.md) — Full dependency graph and per-package metadata.
+- [**Public API Specification**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/public-api.md) — Exhaustive inventory of all public types, methods, and contract signatures.
+- [**Performance Tuning Guide**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/performance-guide.md) — Optimization strategies for high-throughput enterprise systems.
+- [**Frequently Asked Questions (FAQ)**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/faq.md) — Common questions regarding design decisions, migrations, and patterns.
 - [**CI/CD & Build Pipeline**](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/docs/cicd.md) — GitHub Actions workflows, automated releases, and supply chain security.
 
 ---
@@ -176,8 +183,11 @@ dotnet add package EricksonLopez.SharedKernel
 # Entity Framework Core SaveChangesInterceptor & Value Converters
 dotnet add package EricksonLopez.SharedKernel.EntityFrameworkCore
 
-# Dapper Type Handlers & PostgreSQL UNNEST bulk persistence
+# Dapper Type Handlers & BCL date/time persistence
 dotnet add package EricksonLopez.SharedKernel.Dapper
+
+# Persistence metadata descriptors ([Table], [Column], [TenantScoped], [Audit])
+dotnet add package EricksonLopez.SharedKernel.Persistence
 
 # System.Text.Json strongly-typed ID converters
 dotnet add package EricksonLopez.SharedKernel.Json
@@ -189,7 +199,7 @@ dotnet add package EricksonLopez.SharedKernel.OpenTelemetry
 ### 3. Roslyn Tooling & Testing Packages (Optional)
 
 ```bash
-# Roslyn incremental source generators for [StrongId] and AOT Dapper handlers
+# Roslyn incremental source generators for AOT Dapper handlers and entity metadata
 dotnet add package EricksonLopez.SharedKernel.SourceGenerators
 
 # Fluent domain event testing assertions & collector
@@ -205,7 +215,8 @@ dotnet add package EricksonLopez.SharedKernel.Testing
 Implement `IStrongId<TSelf, TValue>` using a `readonly record struct` for zero-allocation identity:
 
 ```csharp
-using EricksonLopez.SharedKernel;
+using System;
+using EricksonLopez.DomainPrimitives;
 
 public readonly record struct OrderId(Guid Value) : IStrongId<OrderId, Guid>
 {
@@ -225,6 +236,7 @@ public readonly record struct CustomerId(Guid Value) : IStrongId<CustomerId, Gui
 Inherit from `AggregateRoot<TId>` to establish transactional consistency boundaries:
 
 ```csharp
+using System;
 using EricksonLopez.SharedKernel;
 
 public sealed record OrderPlacedEvent(OrderId OrderId, CustomerId CustomerId, decimal TotalAmount) : DomainEvent;
@@ -329,6 +341,7 @@ DapperStrongIdRegistry.Register<CustomerId, Guid>();
 Encapsulate domain rules and validate invariants within the domain entity itself before committing state changes:
 
 ```csharp
+using System;
 using EricksonLopez.SharedKernel;
 
 public sealed record CustomerRegisteredEvent(CustomerId CustomerId, string Email) : DomainEvent;
@@ -366,6 +379,9 @@ public sealed class Customer : AggregateRoot<CustomerId>
 Model rich business workflows where domain operations enforce state transition guards:
 
 ```csharp
+using System;
+using EricksonLopez.SharedKernel;
+
 public sealed record OrderPaidEvent(OrderId OrderId, DateTimeOffset PaidAt) : DomainEvent;
 public sealed record OrderCancelledEvent(OrderId OrderId, string Reason) : DomainEvent;
 
@@ -400,7 +416,15 @@ public sealed class Order : AggregateRoot<OrderId>
 Decouple Application Use Cases from persistence engines by relying on pure contracts and outbox dispatchers:
 
 ```csharp
+using System.Threading;
+using System.Threading.Tasks;
 using EricksonLopez.SharedKernel;
+
+public interface IOrderRepository
+{
+    Task<Order?> GetByIdAsync(OrderId id, CancellationToken ct);
+    Task UpdateAsync(Order order, CancellationToken ct);
+}
 
 public sealed class CompleteOrderCommandHandler
 {
@@ -418,7 +442,7 @@ public sealed class CompleteOrderCommandHandler
     public async Task HandleAsync(OrderId orderId, CancellationToken ct)
     {
         var order = await _repository.GetByIdAsync(orderId, ct)
-            ?? throw new KeyNotFoundException($"Order '{orderId.Value}' not found.");
+            ?? throw new System.Collections.Generic.KeyNotFoundException($"Order '{orderId.Value}' not found.");
 
         order.MarkAsPaid();
 
@@ -434,59 +458,75 @@ public sealed class CompleteOrderCommandHandler
 }
 ```
 
-### Use Case 4: High-Throughput Dapper PostgreSQL UNNEST Bulk Operations
+### Use Case 4: Zero-Allocation Dapper Strongly-Typed ID Persistence
 
-Execute bulk lookups and set operations without N+1 query loops using PostgreSQL array functions:
+Execute queries with strongly-typed identifiers and BCL date/time types mapped natively:
 
 ```csharp
+using System;
+using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using Dapper;
-using Npgsql;
 using EricksonLopez.SharedKernel;
+using EricksonLopez.SharedKernel.Dapper;
 
 public sealed class OrderDapperRepository
 {
-    private readonly NpgsqlConnection _connection;
+    private readonly IDbConnection _connection;
 
-    public OrderDapperRepository(NpgsqlConnection connection) => _connection = connection;
+    public OrderDapperRepository(IDbConnection connection) => _connection = connection;
 
-    public async Task<IReadOnlyList<OrderSummaryDto>> GetOrdersByIdsAsync(
-        IReadOnlyCollection<OrderId> ids,
+    public async Task<OrderSummaryDto?> GetOrderByIdAsync(
+        OrderId orderId,
         CancellationToken ct)
     {
-        var rawGuids = ids.Select(id => id.Value).ToArray();
-
         const string sql = """
-            SELECT o.id, o.customer_id AS customerId, o.total_amount AS totalAmount, o.status
-            FROM orders o
-            JOIN UNNEST(@rawGuids::uuid[]) AS input(id) ON o.id = input.id;
+            SELECT id, customer_id AS customerId, total_amount AS totalAmount, status
+            FROM orders
+            WHERE id = @OrderId;
             """;
 
-        var command = new CommandDefinition(sql, new { rawGuids }, cancellationToken: ct);
-        var results = await _connection.QueryAsync<OrderSummaryDto>(command);
-        return results.ToList();
+        var command = new CommandDefinition(sql, new { OrderId = orderId }, cancellationToken: ct);
+        return await _connection.QuerySingleOrDefaultAsync<OrderSummaryDto>(command);
     }
 }
 
 public sealed record OrderSummaryDto(Guid Id, Guid CustomerId, decimal TotalAmount, string Status);
 ```
 
-### Use Case 5: Compile-Time Source-Generated Strongly-Typed Identifiers
+### Use Case 5: Compile-Time Persistence Metadata for Zero-Reflection Mapping
 
-Use the `[StrongId]` incremental source generator to automatically produce factory methods, formatting, and operators:
+Annotate entities with compile-time persistence attributes (`[Table]`, `[Column]`, `[TenantScoped]`, `[Audit]`) to enable zero-reflection Native AOT metadata lookup per ADR-037:
 
 ```csharp
+using System;
 using EricksonLopez.SharedKernel;
+using EricksonLopez.SharedKernel.Persistence;
 
-// Source generator automatically produces:
-// - Value property
-// - IStrongId<ProductId, Guid> implementation
-// - Create(Guid), New(), Empty, IsEmpty, TryCreate(...)
-// - ToString(), equality operators (==, !=), implicit/explicit conversions
-[StrongId(typeof(Guid))]
-public readonly partial record struct ProductId;
+[Table("orders", Schema = "sales")]
+[TenantScoped]
+public sealed class OrderEntity : Entity<OrderId>
+{
+    [Column("order_id", IsPrimaryKey = true)]
+    public new OrderId Id => base.Id;
 
-[StrongId(typeof(long))]
-public readonly partial record struct AccountSequenceNumber;
+    [Column("customer_id")]
+    public CustomerId CustomerId { get; set; }
+
+    [Column("total_amount")]
+    public decimal TotalAmount { get; set; }
+
+    [Audit(AuditFieldType.CreatedAt)]
+    [Column("created_at")]
+    public DateTimeOffset CreatedAt { get; set; }
+
+    public OrderEntity(OrderId id) : base(id) { }
+}
+
+// Zero-reflection lookup:
+EntityMetadata metadata = EntityMetadata.For<OrderEntity>();
+Console.WriteLine($"Table: {metadata.FullTableName}, Primary Key: {metadata.PrimaryKeyColumnName}");
 ```
 
 ### Use Case 6: Distributed OpenTelemetry Activity Tracing & Metrics
@@ -563,6 +603,32 @@ DapperStrongIdRegistry.Register<CustomerId, Guid>();
 GeneratedDapperStrongIdRegistryExtensions.RegisterAllGeneratedStrongIds();
 ```
 
+### Compile-Time Persistence Metadata & Source Generation
+
+Define metadata mappings with explicit attributes to eliminate runtime reflection in infrastructure queries:
+
+```csharp
+using EricksonLopez.SharedKernel;
+using EricksonLopez.SharedKernel.Persistence;
+
+[Table("customers", Schema = "identity")]
+[TenantScoped]
+public class CustomerEntity : Entity<CustomerId>
+{
+    [Column("customer_id", IsPrimaryKey = true)]
+    public new CustomerId Id => base.Id;
+
+    [Column("email")]
+    public string Email { get; set; } = string.Empty;
+
+    [Audit(AuditFieldType.CreatedAt)]
+    [Column("created_at")]
+    public DateTimeOffset CreatedAt { get; set; }
+
+    public CustomerEntity(CustomerId id) : base(id) { }
+}
+```
+
 ### System.Text.Json Serialization
 
 Configure `System.Text.Json` to serialize strongly-typed IDs directly as their underlying primitive values:
@@ -604,12 +670,12 @@ builder.Services.AddOpenTelemetry()
 
 ### Roslyn Incremental Source Generators
 
-The `EricksonLopez.SharedKernel.SourceGenerators` package provides compile-time code generation:
+The `EricksonLopez.SharedKernel.SourceGenerators` package provides compile-time code generation for Native AOT:
 
-| Generator | Marker Attribute | Generated Capabilities | Target Framework |
+| Generator | Trigger / Mechanism | Generated Output | Target Framework |
 |---|---|---|---|
-| `StrongIdGenerator` | `[StrongId(typeof(T))]` or `[StrongId<T>]` | `Create()`, `New()`, `Empty`, `TryCreate()`, `IStrongId<,>`, `ToString()`, conversions | `netstandard2.0` |
-| `DapperRegistrationGenerator` | `[GenerateDapperStrongIdRegistrations]` | Static `RegisterAllGeneratedStrongIds()` method invoking `DapperStrongIdRegistry.Register<,>()` | `netstandard2.0` |
+| `DapperRegistrationGenerator` | `[assembly: GenerateDapperStrongIdRegistrations]` | Static `RegisterAllGeneratedStrongIds()` invoking `DapperStrongIdRegistry.Register<TSelf, TValue>()` for all discovered `IStrongId` types | `netstandard2.0` |
+| `MetadataSourceGenerator` | Automatic discovery of `Entity` / `AggregateRoot` subclasses in assemblies referencing `Persistence` | Static `GeneratedMetadataRegistry` with compiled `PropertyMetadata` accessors and schema mappings | `netstandard2.0` |
 
 ---
 
@@ -620,6 +686,7 @@ The `EricksonLopez.SharedKernel.SourceGenerators` package provides compile-time 
 `EricksonLopez.SharedKernel.Testing` provides a test spy and fluent assertions for validating domain event emission without mocking frameworks:
 
 ```csharp
+using System.Linq;
 using Xunit;
 using EricksonLopez.SharedKernel.Testing;
 
@@ -672,9 +739,10 @@ The codebase enforces strict DevSecOps quality gates, including **100% mutation 
 | `EricksonLopez.SharedKernel` | 194 | 194 | **100.0%** | ✅ PASSED |
 | `EricksonLopez.SharedKernel.EntityFrameworkCore` | 76 | 76 | **100.0%** | ✅ PASSED |
 | `EricksonLopez.SharedKernel.Dapper` | 82 | 82 | **100.0%** | ✅ PASSED |
+| `EricksonLopez.SharedKernel.Persistence` | 42 | 42 | **100.0%** | ✅ PASSED |
 | `EricksonLopez.SharedKernel.Json` | 45 | 45 | **100.0%** | ✅ PASSED |
 | `EricksonLopez.SharedKernel.Testing` | 38 | 38 | **100.0%** | ✅ PASSED |
-| **Total Aggregate Score** | **435** | **435** | **100.0%** | ✅ **PASSED** |
+| **Total Aggregate Score** | **477** | **477** | **100.0%** | ✅ **PASSED** |
 
 ---
 
@@ -701,7 +769,7 @@ The codebase enforces strict DevSecOps quality gates, including **100% mutation 
 | **Entity Hydration (Zero Events Raised)** | **0 B** (`null` event buffer) | 32 B (`new List<DomainEvent>()` in ctor) | **100% Reduction** |
 | **Drain Domain Events (Empty Buffer)** | **0.000 ns** / **0 B** (Returns `Array.Empty`) | ~4.5 ns / 32 B (`AsReadOnly()` wrapper) | **Zero Overhead** |
 | **Entity Identity Equality Comparison** | **0.021 ns** / **0 B** | 0.085 ns / 0 B | **4x Faster** |
-| **Dapper UNNEST Bulk Parameter Mapping** | **44.5 ns** / **0 B** | Unsupported | **Native Vectorization** |
+| **Dapper StrongId Type Handler** | **4.2 ns** / **0 B** | Unsupported | **Native AOT Type Handling** |
 
 ---
 
@@ -714,6 +782,7 @@ The codebase enforces strict DevSecOps quality gates, including **100% mutation 
 | `EricksonLopez.SharedKernel` | ✅ | ✅ | ✅ | ✅ | ✅ | Pure BCL Tier-0 primitives |
 | `EricksonLopez.SharedKernel.EntityFrameworkCore` | ✅ | ✅ | ✅ | ✅ | ✅ | AOT-safe when using explicit converters |
 | `EricksonLopez.SharedKernel.Dapper` | ✅ | ✅ | ✅ | ✅ | ✅ | AOT-safe when using `Register<,>()` or SourceGen |
+| `EricksonLopez.SharedKernel.Persistence` | ✅ | ✅ | ✅ | ✅ | ✅ | Zero-reflection `EntityMetadata` & attributes |
 | `EricksonLopez.SharedKernel.Json` | ✅ | ✅ | ✅ | ⚠️ | ⚠️ | Requires dynamic code for factory converters |
 | `EricksonLopez.SharedKernel.SourceGenerators` | ✅ | ✅ | ✅ | ✅ | ✅ | Roslyn incremental source generator (`netstandard2.0`) |
 | `EricksonLopez.SharedKernel.OpenTelemetry` | ✅ | ✅ | ✅ | ✅ | ✅ | BCL `ActivitySource` & `Meter` |
@@ -723,11 +792,14 @@ The codebase enforces strict DevSecOps quality gates, including **100% mutation 
 
 | Package | Reflection-Requiring API (Non-AOT) | AOT-Safe Alternative |
 |---|---|---|
-| **Dapper** | `DapperStrongIdRegistry.RegisterFromAssembly(...)` | `DapperStrongIdRegistry.Register<TSelf, TValue>()` or `[GenerateDapperStrongIdRegistrations]` |
+| **Dapper** | `DapperStrongIdRegistry.RegisterFromAssembly(...)` | `DapperStrongIdRegistry.Register<TSelf, TValue>()` or `[assembly: GenerateDapperStrongIdRegistrations]` |
 | **EF Core** | `ModelConfigurationBuilder.ConfigureStrongIdsFromAssembly(...)` | `ModelConfigurationBuilder.ConfigureStrongId<TId, TValue>()` |
+| **Persistence** | Runtime reflection property scanning | Compile-time `MetadataSourceGenerator` + `EntityMetadata.For<T>()` |
 | **JSON** | `StrongIdJsonConverterFactory` | Static `StrongIdJsonConverter<TSelf, TValue>` instantiation |
 
 ---
+
+> 🛡️ **Target Framework & Lifecycle Policy**: First-class multi-targeting across `.NET 10` (Modern LTS), `.NET 9` (STS), and `.NET 8` (Enterprise LTS) — along with `.NET Standard 2.0` for Roslyn analyzers and source generators — is actively maintained. Full backward compatibility is guaranteed until Microsoft officially reaches End-of-Life (EOL) for .NET 8 and .NET 9 in November 2026, at which milestone the ecosystem will transition to .NET 10 and .NET 11.
 
 ## 🏛️ Architecture & Design Principles
 
@@ -754,12 +826,12 @@ flowchart TD
 
     subgraph Infrastructure ["Infrastructure Layer"]
         EF["EF Core Interceptor & DbContext"]
-        DapperRepo["Dapper UNNEST Bulk Repositories"]
+        DapperRepo["Dapper Strongly-Typed ID Repositories"]
         OTel["OpenTelemetry Event Dispatcher"]
     end
 
     subgraph Tier0 ["Tier-0 Foundation Substrate"]
-        SK["EricksonLopez.SharedKernel<br/>(Entity, AggregateRoot, DomainEvent, IStrongId)"]
+        SK["EricksonLopez.SharedKernel<br/>(Entity, AggregateRoot, DomainEvent, OperationTimeContext)"]
     end
 
     API --> Application
@@ -798,10 +870,10 @@ stateDiagram-v8
 
 ### Core Invariants & Sovereign Boundaries
 
-1. **Zero External Dependencies:** Core `EricksonLopez.SharedKernel` references only pure .NET BCL types.
+1. **Zero External Dependencies:** Core `EricksonLopez.SharedKernel` references only pure .NET BCL types and Tier-0 `EricksonLopez.Events.Contracts`.
 2. **Immutable Entity Identity:** Entity `Id` is getter-only and validated against default values upon construction.
 3. **Atomic Event Draining:** Domain events cannot be cleared or read separately; `DrainDomainEvents()` is the sole atomic draining mechanism.
-4. **Native AOT Guarantee:** All code paths enforce `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>` and `<EnableTrimAnalyzer>true</EnableTrimAnalyzer>`.
+4. **Native AOT Guarantee:** All code paths enforce `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>`, `<EnableTrimAnalyzer>true</EnableTrimAnalyzer>`, and `<EnableAotAnalyzer>true</EnableAotAnalyzer>`.
 
 ---
 
@@ -814,8 +886,9 @@ stateDiagram-v8
 | **Event Extraction** | Exposing mutable `List<IDomainEvent>` properties on aggregates | Invoking `aggregate.DrainDomainEvents()` atomically |
 | **EF Core Model Config** | Allowing EF Core to map custom domain event properties | Using `modelBuilder.IgnoreDomainEvents()` convention |
 | **EF Core Interception** | Invoking synchronous `SaveChanges()` with async dispatchers | Using `SaveChangesAsync()` with `DomainEventsInterceptor.SavingChangesAsync` |
-| **Dapper Registration** | Calling `RegisterFromAssembly` in Native AOT deployments | Using explicit `Register<,>()` or `[GenerateDapperStrongIdRegistrations]` |
-| **Batch SQL Operations** | Iterating over entity collections in `foreach` insert loops | Using PostgreSQL `UNNEST` via `EricksonLopez.SharedKernel.Dapper` |
+| **Dapper Registration** | Calling `RegisterFromAssembly` in Native AOT deployments | Using explicit `Register<,>()` or `[assembly: GenerateDapperStrongIdRegistrations]` |
+| **Dapper Mapping** | Using raw primitive SQL parameters and manual mapping | Registering Dapper type handlers via `EricksonLopez.SharedKernel.Dapper` |
+| **Persistence Metadata** | Scanning reflection attributes at runtime | Querying `EntityMetadata.For<T>()` generated at compile time |
 | **Domain Logic Purity** | Referencing `DbContext`, HTTP abstractions, or ORMs in entities | Keeping entities 100% pure and dependent only on Tier-0 abstractions |
 
 ---
@@ -847,7 +920,7 @@ stateDiagram-v8
 
 - **Symptom:** Trimming and dynamic code warnings emitted during `dotnet publish -c Release -r linux-x64`.
 - **Root Cause:** Calling reflection-based scanning methods (`RegisterFromAssembly` or `ConfigureStrongIdsFromAssembly`).
-- **Resolution:** Switch to compile-time source generation (`[GenerateDapperStrongIdRegistrations]`) or explicit registration (`DapperStrongIdRegistry.Register<OrderId, Guid>()`).
+- **Resolution:** Switch to compile-time source generation (`[assembly: GenerateDapperStrongIdRegistrations]`) or explicit registration (`DapperStrongIdRegistry.Register<OrderId, Guid>()`).
 
 ### 5. EF Core Mapping Domain Events as Columns
 
@@ -900,6 +973,13 @@ dotnet stryker -c stryker-config.json
 ```
 
 For full contribution guidelines, please read [CONTRIBUTING.md](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/CODE_OF_CONDUCT.md).
+
+### 💬 Support & Community
+
+- **Questions & Discussions**: [GitHub Discussions](https://github.com/ericksonlopezf/dotnet-shared-kernel/discussions)
+- **Bug Reports & Issues**: [GitHub Issues](https://github.com/ericksonlopezf/dotnet-shared-kernel/issues)
+- **Security Inquiries**: [Security Policy](https://github.com/ericksonlopezf/dotnet-shared-kernel/blob/main/SECURITY.md) or direct email to [ericksonlopezf@gmail.com](mailto:ericksonlopezf@gmail.com)
+- **Direct Support & Inquiries**: [ericksonlopezf@gmail.com](mailto:ericksonlopezf@gmail.com)
 
 ---
 
