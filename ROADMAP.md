@@ -15,7 +15,8 @@ This roadmap reflects the evolutionary milestones, completed architectural phase
 | **v1.0.1** | Quality Maintenance: Dependency updates (`AwesomeAssertions 9.5.0`), build pipeline fixes. | ✅ **Released** |
 | **v1.1.0** | Aggregate Roots & Security: `AggregateRoot<TId>` with lazy event collection, Strong Naming automation, Package Validation baseline. | ✅ **Released** |
 | **v2.0.0** | Core Extraction: Extraction of pagination and ValueObject, zero runtime dependencies. | ✅ **Released** |
-| **v3.0.0** | Production Release: `IStrongId<TSelf, TValue>`, `IEntity<TId>`, `IHasDomainEvents`, `IAggregateRoot`, `ValueObject`, `ValueObjectAttribute`, 100% Mutation Score, OpenTelemetry, EF Core interceptors, Dapper UNNEST, SourceGenerators, Native AOT compilation gate. | ✅ **Released (2026-08-25)** |
+| **v3.0.0** | Production Release: `IStrongId<TSelf, TValue>`, `IEntity<TId>`, `IHasDomainEvents`, `IAggregateRoot`, `ValueObject`, `ValueObjectAttribute`, 100% Mutation Score, OpenTelemetry, EF Core interceptors, Dapper Type Handlers, SourceGenerators, Native AOT compilation gate. | ✅ **Released (2026-08-25)** |
+| **v4.0.0** | Enterprise Quality Release: Zero `[Obsolete]` policy, `DomainEventIdentityEqualityComparer` decomposition (One Type Per File), Roslyn Analyzers enforcement, strict XML docs, zero suppression policy. | ✅ **Released (2026-09-20)** |
 
 ---
 
@@ -41,7 +42,7 @@ Items identified by the functional parity audit (2026-08-19):
 
 | Item | Type | Status |
 |---|---|---|
-| Benchmark public comparativo vs Ardalis.SharedKernel (`CompetitiveParityBenchmarks`) | Performance | ✅ Done |
+| Public comparative benchmark vs Ardalis.SharedKernel (`CompetitiveParityBenchmarks`) | Performance | ✅ Done |
 | EF Core `ConfigureStrongIdsFromAssembly` & `ConfigureStrongIdsFromAssemblies` bulk registration | API | ✅ Done |
 | Dapper `DapperStrongIdRegistry.RegisterFromAssemblies` multi-assembly scanning | API | ✅ Done |
 

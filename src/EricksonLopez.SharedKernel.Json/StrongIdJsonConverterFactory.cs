@@ -19,8 +19,9 @@ namespace EricksonLopez.SharedKernel.Json;
 public sealed class StrongIdJsonConverterFactory
     : JsonConverterFactory
 {
+    private const int _maxCacheSize = 1024;
     private static readonly ConcurrentDictionary<Type, JsonConverter>
-        ConverterCache = new();
+        _converterCache = new();
 
     /// <summary>
     /// Determines whether this factory can produce a converter for the specified type.
@@ -60,26 +61,36 @@ public sealed class StrongIdJsonConverterFactory
         ArgumentNullException.ThrowIfNull(typeToConvert);
         ArgumentNullException.ThrowIfNull(options);
 
-        return ConverterCache.GetOrAdd(
-            typeToConvert,
-            static targetType =>
-            {
-                var strongIdInterface =
-                    GetStrongIdInterface(targetType)
-                    ?? throw new InvalidOperationException(
-                        $"Type '{targetType.FullName}' does not implement " +
-                        $"'{typeof(IStrongId<,>).FullName}'.");
+        if (_converterCache.TryGetValue(typeToConvert, out var cached))
+        {
+            return cached;
+        }
 
-                var genericArguments =
-                    strongIdInterface.GetGenericArguments();
+        if (_converterCache.Count < _maxCacheSize)
+        {
+            return _converterCache.GetOrAdd(typeToConvert, CreateConverterInstance);
+        }
 
-                var converterType =
-                    typeof(StrongIdJsonConverter<,>)
-                        .MakeGenericType(genericArguments);
+        return CreateConverterInstance(typeToConvert);
+    }
 
-                return (JsonConverter)
-                    Activator.CreateInstance(converterType)!;
-            });
+    private static JsonConverter CreateConverterInstance(Type targetType)
+    {
+        var strongIdInterface =
+            GetStrongIdInterface(targetType)
+            ?? throw new InvalidOperationException(
+                $"Type '{targetType.FullName}' does not implement " +
+                $"'{typeof(IStrongId<,>).FullName}'.");
+
+        var genericArguments =
+            strongIdInterface.GetGenericArguments();
+
+        var converterType =
+            typeof(StrongIdJsonConverter<,>)
+                .MakeGenericType(genericArguments);
+
+        return (JsonConverter)
+            Activator.CreateInstance(converterType)!;
     }
 
     private static Type? GetStrongIdInterface(Type type)

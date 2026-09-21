@@ -3,6 +3,9 @@
 ## Status
 Accepted — August 2026
 
+## Date
+2026-09-04
+
 ## Context
 In Domain-Driven Design (DDD) with .NET 10 / C# 14, domain models require strongly-typed structures to eliminate Primitive Obsession.
 Across the `EricksonLopez.*` ecosystem, three separate packages handle distinct aspects of domain types:

@@ -7,11 +7,13 @@
     <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.Json\EricksonLopez.SharedKernel.Json.csproj" />
     <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.OpenTelemetry\EricksonLopez.SharedKernel.OpenTelemetry.csproj" />
     <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.Testing\EricksonLopez.SharedKernel.Testing.csproj" />
-    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.SourceGenerators\EricksonLopez.SharedKernel.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" UndefineProperties="PublishAot" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.Persistence\EricksonLopez.SharedKernel.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel.SourceGenerators\EricksonLopez.SharedKernel.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" GlobalPropertiesToRemove="PublishAot" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper" />
+    <PackageReference Include="EricksonLopez.DomainPrimitives.Abstractions" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
@@ -29,7 +31,7 @@
     <InvariantGlobalization>false</InvariantGlobalization>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
-    <NoWarn>$(NoWarn);CA1859;CS8602;CA1852;CS1591;CA1510;IL2026;IL3050;IL2104;IL3053;IL2091</NoWarn>
+    <NoWarn>$(NoWarn);CA1859;CS8602;CA1510;IL2026;IL3050;IL2104;IL3053;IL2091</NoWarn>
   </PropertyGroup>
 
 </Project>

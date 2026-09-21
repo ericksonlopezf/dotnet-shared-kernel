@@ -3,6 +3,9 @@
 ## Status
 Accepted
 
+## Date
+2026-09-04
+
 ## Context
 Traditionally, DDD frameworks (like those popularized by Jimmy Bogard or Vladimir Khorikov) include a `ValueObject` base class that uses reflection or an abstract method to provide structural equality:
 

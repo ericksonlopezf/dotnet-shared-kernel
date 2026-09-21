@@ -2,6 +2,7 @@
 
   <Folder Name="/src/">
     <Project Path="src/EricksonLopez.SharedKernel/EricksonLopez.SharedKernel.csproj" />
+    <Project Path="src/EricksonLopez.SharedKernel.Persistence/EricksonLopez.SharedKernel.Persistence.csproj" />
     <Project Path="src/EricksonLopez.SharedKernel.EntityFrameworkCore/EricksonLopez.SharedKernel.EntityFrameworkCore.csproj" />
     <Project Path="src/EricksonLopez.SharedKernel.Dapper/EricksonLopez.SharedKernel.Dapper.csproj" />
     <Project Path="src/EricksonLopez.SharedKernel.Json/EricksonLopez.SharedKernel.Json.csproj" />
@@ -24,7 +25,7 @@
     <Project Path="tests/EricksonLopez.SharedKernel.Json.Tests/EricksonLopez.SharedKernel.Json.Tests.csproj" />
     <Project Path="tests/EricksonLopez.SharedKernel.ArchitectureTests/EricksonLopez.SharedKernel.ArchitectureTests.csproj" />
     <Project Path="tests/EricksonLopez.SharedKernel.IntegrationTests/EricksonLopez.SharedKernel.IntegrationTests.csproj" />
-    <Project Path="tests/EricksonLopez.SharedKernel.NativeAotTests/EricksonLopez.SharedKernel.NativeAotTests.csproj" />
+    <Project Path="tests/EricksonLopez.SharedKernel.AotSmokeTest/EricksonLopez.SharedKernel.AotSmokeTest.csproj" />
     <Project Path="tests/EricksonLopez.SharedKernel.SourceGenerators.Tests/EricksonLopez.SharedKernel.SourceGenerators.Tests.csproj" />
     <Project Path="tests/EricksonLopez.SharedKernel.OpenTelemetry.Tests/EricksonLopez.SharedKernel.OpenTelemetry.Tests.csproj" />
   </Folder>

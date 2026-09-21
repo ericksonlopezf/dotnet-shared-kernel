@@ -6,7 +6,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <NoWarn>$(NoWarn);CA1822;CA1707;CA1812;CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CA1822;CA1812</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

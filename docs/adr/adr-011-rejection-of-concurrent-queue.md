@@ -3,6 +3,9 @@
 ## Status
 Accepted
 
+## Date
+2026-09-04
+
 ## Context
 A previous implementation of `AggregateRoot<TId>` utilized `ConcurrentQueue<IDomainEvent>` for its `_domainEvents` collection to presumably offer thread safety when raising events.
 

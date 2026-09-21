@@ -1,14 +1,12 @@
 // Copyright © Erickson Lopez. MIT License.
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using EricksonLopez.DomainPrimitives;
 using EricksonLopez.SharedKernel;
 using EricksonLopez.SharedKernel.NativeAotTests.Types;
-using System.Diagnostics.CodeAnalysis;
-
-#pragma warning disable CS1591 // Missing XML comment — test harness
 
 Console.WriteLine("=================================================");
 Console.WriteLine(" EricksonLopez.SharedKernel NativeAOT Test Suite ");

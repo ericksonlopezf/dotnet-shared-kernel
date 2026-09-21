@@ -45,7 +45,7 @@ This document consolidates all formal architectural rejections and discards. To 
 
 ## Architectural Principles Enforced by Discards
 
-1. **Tier 0 Foundation:** `EricksonLopez.SharedKernel` must depend **only** on the .NET Base Class Library (BCL).
+1. **Tier 0 Foundation:** `EricksonLopez.SharedKernel` must depend **only** on the .NET Base Class Library (BCL) and the Tier-0 foundation contracts in `EricksonLopez.Events.Contracts` (per [ADR-035](adr/adr-035-events-contracts-tier-0-foundation-boundary.md)).
 2. **Zero Allocation by Default:** Read-only entity hydration produces 0 bytes of event-collection memory allocations.
 3. **100% Native AOT & Trimming:** No reflection, no runtime IL emission (`IL3050`), and unconditional compile-time trim safety.
 4. **Single-Responsibility Micro-Libraries:** Features are encapsulated in dedicated packages rather than bloated into a monolithic god-package.

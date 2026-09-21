@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+    <AssemblyName>EricksonLopez.SharedKernel.Persistence</AssemblyName>
+    <RootNamespace>EricksonLopez.SharedKernel.Persistence</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsTrimmable>true</IsTrimmable>
+    <IsAotCompatible>true</IsAotCompatible>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <EnableAotAnalyzer>true</EnableAotAnalyzer>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    
+    <!-- NuGet Package Metadata -->
+    <IsPackable>true</IsPackable>
+    <PackageId>EricksonLopez.SharedKernel.Persistence</PackageId>
+    <Description>Compile-time persistence metadata attributes and entity descriptors for EricksonLopez.SharedKernel.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>$(CommonPackageTags);persistence;metadata;entity-metadata;schema-mapping;auditing;multi-tenancy;native-aot</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
+  </ItemGroup>
+</Project>

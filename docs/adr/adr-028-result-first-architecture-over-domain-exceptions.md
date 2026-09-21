@@ -1,5 +1,11 @@
 # ADR-028: Result-First Architecture over Domain Exceptions
 
+## Status
+Accepted
+
+## Date
+2026-08-15
+
 **Date:** 2026-08-15  
 **Status:** Accepted  
 **Deciders:** Erickson Lopez  

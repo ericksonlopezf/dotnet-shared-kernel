@@ -7,12 +7,12 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>false</IsTestProject>
     <SonarQubeTestProject>true</SonarQubeTestProject>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
 
 
   <ItemGroup>
+    <PackageReference Include="EricksonLopez.DomainPrimitives.Abstractions" />
     <ProjectReference Include="..\..\src\EricksonLopez.SharedKernel\EricksonLopez.SharedKernel.csproj" />
   </ItemGroup>
 
