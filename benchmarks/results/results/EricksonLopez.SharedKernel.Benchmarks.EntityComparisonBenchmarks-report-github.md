@@ -2,18 +2,18 @@
 
 BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.5 LTS (Noble Numbat)
 AMD EPYC 7763 2.45GHz, 1 CPU, 4 logical and 2 physical cores
-.NET SDK 10.0.401
-  [Host]    : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
-  .NET 10.0 : .NET 10.0.12 (10.0.12, 10.0.1226.42308), X64 RyuJIT x86-64-v3
+.NET SDK 10.0.402
+  [Host]    : .NET 10.0.13 (10.0.13, 10.0.1326.50504), X64 RyuJIT x86-64-v3
+  .NET 10.0 : .NET 10.0.13 (10.0.13, 10.0.1326.50504), X64 RyuJIT x86-64-v3
 
 
 ```
 | Method                                   | Job       | Runtime   | Mean      | Error     | StdDev    | Ratio | RatioSD | Rank | Allocated | Alloc Ratio |
 |----------------------------------------- |---------- |---------- |----------:|----------:|----------:|------:|--------:|-----:|----------:|------------:|
-| Ardalis_EntityEquality_SameId            | .NET 10.0 | .NET 10.0 | 0.4999 ns | 0.0078 ns | 0.0073 ns |     ? |       ? |    1 |         - |           ? |
-| EricksonLopez_EntityEquality_SameId      | .NET 10.0 | .NET 10.0 | 3.4554 ns | 0.0062 ns | 0.0058 ns |     ? |       ? |    2 |         - |           ? |
-| Ardalis_EntityEquality_DifferentId       | .NET 10.0 | .NET 10.0 | 0.4819 ns | 0.0101 ns | 0.0094 ns |     ? |       ? |    1 |         - |           ? |
-| EricksonLopez_EntityEquality_DifferentId | .NET 10.0 | .NET 10.0 | 3.4566 ns | 0.0082 ns | 0.0073 ns |     ? |       ? |    2 |         - |           ? |
+| Ardalis_EntityEquality_SameId            | .NET 10.0 | .NET 10.0 | 0.5127 ns | 0.0076 ns | 0.0067 ns |     ? |       ? |    1 |         - |           ? |
+| EricksonLopez_EntityEquality_SameId      | .NET 10.0 | .NET 10.0 | 3.4690 ns | 0.0056 ns | 0.0044 ns |     ? |       ? |    2 |         - |           ? |
+| Ardalis_EntityEquality_DifferentId       | .NET 10.0 | .NET 10.0 | 0.5097 ns | 0.0073 ns | 0.0068 ns |     ? |       ? |    1 |         - |           ? |
+| EricksonLopez_EntityEquality_DifferentId | .NET 10.0 | .NET 10.0 | 3.4575 ns | 0.0055 ns | 0.0052 ns |     ? |       ? |    2 |         - |           ? |
 | Ardalis_EntityEquality_SameId            | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
 | EricksonLopez_EntityEquality_SameId      | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
 | Ardalis_EntityEquality_DifferentId       | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
