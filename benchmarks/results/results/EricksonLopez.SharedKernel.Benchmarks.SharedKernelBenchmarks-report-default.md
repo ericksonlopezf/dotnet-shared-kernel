@@ -8,31 +8,31 @@ AMD EPYC 7763 2.45GHz, 1 CPU, 4 logical and 2 physical cores
 
  Method                                | Job       | Runtime   | Mean      | Error     | StdDev    | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
 -------------------------------------- |---------- |---------- |----------:|----------:|----------:|------:|--------:|-------:|----------:|------------:|
- EntityEquality_SameId                 | .NET 10.0 | .NET 10.0 |  3.553 ns | 0.0029 ns | 0.0026 ns |     ? |       ? |      - |         - |           ? |
+ EntityEquality_SameId                 | .NET 10.0 | .NET 10.0 |  3.534 ns | 0.0032 ns | 0.0025 ns |     ? |       ? |      - |         - |           ? |
  EntityEquality_SameId                 | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
  EntityEquality_SameId                 | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
                                        |           |           |           |           |           |       |         |        |           |             |
- EntityEquality_DifferentId            | .NET 10.0 | .NET 10.0 |  3.449 ns | 0.0059 ns | 0.0053 ns |     ? |       ? |      - |         - |           ? |
+ EntityEquality_DifferentId            | .NET 10.0 | .NET 10.0 |  3.447 ns | 0.0065 ns | 0.0054 ns |     ? |       ? |      - |         - |           ? |
  EntityEquality_DifferentId            | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
  EntityEquality_DifferentId            | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
                                        |           |           |           |           |           |       |         |        |           |             |
- EntityGetHashCode                     | .NET 10.0 | .NET 10.0 |  7.600 ns | 0.1562 ns | 0.1461 ns |     ? |       ? |      - |         - |           ? |
+ EntityGetHashCode                     | .NET 10.0 | .NET 10.0 |  7.478 ns | 0.1196 ns | 0.1118 ns |     ? |       ? |      - |         - |           ? |
  EntityGetHashCode                     | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
  EntityGetHashCode                     | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
                                        |           |           |           |           |           |       |         |        |           |             |
- AggregateDrainDomainEvents_NoEvents   | .NET 10.0 | .NET 10.0 |  2.060 ns | 0.0063 ns | 0.0056 ns |     ? |       ? |      - |         - |           ? |
+ AggregateDrainDomainEvents_NoEvents   | .NET 10.0 | .NET 10.0 |  2.103 ns | 0.0105 ns | 0.0093 ns |     ? |       ? |      - |         - |           ? |
  AggregateDrainDomainEvents_NoEvents   | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
  AggregateDrainDomainEvents_NoEvents   | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
                                        |           |           |           |           |           |       |         |        |           |             |
- AggregateDrainDomainEvents_WithEvents | .NET 10.0 | .NET 10.0 | 50.496 ns | 0.5187 ns | 0.4852 ns |     ? |       ? | 0.0114 |     192 B |           ? |
+ AggregateDrainDomainEvents_WithEvents | .NET 10.0 | .NET 10.0 | 58.609 ns | 0.6055 ns | 0.5367 ns |     ? |       ? | 0.0114 |     192 B |           ? |
  AggregateDrainDomainEvents_WithEvents | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
  AggregateDrainDomainEvents_WithEvents | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
                                        |           |           |           |           |           |       |         |        |           |             |
- AggregateRaiseDomainEvent_FirstTime   | .NET 10.0 | .NET 10.0 | 31.128 ns | 0.0626 ns | 0.0586 ns |     ? |       ? | 0.0081 |     136 B |           ? |
+ AggregateRaiseDomainEvent_FirstTime   | .NET 10.0 | .NET 10.0 | 33.875 ns | 0.5017 ns | 0.4693 ns |     ? |       ? | 0.0081 |     136 B |           ? |
  AggregateRaiseDomainEvent_FirstTime   | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
  AggregateRaiseDomainEvent_FirstTime   | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
                                        |           |           |           |           |           |       |         |        |           |             |
- AggregateRaiseDomainEvent_Subsequent  | .NET 10.0 | .NET 10.0 | 38.064 ns | 0.7740 ns | 0.6463 ns |     ? |       ? | 0.0081 |     136 B |           ? |
+ AggregateRaiseDomainEvent_Subsequent  | .NET 10.0 | .NET 10.0 | 40.665 ns | 0.5320 ns | 0.4976 ns |     ? |       ? | 0.0081 |     136 B |           ? |
  AggregateRaiseDomainEvent_Subsequent  | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
  AggregateRaiseDomainEvent_Subsequent  | .NET 9.0  | .NET 9.0  |        NA |        NA |        NA |     ? |       ? |     NA |        NA |           ? |
 

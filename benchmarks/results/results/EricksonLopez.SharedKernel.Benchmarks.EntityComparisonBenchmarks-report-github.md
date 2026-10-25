@@ -10,10 +10,10 @@ AMD EPYC 7763 2.45GHz, 1 CPU, 4 logical and 2 physical cores
 ```
 | Method                                   | Job       | Runtime   | Mean      | Error     | StdDev    | Ratio | RatioSD | Rank | Allocated | Alloc Ratio |
 |----------------------------------------- |---------- |---------- |----------:|----------:|----------:|------:|--------:|-----:|----------:|------------:|
-| Ardalis_EntityEquality_SameId            | .NET 10.0 | .NET 10.0 | 0.5127 ns | 0.0076 ns | 0.0067 ns |     ? |       ? |    1 |         - |           ? |
-| EricksonLopez_EntityEquality_SameId      | .NET 10.0 | .NET 10.0 | 3.4690 ns | 0.0056 ns | 0.0044 ns |     ? |       ? |    2 |         - |           ? |
-| Ardalis_EntityEquality_DifferentId       | .NET 10.0 | .NET 10.0 | 0.5097 ns | 0.0073 ns | 0.0068 ns |     ? |       ? |    1 |         - |           ? |
-| EricksonLopez_EntityEquality_DifferentId | .NET 10.0 | .NET 10.0 | 3.4575 ns | 0.0055 ns | 0.0052 ns |     ? |       ? |    2 |         - |           ? |
+| Ardalis_EntityEquality_SameId            | .NET 10.0 | .NET 10.0 | 0.4977 ns | 0.0060 ns | 0.0054 ns |     ? |       ? |    1 |         - |           ? |
+| EricksonLopez_EntityEquality_SameId      | .NET 10.0 | .NET 10.0 | 3.4539 ns | 0.0062 ns | 0.0055 ns |     ? |       ? |    2 |         - |           ? |
+| Ardalis_EntityEquality_DifferentId       | .NET 10.0 | .NET 10.0 | 0.5127 ns | 0.0139 ns | 0.0123 ns |     ? |       ? |    1 |         - |           ? |
+| EricksonLopez_EntityEquality_DifferentId | .NET 10.0 | .NET 10.0 | 3.5461 ns | 0.0141 ns | 0.0125 ns |     ? |       ? |    3 |         - |           ? |
 | Ardalis_EntityEquality_SameId            | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
 | EricksonLopez_EntityEquality_SameId      | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
 | Ardalis_EntityEquality_DifferentId       | .NET 8.0  | .NET 8.0  |        NA |        NA |        NA |     ? |       ? |    ? |        NA |           ? |
