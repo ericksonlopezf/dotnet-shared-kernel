@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-20261101-082842</title>
+<title>EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-20261108-082203</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,38 +13,38 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.5 LTS (Noble Numbat)
-AMD EPYC 7763 2.63GHz, 1 CPU, 4 logical and 2 physical cores
+BenchmarkDotNet v0.15.8, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 9V74 3.69GHz, 1 CPU, 4 logical and 2 physical cores
 .NET SDK 10.0.403
-  [Host]    : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
-  .NET 10.0 : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+  [Host]    : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v4
+  .NET 10.0 : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v4
 </code></pre>
 <pre><code></code></pre>
 
 <table>
-<thead><tr><th>Method                         </th><th>Job</th><th>Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
+<thead><tr><th>Method                         </th><th>Job</th><th>Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
 </tr>
-</thead><tbody><tr><td>EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>3.593 ns</td><td>0.0160 ns</td><td>0.0134 ns</td><td>3.586 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
-</tr><tr><td>EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>EntityEquality_SameId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>3.447 ns</td><td>0.0049 ns</td><td>0.0043 ns</td><td>3.446 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
-</tr><tr><td>EntityEquality_DifferentId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>EntityEquality_DifferentId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>EntityGetHashCode</td><td>.NET 10.0</td><td>.NET 10.0</td><td>7.437 ns</td><td>0.1325 ns</td><td>0.1240 ns</td><td>7.535 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
-</tr><tr><td>EntityGetHashCode</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>EntityGetHashCode</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>2.059 ns</td><td>0.0069 ns</td><td>0.0061 ns</td><td>2.057 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
-</tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>52.274 ns</td><td>0.3676 ns</td><td>0.3069 ns</td><td>52.171 ns</td><td>?</td><td>?</td><td>0.0114</td><td>192 B</td><td>?</td>
-</tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 10.0</td><td>.NET 10.0</td><td>29.332 ns</td><td>0.1712 ns</td><td>0.1601 ns</td><td>29.342 ns</td><td>?</td><td>?</td><td>0.0081</td><td>136 B</td><td>?</td>
-</tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 10.0</td><td>.NET 10.0</td><td>36.599 ns</td><td>0.2655 ns</td><td>0.2354 ns</td><td>36.559 ns</td><td>?</td><td>?</td><td>0.0081</td><td>136 B</td><td>?</td>
-</tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</thead><tbody><tr><td>EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>3.440 ns</td><td>0.0078 ns</td><td>0.0069 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
+</tr><tr><td>EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>EntityEquality_SameId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>2.701 ns</td><td>0.0087 ns</td><td>0.0068 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
+</tr><tr><td>EntityEquality_DifferentId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>EntityEquality_DifferentId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>EntityGetHashCode</td><td>.NET 10.0</td><td>.NET 10.0</td><td>5.135 ns</td><td>0.0039 ns</td><td>0.0035 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
+</tr><tr><td>EntityGetHashCode</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>EntityGetHashCode</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>1.376 ns</td><td>0.0040 ns</td><td>0.0031 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
+</tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>47.506 ns</td><td>0.9776 ns</td><td>1.0461 ns</td><td>?</td><td>?</td><td>0.0114</td><td>192 B</td><td>?</td>
+</tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 10.0</td><td>.NET 10.0</td><td>25.483 ns</td><td>0.2196 ns</td><td>0.2054 ns</td><td>?</td><td>?</td><td>0.0081</td><td>136 B</td><td>?</td>
+</tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 10.0</td><td>.NET 10.0</td><td>31.854 ns</td><td>0.6728 ns</td><td>0.9209 ns</td><td>?</td><td>?</td><td>0.0081</td><td>136 B</td><td>?</td>
+</tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
+</tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr></tbody></table>
 </body>
 </html>
