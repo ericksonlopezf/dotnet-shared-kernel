@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-20261108-081958</title>
+<title>EricksonLopez.SharedKernel.Benchmarks.EntityComparisonBenchmarks-20261115-084021</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,28 +14,28 @@
 <body>
 <pre><code>
 BenchmarkDotNet v0.15.8, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
-AMD EPYC 9V74 3.69GHz, 1 CPU, 4 logical and 2 physical cores
-.NET SDK 10.0.403
-  [Host]    : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v4
-  .NET 10.0 : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v4
+AMD EPYC 9V45 4.33GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.404
+  [Host]    : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v4
+  .NET 10.0 : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v4
 </code></pre>
 <pre><code></code></pre>
 
 <table>
-<thead><tr><th>Method                            </th><th>Job</th><th>Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Ratio</th><th>RatioSD</th><th>Rank</th><th>Allocated</th><th>Alloc Ratio</th>
+<thead><tr><th>Method                            </th><th>Job</th><th>Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th><th>Ratio</th><th>RatioSD</th><th>Rank</th><th>Allocated</th><th>Alloc Ratio</th>
 </tr>
-</thead><tbody><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.1973 ns</td><td>0.0021 ns</td><td>0.0017 ns</td><td>?</td><td>?</td><td>1</td><td>-</td><td>?</td>
-</tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>2.7339 ns</td><td>0.0061 ns</td><td>0.0048 ns</td><td>?</td><td>?</td><td>2</td><td>-</td><td>?</td>
-</tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.1912 ns</td><td>0.0020 ns</td><td>0.0017 ns</td><td>?</td><td>?</td><td>1</td><td>-</td><td>?</td>
-</tr><tr><td>EricksonLopez_EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>2.7359 ns</td><td>0.0033 ns</td><td>0.0030 ns</td><td>?</td><td>?</td><td>2</td><td>-</td><td>?</td>
-</tr><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
-</tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
-</tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
-</tr><tr><td>EricksonLopez_EntityEquality_DifferentId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
-</tr><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
-</tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
-</tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
-</tr><tr><td>EricksonLopez_EntityEquality_DifferentId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
+</thead><tbody><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.0070 ns</td><td>0.0090 ns</td><td>0.0092 ns</td><td>0.0019 ns</td><td>?</td><td>?</td><td>1</td><td>-</td><td>?</td>
+</tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>1.8531 ns</td><td>0.0455 ns</td><td>0.0403 ns</td><td>1.8528 ns</td><td>?</td><td>?</td><td>3</td><td>-</td><td>?</td>
+</tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>0.0355 ns</td><td>0.0230 ns</td><td>0.0274 ns</td><td>0.0324 ns</td><td>?</td><td>?</td><td>2</td><td>-</td><td>?</td>
+</tr><tr><td>EricksonLopez_EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>1.9167 ns</td><td>0.0594 ns</td><td>0.0684 ns</td><td>1.9056 ns</td><td>?</td><td>?</td><td>3</td><td>-</td><td>?</td>
+</tr><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
+</tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
+</tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
+</tr><tr><td>EricksonLopez_EntityEquality_DifferentId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
+</tr><tr><td>Ardalis_EntityEquality_SameId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
+</tr><tr><td>EricksonLopez_EntityEquality_SameId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
+</tr><tr><td>Ardalis_EntityEquality_DifferentId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
+</tr><tr><td>EricksonLopez_EntityEquality_DifferentId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>?</td>
 </tr></tbody></table>
 </body>
 </html>
