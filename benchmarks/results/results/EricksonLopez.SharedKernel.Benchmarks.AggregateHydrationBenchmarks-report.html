@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks-20261115-083805</title>
+<title>EricksonLopez.SharedKernel.Benchmarks.AggregateHydrationBenchmarks-20261122-090304</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <pre><code>
 BenchmarkDotNet v0.15.8, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
-AMD EPYC 9V45 4.33GHz, 1 CPU, 4 logical and 2 physical cores
+INTEL XEON PLATINUM 8573C 3.00GHz, 1 CPU, 4 logical and 2 physical cores
 .NET SDK 10.0.404
   [Host]    : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v4
   .NET 10.0 : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v4
@@ -24,10 +24,10 @@ AMD EPYC 9V45 4.33GHz, 1 CPU, 4 logical and 2 physical cores
 <table>
 <thead><tr><th>Method                               </th><th>Job</th><th>Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Ratio</th><th>RatioSD</th><th>Rank</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
 </tr>
-</thead><tbody><tr><td>Ardalis_AggregateHydration_ZeroEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>8.736 ns</td><td>0.2143 ns</td><td>0.3336 ns</td><td>?</td><td>?</td><td>2</td><td>0.0043</td><td>72 B</td><td>?</td>
-</tr><tr><td>EricksonLopez_AggregateHydration_ZeroEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>3.834 ns</td><td>0.1168 ns</td><td>0.2277 ns</td><td>?</td><td>?</td><td>1</td><td>0.0029</td><td>48 B</td><td>?</td>
-</tr><tr><td>Ardalis_DrainEvents_WithEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>42.713 ns</td><td>0.6665 ns</td><td>0.8429 ns</td><td>?</td><td>?</td><td>4</td><td>0.0119</td><td>200 B</td><td>?</td>
-</tr><tr><td>EricksonLopez_DrainEvents_WithEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>33.101 ns</td><td>0.6047 ns</td><td>0.6471 ns</td><td>?</td><td>?</td><td>3</td><td>0.0114</td><td>192 B</td><td>?</td>
+</thead><tbody><tr><td>Ardalis_AggregateHydration_ZeroEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>17.302 ns</td><td>0.1403 ns</td><td>0.1244 ns</td><td>?</td><td>?</td><td>2</td><td>0.0008</td><td>72 B</td><td>?</td>
+</tr><tr><td>EricksonLopez_AggregateHydration_ZeroEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>9.133 ns</td><td>0.0972 ns</td><td>0.0812 ns</td><td>?</td><td>?</td><td>1</td><td>0.0006</td><td>48 B</td><td>?</td>
+</tr><tr><td>Ardalis_DrainEvents_WithEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>85.468 ns</td><td>0.1460 ns</td><td>0.1294 ns</td><td>?</td><td>?</td><td>4</td><td>0.0024</td><td>200 B</td><td>?</td>
+</tr><tr><td>EricksonLopez_DrainEvents_WithEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>65.342 ns</td><td>0.5000 ns</td><td>0.4677 ns</td><td>?</td><td>?</td><td>3</td><td>0.0023</td><td>192 B</td><td>?</td>
 </tr><tr><td>Ardalis_AggregateHydration_ZeroEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>EricksonLopez_AggregateHydration_ZeroEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>Ardalis_DrainEvents_WithEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>

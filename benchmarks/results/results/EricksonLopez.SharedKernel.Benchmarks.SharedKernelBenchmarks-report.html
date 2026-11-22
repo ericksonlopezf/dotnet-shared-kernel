@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-20261115-084237</title>
+<title>EricksonLopez.SharedKernel.Benchmarks.SharedKernelBenchmarks-20261122-090639</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,7 +14,7 @@
 <body>
 <pre><code>
 BenchmarkDotNet v0.15.8, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
-AMD EPYC 9V45 4.33GHz, 1 CPU, 4 logical and 2 physical cores
+INTEL XEON PLATINUM 8573C 3.00GHz, 1 CPU, 4 logical and 2 physical cores
 .NET SDK 10.0.404
   [Host]    : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v4
   .NET 10.0 : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v4
@@ -24,25 +24,25 @@ AMD EPYC 9V45 4.33GHz, 1 CPU, 4 logical and 2 physical cores
 <table>
 <thead><tr><th>Method                         </th><th>Job</th><th>Runtime</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
 </tr>
-</thead><tbody><tr><td>EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>2.104 ns</td><td>0.0591 ns</td><td>0.0553 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
+</thead><tbody><tr><td>EntityEquality_SameId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>2.399 ns</td><td>0.0105 ns</td><td>0.0098 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
 </tr><tr><td>EntityEquality_SameId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>EntityEquality_SameId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>1.885 ns</td><td>0.0592 ns</td><td>0.0495 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
+</tr><tr><td>EntityEquality_DifferentId</td><td>.NET 10.0</td><td>.NET 10.0</td><td>2.409 ns</td><td>0.0240 ns</td><td>0.0213 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
 </tr><tr><td>EntityEquality_DifferentId</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>EntityEquality_DifferentId</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>EntityGetHashCode</td><td>.NET 10.0</td><td>.NET 10.0</td><td>3.236 ns</td><td>0.0793 ns</td><td>0.1186 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
+</tr><tr><td>EntityGetHashCode</td><td>.NET 10.0</td><td>.NET 10.0</td><td>4.607 ns</td><td>0.0230 ns</td><td>0.0215 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
 </tr><tr><td>EntityGetHashCode</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>EntityGetHashCode</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>5.035 ns</td><td>0.1185 ns</td><td>0.1411 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
+</tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>6.222 ns</td><td>0.0621 ns</td><td>0.0580 ns</td><td>?</td><td>?</td><td>-</td><td>-</td><td>?</td>
 </tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>AggregateDrainDomainEvents_NoEvents</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>31.994 ns</td><td>0.5937 ns</td><td>0.5263 ns</td><td>?</td><td>?</td><td>0.0114</td><td>192 B</td><td>?</td>
+</tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 10.0</td><td>.NET 10.0</td><td>64.833 ns</td><td>0.3028 ns</td><td>0.2684 ns</td><td>?</td><td>?</td><td>0.0023</td><td>192 B</td><td>?</td>
 </tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>AggregateDrainDomainEvents_WithEvents</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 10.0</td><td>.NET 10.0</td><td>18.313 ns</td><td>0.2697 ns</td><td>0.2106 ns</td><td>?</td><td>?</td><td>0.0081</td><td>136 B</td><td>?</td>
+</tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 10.0</td><td>.NET 10.0</td><td>39.426 ns</td><td>0.4979 ns</td><td>0.4414 ns</td><td>?</td><td>?</td><td>0.0016</td><td>136 B</td><td>?</td>
 </tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>AggregateRaiseDomainEvent_FirstTime</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
-</tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 10.0</td><td>.NET 10.0</td><td>22.039 ns</td><td>0.4827 ns</td><td>0.9639 ns</td><td>?</td><td>?</td><td>0.0081</td><td>136 B</td><td>?</td>
+</tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 10.0</td><td>.NET 10.0</td><td>46.275 ns</td><td>0.1969 ns</td><td>0.1745 ns</td><td>?</td><td>?</td><td>0.0016</td><td>136 B</td><td>?</td>
 </tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 8.0</td><td>.NET 8.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr><tr><td>AggregateRaiseDomainEvent_Subsequent</td><td>.NET 9.0</td><td>.NET 9.0</td><td>NA</td><td>NA</td><td>NA</td><td>?</td><td>?</td><td>NA</td><td>NA</td><td>?</td>
 </tr></tbody></table>
